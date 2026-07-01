@@ -76,7 +76,7 @@ export default function Footer() {
       </div>
 
       <div className="border-t border-slate-700 text-center py-6 text-gray-400">
-        © 2026 Universal Space. All rights reserved.
+        © 2026 Universal Space • Version 1.0 🚀
       </div>
 
     </footer>
