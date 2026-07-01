@@ -179,7 +179,7 @@ export default function Home() {
 
     {articles.slice().reverse().map((article) => (
       <ArticleCard
-        key={`latest-${article.id}`}
+        key={article.slug}
         category={article.category}
         title={article.title}
         description={article.description}
