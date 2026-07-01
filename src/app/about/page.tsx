@@ -1,60 +1,85 @@
-export default function About() {
+export default function AboutPage() {
   return (
-    <main className="min-h-screen bg-slate-50">
+    <main className="max-w-5xl mx-auto px-6 py-20">
 
-      <section className="max-w-5xl mx-auto py-24 px-6">
+      <h1 className="text-5xl font-bold mb-8">
+        About Universal Space
+      </h1>
 
-        <h1 className="text-5xl font-bold mb-8">
-          About Universal Space
-        </h1>
+      <div className="space-y-8 text-lg text-gray-700 leading-8">
 
-        <p className="text-xl text-gray-700 leading-9 mb-8">
-          Universal Space is dedicated to helping professionals grow through
-          Artificial Intelligence, investing, technology, online business and
-          personal finance.
+        <p>
+          Welcome to <strong>Universal Space</strong> — a place created to make
+          Artificial Intelligence, investing, technology and online business
+          easier to understand and apply in everyday life.
         </p>
 
-        <p className="text-lg text-gray-600 leading-8 mb-8">
-          Our mission is simple:
-          provide practical knowledge that saves time,
-          helps build wealth and creates financial freedom.
+        <p>
+          In today's fast-changing world, we are surrounded by endless
+          information. The challenge isn't finding information—it's knowing what
+          truly matters and how to use it effectively.
         </p>
 
-        <div className="grid md:grid-cols-3 gap-8 mt-16">
+        <p>
+          Universal Space was built with one simple mission:
+        </p>
 
-          <div className="bg-white rounded-2xl shadow p-8">
-            <div className="text-5xl mb-4">🤖</div>
-            <h2 className="text-2xl font-semibold mb-3">
-              AI
-            </h2>
-            <p>
-              Learn practical AI that boosts productivity.
-            </p>
-          </div>
+        <div className="bg-blue-50 border-l-4 border-blue-600 rounded-xl p-6">
+          <h2 className="text-2xl font-bold text-blue-700">
+            Simplify complex ideas into practical knowledge.
+          </h2>
+        </div>
 
-          <div className="bg-white rounded-2xl shadow p-8">
-            <div className="text-5xl mb-4">💰</div>
-            <h2 className="text-2xl font-semibold mb-3">
-              Wealth
-            </h2>
-            <p>
-              Build long-term wealth through smart investing.
-            </p>
-          </div>
+        <p>
+          Whether you're exploring Artificial Intelligence, planning your
+          investments, improving your productivity, or building an online
+          business, you'll find practical guides, trusted resources and useful
+          tools designed for busy professionals.
+        </p>
 
-          <div className="bg-white rounded-2xl shadow p-8">
-            <div className="text-5xl mb-4">🚀</div>
-            <h2 className="text-2xl font-semibold mb-3">
-              Growth
-            </h2>
-            <p>
-              Build scalable online income and future-proof skills.
-            </p>
-          </div>
+        <h2 className="text-3xl font-bold pt-6">
+          Why I Started Universal Space
+        </h2>
+
+        <p>
+          Like many professionals, I found myself constantly learning about AI,
+          finance and technology while balancing a full-time career. I realised
+          that many resources were either too technical or too overwhelming for
+          everyday people.
+        </p>
+
+        <p>
+          I created Universal Space to bring together practical knowledge that
+          helps people save time, make better decisions and build long-term
+          wealth through continuous learning.
+        </p>
+
+        <h2 className="text-3xl font-bold pt-6">
+          What You'll Find Here
+        </h2>
+
+        <ul className="list-disc pl-6 space-y-3">
+          <li>🤖 Practical AI guides and tools</li>
+          <li>💰 Investing and personal finance insights</li>
+          <li>🚀 Online business and side hustle ideas</li>
+          <li>📱 Technology reviews and recommendations</li>
+          <li>🛠️ Useful calculators and productivity tools</li>
+        </ul>
+
+        <div className="bg-slate-100 rounded-2xl p-8 mt-12">
+
+          <h2 className="text-3xl font-bold mb-4">
+            Our Mission
+          </h2>
+
+          <p className="text-xl font-medium">
+            Help millions of people make smarter decisions by simplifying AI,
+            money, technology and business.
+          </p>
 
         </div>
 
-      </section>
+      </div>
 
     </main>
   );

@@ -1,11 +1,12 @@
 import SearchBar from "./components/SearchBar";
 import CategoryCard from "./components/CategoryCard";
 import Footer from "./components/Footer";
-import { articles } from "../data/articles";
+import { getAllArticles } from "@/lib/articles";
 import Navbar from "./components/Navbar";
 import ArticleCard from "./components/Articlecard";
 
 export default function Home() {
+    const articles = getAllArticles();
   return (
     <main className="min-h-screen bg-slate-50">
       <Navbar />
@@ -182,7 +183,7 @@ export default function Home() {
         category={article.category}
         title={article.title}
         description={article.description}
-        link={article.link}
+        link={`/articles/${article.slug}`}
       />
     ))}
 

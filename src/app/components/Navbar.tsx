@@ -11,31 +11,51 @@ export default function Navbar() {
         </Link>
 
         {/* Navigation */}
-        <div className="hidden md:flex items-center gap-7 text-sm font-medium">
+        <div className="hidden md:flex items-center gap-8 text-sm font-medium">
 
           <Link href="/" className="hover:text-blue-600 transition">
             Home
           </Link>
 
-          <Link href="/ai" className="hover:text-blue-600 transition">
-            AI
-          </Link>
+          <div className="relative group">
 
-          <Link href="/wealth" className="hover:text-blue-600 transition">
-            Wealth
-          </Link>
+            <button className="hover:text-blue-600 transition">
+              Learn ▾
+            </button>
 
-          <Link href="/business" className="hover:text-blue-600 transition">
-            Business
-          </Link>
+            <div className="absolute left-0 mt-3 hidden group-hover:block w-64 rounded-xl bg-white shadow-xl border border-gray-100 p-3">
 
-          <Link href="/reviews" className="hover:text-blue-600 transition">
-            Reviews
-          </Link>
+              <Link
+                href="/ai"
+                className="block rounded-lg px-4 py-3 hover:bg-gray-100"
+              >
+                🤖 Artificial Intelligence
+              </Link>
 
-          <Link href="/resources" className="hover:text-blue-600 transition">
-            Resources
-          </Link>
+              <Link
+                href="/wealth"
+                className="block rounded-lg px-4 py-3 hover:bg-gray-100"
+              >
+                💰 Wealth
+              </Link>
+
+              <Link
+                href="/business"
+                className="block rounded-lg px-4 py-3 hover:bg-gray-100"
+              >
+                🚀 Business
+              </Link>
+
+              <Link
+                href="/reviews"
+                className="block rounded-lg px-4 py-3 hover:bg-gray-100"
+              >
+                💻 Technology
+              </Link>
+
+            </div>
+
+          </div>
 
           <Link href="/tools" className="hover:text-blue-600 transition">
             Tools
