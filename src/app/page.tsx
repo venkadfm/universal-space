@@ -1,3 +1,7 @@
+import SearchBar from "./components/SearchBar";
+import CategoryCard from "./components/CategoryCard";
+import Footer from "./components/Footer";
+import { articles } from "../data/articles";
 import Navbar from "./components/Navbar";
 import ArticleCard from "./components/Articlecard";
 
@@ -25,15 +29,99 @@ export default function Home() {
         </div>
 
         <div className="flex justify-center gap-5 mt-10">
-          <button className="bg-blue-600 text-white px-8 py-4 rounded-xl hover:bg-blue-700 transition duration-300 shadow-lg">
-            Explore Articles
-          </button>
 
-          <button className="border border-blue-600 text-blue-600 px-8 py-4 rounded-xl hover:bg-blue-50 transition duration-300">
-            Join Newsletter
-          </button>
-        </div>
+  <button className="bg-blue-600 text-white px-8 py-4 rounded-xl hover:bg-blue-700 transition duration-300 shadow-xl hover:scale-105">
+    Explore Articles
+  </button>
+
+  <button className="border-2 border-blue-600 text-blue-600 px-8 py-4 rounded-xl hover:bg-blue-50 transition duration-300 hover:scale-105">
+    Marketplace
+  </button>
+
+</div>
+
+<div className="flex justify-center gap-12 mt-16 text-center">
+
+  <div>
+    <h3 className="text-4xl font-bold text-blue-600">
+      100+
+    </h3>
+
+    <p className="text-gray-600">
+      Future Articles
+    </p>
+  </div>
+
+  <div>
+    <h3 className="text-4xl font-bold text-blue-600">
+      20+
+    </h3>
+
+    <p className="text-gray-600">
+      Free Tools
+    </p>
+  </div>
+
+  <div>
+    <h3 className="text-4xl font-bold text-blue-600">
+      50+
+    </h3>
+
+    <p className="text-gray-600">
+      Digital Products
+    </p>
+  </div>
+
+</div>
       </section>
+      {/* Featured Categories */}
+
+<section className="max-w-6xl mx-auto px-6 py-20">
+  <div className="mt-8 mb-16">
+  <SearchBar />
+</div>
+
+  <h2 className="text-4xl font-bold text-center mb-3">
+    Explore Categories
+  </h2>
+
+  <p className="text-center text-gray-600 mb-12">
+    Everything you need to grow your career, wealth and business.
+  </p>
+
+  <div className="grid md:grid-cols-4 gap-8">
+
+    <CategoryCard
+      emoji="🤖"
+      title="AI"
+      description="AI tools, prompts and automation guides."
+      link="/ai"
+    />
+
+    <CategoryCard
+      emoji="💰"
+      title="Wealth"
+      description="Investing, financial freedom and money management."
+      link="/wealth"
+    />
+
+    <CategoryCard
+      emoji="🚀"
+      title="Business"
+      description="Side hustles and online business ideas."
+      link="/business"
+    />
+
+    <CategoryCard
+      emoji="🛒"
+      title="Marketplace"
+      description="Templates, scripts and digital products."
+      link="/marketplace"
+    />
+
+  </div>
+
+</section>
 
     {/* Featured Articles */}
 
@@ -69,6 +157,34 @@ export default function Home() {
   description="A practical roadmap for starting an online business with AI."
   link="/business"
 />
+
+  </div>
+
+</section>
+
+{/* Latest Articles */}
+
+<section className="max-w-6xl mx-auto px-6 pb-24">
+
+  <h2 className="text-4xl font-bold text-center mb-3">
+    Latest Articles
+  </h2>
+
+  <p className="text-center text-gray-600 mb-12">
+    Fresh insights from Universal Space.
+  </p>
+
+  <div className="grid md:grid-cols-3 gap-8">
+
+    {articles.slice().reverse().map((article) => (
+      <ArticleCard
+        key={`latest-${article.id}`}
+        category={article.category}
+        title={article.title}
+        description={article.description}
+        link={article.link}
+      />
+    ))}
 
   </div>
 
@@ -152,9 +268,7 @@ export default function Home() {
       </section>
 
       {/* Footer */}
-      <footer className="border-t py-8 text-center text-gray-500">
-        © 2026 Universal Space. All rights reserved.
-      </footer>
+      <Footer />
     </main>
   );
 }

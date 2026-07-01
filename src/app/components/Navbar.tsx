@@ -2,22 +2,16 @@ import Link from "next/link";
 
 export default function Navbar() {
   return (
-    <nav className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-200 shadow-sm">
-      <div className="max-w-7xl mx-auto flex items-center justify-between px-8 py-5">
+    <nav className="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-gray-200 shadow-sm">
+      <div className="max-w-7xl mx-auto flex items-center justify-between px-6 py-4">
 
         {/* Logo */}
-        <Link href="/" className="flex flex-col">
-          <span className="text-2xl font-extrabold text-slate-900">
-            Universal Space
-          </span>
-
-          <span className="text-xs text-gray-500 tracking-wide">
-            AI • Wealth • Business
-          </span>
+        <Link href="/" className="text-2xl font-bold text-slate-900">
+          Universal <span className="text-blue-600">Space</span>
         </Link>
 
         {/* Navigation */}
-        <div className="flex items-center gap-7 text-sm font-medium">
+        <div className="hidden md:flex items-center gap-7 text-sm font-medium">
 
           <Link href="/" className="hover:text-blue-600 transition">
             Home
@@ -43,11 +37,20 @@ export default function Navbar() {
             Resources
           </Link>
 
+          <Link href="/tools" className="hover:text-blue-600 transition">
+            Tools
+          </Link>
+
+          <Link href="/marketplace" className="hover:text-blue-600 transition">
+            Marketplace
+          </Link>
+
           <Link href="/about" className="hover:text-blue-600 transition">
             About
           </Link>
 
         </div>
+
       </div>
     </nav>
   );
