@@ -14,27 +14,38 @@ export default function ArticleCard({
   link,
 }: ArticleCardProps) {
   return (
-    <div className="bg-white rounded-2xl shadow-md p-6 hover:shadow-xl transition duration-300">
+    <Link href={link} className="group block">
+      <article className="h-full rounded-3xl border border-slate-200 bg-white p-7 shadow-sm transition-all duration-300 hover:-translate-y-2 hover:border-blue-200 hover:shadow-2xl">
 
-      <span className="text-sm font-semibold text-blue-600">
-        {category}
-      </span>
+        {/* Category Badge */}
+        <div className="inline-flex rounded-full bg-blue-100 px-3 py-1 text-sm font-semibold text-blue-700">
+          {category}
+        </div>
 
-      <h3 className="text-2xl font-bold mt-3 mb-4">
-        {title}
-      </h3>
+        {/* Title */}
+        <h3 className="mt-5 text-2xl font-bold leading-tight text-slate-900 group-hover:text-blue-600 transition-colors">
+          {title}
+        </h3>
 
-      <p className="text-gray-600 leading-7">
-        {description}
-      </p>
+        {/* Description */}
+        <p className="mt-4 text-gray-600 leading-7">
+          {description}
+        </p>
 
-      <Link
-        href={link}
-        className="inline-block mt-6 text-blue-600 font-semibold hover:underline"
-      >
-        Read Article →
-      </Link>
+        {/* Footer */}
+        <div className="mt-8 flex items-center justify-between border-t border-slate-100 pt-5">
 
-    </div>
+          <span className="text-sm text-gray-500">
+            5 min read
+          </span>
+
+          <span className="font-semibold text-blue-600 group-hover:translate-x-1 transition-transform">
+            Read →
+          </span>
+
+        </div>
+
+      </article>
+    </Link>
   );
 }

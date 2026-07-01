@@ -1,3 +1,4 @@
+import { MDXRemote } from "next-mdx-remote/rsc";
 import { notFound } from "next/navigation";
 import { getArticleBySlug } from "@/lib/articles";
 
@@ -17,7 +18,8 @@ export default async function ArticlePage({ params }: Props) {
   }
 
   return (
-    <main className="max-w-4xl mx-auto px-6 py-20">
+    <main className="min-h-screen bg-slate-50 px-6 py-20">
+  <div className="max-w-4xl mx-auto bg-white rounded-3xl shadow-xl p-10 md:p-14">
       <span className="text-blue-600 font-semibold">
         {article.meta.category}
       </span>
@@ -36,9 +38,10 @@ export default async function ArticlePage({ params }: Props) {
         <span>✍️ {article.meta.author}</span>
       </div>
 
-      <article className="prose prose-lg max-w-none mt-12 whitespace-pre-line">
-        {article.content}
-      </article>
-    </main>
+      <article className="mt-12 prose prose-lg max-w-none">
+  <MDXRemote source={article.content} />
+</article>
+      </div>
+</main>
   );
 }
