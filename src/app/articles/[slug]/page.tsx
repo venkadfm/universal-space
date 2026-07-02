@@ -1,9 +1,10 @@
+import ToolCard from "@/components/article/ToolCard";
 import remarkGfm from "remark-gfm";
 import {
   RecommendationBox,
   ProTip,
   WarningBox,
-} from "@/app/components/ArticleCallouts";
+} from "@/components/article/ArticleCallouts";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import { notFound } from "next/navigation";
 import { getArticleBySlug } from "@/lib/articles";
@@ -18,6 +19,7 @@ const mdxComponents = {
   RecommendationBox,
   ProTip,
   WarningBox,
+  ToolCard,
 
   h1: (props: React.HTMLAttributes<HTMLHeadingElement>) => (
     <h1
