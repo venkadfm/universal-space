@@ -21,31 +21,34 @@ const mdxComponents = {
 
   h1: (props: React.HTMLAttributes<HTMLHeadingElement>) => (
     <h1
-      className="mt-12 text-4xl font-extrabold tracking-tight text-slate-950"
+      className="mt-8 text-3xl font-extrabold tracking-tight text-slate-950"
       {...props}
     />
   ),
 
   h2: (props: React.HTMLAttributes<HTMLHeadingElement>) => (
     <h2
-      className="mt-14 border-t border-slate-200 pt-10 text-3xl font-bold tracking-tight text-slate-950"
+      className="mt-8 border-t border-slate-200 pt-6 text-2xl font-bold tracking-tight text-slate-950"
       {...props}
     />
   ),
 
   h3: (props: React.HTMLAttributes<HTMLHeadingElement>) => (
     <h3
-      className="mt-10 text-2xl font-bold tracking-tight text-slate-900"
+      className="mt-6 text-xl font-bold tracking-tight text-slate-900"
       {...props}
     />
   ),
 
   p: (props: React.HTMLAttributes<HTMLParagraphElement>) => (
-    <p className="mt-5 text-lg leading-8 text-slate-700" {...props} />
+    <p className="mt-3 text-base leading-7 text-slate-700" {...props} />
   ),
 
   ul: (props: React.HTMLAttributes<HTMLUListElement>) => (
-    <ul className="mt-5 space-y-3 pl-6 text-lg leading-8 text-slate-700" {...props} />
+    <ul
+      className="mt-3 space-y-2 pl-6 text-base leading-7 text-slate-700"
+      {...props}
+    />
   ),
 
   li: (props: React.HTMLAttributes<HTMLLIElement>) => (
@@ -54,30 +57,39 @@ const mdxComponents = {
 
   blockquote: (props: React.HTMLAttributes<HTMLQuoteElement>) => (
     <blockquote
-      className="my-8 rounded-2xl border-l-4 border-blue-600 bg-blue-50 p-6 text-lg font-medium leading-8 text-slate-800"
+      className="my-5 rounded-2xl border-l-4 border-blue-600 bg-blue-50 p-5 text-base font-medium leading-7 text-slate-800"
       {...props}
     />
   ),
 
   table: (props: React.HTMLAttributes<HTMLTableElement>) => (
-    <div className="my-8 overflow-x-auto rounded-2xl border border-slate-200">
-      <table className="w-full border-collapse bg-white text-left text-sm" {...props} />
+    <div className="my-4 overflow-x-auto rounded-2xl border border-slate-200">
+      <table
+        className="w-full border-collapse bg-white text-left text-sm"
+        {...props}
+      />
     </div>
   ),
 
   th: (props: React.HTMLAttributes<HTMLTableCellElement>) => (
     <th
-      className="border-b border-slate-200 bg-slate-100 px-5 py-4 font-bold text-slate-900"
+      className="border-b border-slate-200 bg-slate-100 px-4 py-3 font-bold text-slate-900"
       {...props}
     />
   ),
 
   td: (props: React.HTMLAttributes<HTMLTableCellElement>) => (
-    <td className="border-b border-slate-100 px-5 py-4 text-slate-700" {...props} />
+    <td
+      className="border-b border-slate-100 px-4 py-3 text-slate-700"
+      {...props}
+    />
   ),
 
   a: (props: React.AnchorHTMLAttributes<HTMLAnchorElement>) => (
-    <a className="font-semibold text-blue-600 underline-offset-4 hover:underline" {...props} />
+    <a
+      className="font-semibold text-blue-600 underline-offset-4 hover:underline"
+      {...props}
+    />
   ),
 };
 
@@ -91,38 +103,39 @@ export default async function ArticlePage({ params }: Props) {
   }
 
   return (
-    <main className="min-h-screen bg-slate-50 px-6 py-20">
-      <article className="mx-auto max-w-5xl rounded-3xl bg-white p-8 shadow-xl md:p-14">
-        <div className="mb-10 border-b border-slate-200 pb-8">
+    <main className="min-h-screen bg-slate-50 px-6 py-12">
+      <article className="mx-auto max-w-5xl rounded-3xl bg-white p-7 shadow-xl md:p-10">
+        <header className="mb-7 border-b border-slate-200 pb-7">
           <span className="inline-flex rounded-full bg-blue-100 px-4 py-2 text-sm font-semibold text-blue-700">
             {article.meta.category}
           </span>
 
-          <h1 className="mt-6 text-4xl font-extrabold leading-tight tracking-tight text-slate-950 md:text-6xl">
+          <h1 className="mt-5 text-4xl font-extrabold leading-tight tracking-tight text-slate-950 md:text-5xl">
             {article.meta.title}
           </h1>
 
-          <p className="mt-6 max-w-3xl text-xl leading-8 text-slate-600">
+          <p className="mt-5 max-w-3xl text-lg leading-7 text-slate-600">
             {article.meta.description}
           </p>
 
-          <div className="mt-6 flex flex-wrap items-center gap-4 text-sm text-slate-500">
+          <div className="mt-5 flex flex-wrap items-center gap-4 text-sm text-slate-500">
             <span>📅 {article.meta.date}</span>
             <span>•</span>
             <span>✍️ {article.meta.author}</span>
           </div>
-        </div>
+        </header>
 
         <div className="mx-auto max-w-4xl">
           <MDXRemote
-  source={article.content}
-  components={mdxComponents}
-  options={{
-    mdxOptions: {
-      remarkPlugins: [remarkGfm],
-    },
-  }}
-/>
+            source={article.content}
+            components={mdxComponents}
+            options={{
+              mdxOptions: {
+                remarkPlugins: [remarkGfm],
+                format: "mdx",
+              },
+            }}
+          />
         </div>
       </article>
     </main>
