@@ -1,77 +1,91 @@
+"use client";
+
 import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { useState } from "react";
+
+const navLinks = [
+  { name: "Home", href: "/" },
+  { name: "AI", href: "/ai" },
+  { name: "Wealth", href: "/wealth" },
+  { name: "Business", href: "/business" },
+  { name: "Reviews", href: "/reviews" },
+  { name: "Resources", href: "/resources" },
+  { name: "Marketplace", href: "/marketplace" },
+];
 
 export default function Navbar() {
-  return (
-    <nav className="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-gray-200 shadow-sm">
-      <div className="max-w-7xl mx-auto flex items-center justify-between px-6 py-4">
+  const pathname = usePathname();
+  const [open, setOpen] = useState(false);
 
-        {/* Logo */}
-        <Link href="/" className="text-2xl font-bold text-slate-900">
-          Universal <span className="text-blue-600">Space</span>
+  return (
+    <header className="sticky top-0 z-50 border-b border-slate-200 bg-white/90 backdrop-blur">
+      <nav className="mx-auto flex max-w-6xl items-center justify-between px-5 py-4 md:px-6">
+        <Link href="/" className="text-xl font-extrabold tracking-tight text-slate-900">
+          Universal Space
         </Link>
 
-        {/* Navigation */}
-        <div className="hidden md:flex items-center gap-8 text-sm font-medium">
+        <div className="hidden items-center gap-7 md:flex">
+          {navLinks.map((link) => {
+            const active = pathname === link.href;
 
-          <Link href="/" className="hover:text-blue-600 transition">
-            Home
-          </Link>
-
-          <div className="relative group">
-
-            <button className="hover:text-blue-600 transition">
-              Learn ▾
-            </button>
-
-            <div className="absolute left-0 mt-3 hidden group-hover:block w-64 rounded-xl bg-white shadow-xl border border-gray-100 p-3">
-
+            return (
               <Link
-                href="/ai"
-                className="block rounded-lg px-4 py-3 hover:bg-gray-100"
+                key={link.href}
+                href={link.href}
+                className={`text-sm font-semibold transition ${
+                  active
+                    ? "text-blue-600"
+                    : "text-slate-600 hover:text-blue-600"
+                }`}
               >
-                🤖 Artificial Intelligence
+                {link.name}
               </Link>
-
-              <Link
-                href="/wealth"
-                className="block rounded-lg px-4 py-3 hover:bg-gray-100"
-              >
-                💰 Wealth
-              </Link>
-
-              <Link
-                href="/business"
-                className="block rounded-lg px-4 py-3 hover:bg-gray-100"
-              >
-                🚀 Business
-              </Link>
-
-              <Link
-                href="/reviews"
-                className="block rounded-lg px-4 py-3 hover:bg-gray-100"
-              >
-                💻 Technology
-              </Link>
-
-            </div>
-
-          </div>
-
-          <Link href="/tools" className="hover:text-blue-600 transition">
-            Tools
-          </Link>
-
-          <Link href="/marketplace" className="hover:text-blue-600 transition">
-            Marketplace
-          </Link>
-
-          <Link href="/about" className="hover:text-blue-600 transition">
-            About
-          </Link>
-
+            );
+          })}
         </div>
 
-      </div>
-    </nav>
+        <button
+          onClick={() => setOpen(!open)}
+          className="rounded-xl border border-slate-200 px-3 py-2 text-xl md:hidden"
+          aria-label="Open menu"
+        >
+          {open ? "✕" : "☰"}
+        </button>
+      </nav>
+
+      {open && (
+        <div className="border-t border-slate-200 bg-white px-5 py-4 md:hidden">
+          <div className="flex flex-col gap-4">
+            {navLinks.map((link) => {
+              const active = pathname === link.href;
+
+              return (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  onClick={() => setOpen(false)}
+                  className={`rounded-xl px-4 py-3 text-base font-semibold ${
+                    active
+                      ? "bg-blue-50 text-blue-600"
+                      : "text-slate-700 hover:bg-slate-50"
+                  }`}
+                >
+                  {link.name}
+                </Link>
+              );
+            })}
+
+            <Link
+              href="/contact"
+              onClick={() => setOpen(false)}
+              className="rounded-xl bg-blue-600 px-4 py-3 text-center font-semibold text-white"
+            >
+              Contact
+            </Link>
+          </div>
+        </div>
+      )}
+    </header>
   );
 }

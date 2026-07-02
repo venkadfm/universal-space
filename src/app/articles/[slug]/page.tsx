@@ -1,4 +1,5 @@
-import ToolCard from "@/components/article/ToolCard";
+import AffiliateCTA from "@/components/article/AffiliateCTA";
+import ProductCard from "@/components/article/ProductCard";
 import remarkGfm from "remark-gfm";
 import {
   RecommendationBox,
@@ -19,7 +20,8 @@ const mdxComponents = {
   RecommendationBox,
   ProTip,
   WarningBox,
-  ToolCard,
+  ProductCard,
+  AffiliateCTA,
 
   h1: (props: React.HTMLAttributes<HTMLHeadingElement>) => (
     <h1

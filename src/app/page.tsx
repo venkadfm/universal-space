@@ -7,24 +7,30 @@ import CategoryCard from "./components/CategoryCard";
 import ArticleCard from "./components/Articlecard";
 
 export default function Home() {
-  const articles = getAllArticles();
+  const articles = getAllArticles().filter(
+    (article) => article.slug && !article.slug.startsWith("_")
+  );
+
   const featuredArticles = articles.filter((article) => article.featured);
-  const latestArticles = articles.slice(0, 3);
+
+  const latestArticles = articles
+    .filter((article) => !article.featured)
+    .slice(0, 3);
 
   return (
     <main className="min-h-screen bg-slate-50">
       <Navbar />
 
       {/* Hero */}
-      <section className="relative overflow-hidden px-6 py-28 text-center">
+      <section className="relative overflow-hidden px-5 py-14 text-center md:px-6 md:py-28">
         <div className="absolute inset-0 -z-10 bg-gradient-to-b from-blue-50 via-slate-50 to-slate-50" />
 
         <div className="mx-auto max-w-6xl">
-          <div className="mb-6 inline-flex rounded-full border border-blue-200 bg-white px-4 py-2 text-sm font-semibold text-blue-700 shadow-sm">
+          <div className="mb-5 inline-flex rounded-full border border-blue-200 bg-white px-3 py-2 text-xs font-semibold text-blue-700 shadow-sm md:mb-6 md:px-4 md:text-sm">
             AI • Wealth • Business • Tools
           </div>
 
-          <h1 className="text-6xl font-extrabold leading-tight tracking-tight text-slate-900 md:text-7xl">
+          <h1 className="text-4xl font-extrabold leading-tight tracking-tight text-slate-900 sm:text-5xl md:text-7xl">
             Build <span className="text-blue-600">Wealth.</span>
             <br />
             Master <span className="text-blue-600">AI.</span>
@@ -32,38 +38,38 @@ export default function Home() {
             Grow <span className="text-blue-600">Faster.</span>
           </h1>
 
-          <p className="mx-auto mt-8 max-w-3xl text-xl leading-9 text-gray-600 md:text-2xl">
+          <p className="mx-auto mt-5 max-w-2xl text-base leading-7 text-gray-600 sm:text-lg md:mt-8 md:text-2xl md:leading-9">
             Practical guides, AI tools, investing insights and business ideas
             designed to help ambitious professionals save time, build skills,
             and create long-term wealth.
           </p>
 
-          <div className="mt-10 flex flex-wrap justify-center gap-5">
+          <div className="mt-7 flex flex-col justify-center gap-3 sm:flex-row md:mt-10 md:gap-5">
             <Button
               size="lg"
-              className="rounded-xl px-8 py-7 text-lg font-semibold shadow-lg transition-all hover:scale-105"
+              className="w-full rounded-xl px-6 py-6 text-base font-semibold shadow-lg transition-all hover:scale-105 sm:w-auto md:px-8 md:py-7 md:text-lg"
             >
               Explore Articles
             </Button>
 
             <a
               href="/marketplace"
-              className="rounded-xl border-2 border-blue-600 px-8 py-4 text-lg font-semibold text-blue-600 transition hover:scale-105 hover:bg-blue-50"
+              className="w-full rounded-xl border-2 border-blue-600 px-6 py-4 text-base font-semibold text-blue-600 transition hover:scale-105 hover:bg-blue-50 sm:w-auto md:px-8 md:text-lg"
             >
               Marketplace
             </a>
           </div>
 
-          <div className="mx-auto mt-16 max-w-3xl">
+          <div className="mx-auto mt-10 max-w-3xl md:mt-16">
             <SearchBar />
           </div>
         </div>
       </section>
 
       {/* Value Cards */}
-      <section className="mx-auto max-w-6xl px-6 pb-24">
-        <div className="grid gap-6 md:grid-cols-3">
-          <div className="rounded-3xl border border-slate-200 bg-white p-7 shadow-sm">
+      <section className="mx-auto max-w-6xl px-5 pb-14 md:px-6 md:pb-24">
+        <div className="grid gap-5 md:grid-cols-3 md:gap-6">
+          <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm md:p-7">
             <div className="mb-4 text-4xl">🤖</div>
             <h3 className="text-xl font-bold text-slate-900">
               Practical AI Guides
@@ -73,7 +79,7 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="rounded-3xl border border-slate-200 bg-white p-7 shadow-sm">
+          <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm md:p-7">
             <div className="mb-4 text-4xl">💰</div>
             <h3 className="text-xl font-bold text-slate-900">
               Wealth Building
@@ -83,7 +89,7 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="rounded-3xl border border-slate-200 bg-white p-7 shadow-sm">
+          <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm md:p-7">
             <div className="mb-4 text-4xl">🚀</div>
             <h3 className="text-xl font-bold text-slate-900">
               Online Business
@@ -96,17 +102,17 @@ export default function Home() {
       </section>
 
       {/* Featured Articles */}
-      <section className="mx-auto max-w-6xl px-6 pb-24">
-        <div className="mb-12 text-center">
-          <h2 className="text-4xl font-bold text-slate-900">
+      <section className="mx-auto max-w-6xl px-5 pb-14 md:px-6 md:pb-24">
+        <div className="mb-8 text-center md:mb-12">
+          <h2 className="text-3xl font-bold text-slate-900 md:text-4xl">
             Featured Guides
           </h2>
-          <p className="mt-4 text-gray-600">
+          <p className="mt-3 text-gray-600 md:mt-4">
             Start with our most useful guides for AI, wealth and growth.
           </p>
         </div>
 
-        <div className="grid gap-8 md:grid-cols-3">
+        <div className="grid gap-6 md:grid-cols-3 md:gap-8">
           {featuredArticles.length > 0 ? (
             featuredArticles.map((article) => (
               <ArticleCard
@@ -126,18 +132,18 @@ export default function Home() {
       </section>
 
       {/* Categories */}
-      <section className="bg-white py-24">
-        <div className="mx-auto max-w-6xl px-6">
-          <div className="mb-12 text-center">
-            <h2 className="text-4xl font-bold text-slate-900">
+      <section className="bg-white py-14 md:py-24">
+        <div className="mx-auto max-w-6xl px-5 md:px-6">
+          <div className="mb-8 text-center md:mb-12">
+            <h2 className="text-3xl font-bold text-slate-900 md:text-4xl">
               Explore Categories
             </h2>
-            <p className="mt-4 text-gray-600">
+            <p className="mt-3 text-gray-600 md:mt-4">
               Choose the area you want to improve first.
             </p>
           </div>
 
-          <div className="grid gap-8 md:grid-cols-4">
+          <div className="grid gap-6 sm:grid-cols-2 md:grid-cols-4 md:gap-8">
             <CategoryCard
               emoji="🤖"
               title="AI"
@@ -170,17 +176,17 @@ export default function Home() {
       </section>
 
       {/* Latest Articles */}
-      <section className="mx-auto max-w-6xl px-6 py-24">
-        <div className="mb-12 text-center">
-          <h2 className="text-4xl font-bold text-slate-900">
+      <section className="mx-auto max-w-6xl px-5 py-14 md:px-6 md:py-24">
+        <div className="mb-8 text-center md:mb-12">
+          <h2 className="text-3xl font-bold text-slate-900 md:text-4xl">
             Latest Articles
           </h2>
-          <p className="mt-4 text-gray-600">
+          <p className="mt-3 text-gray-600 md:mt-4">
             Fresh insights from Universal Space.
           </p>
         </div>
 
-        <div className="grid gap-8 md:grid-cols-3">
+        <div className="grid gap-6 md:grid-cols-3 md:gap-8">
           {latestArticles.map((article) => (
             <ArticleCard
               key={article.slug}
@@ -194,9 +200,9 @@ export default function Home() {
       </section>
 
       {/* Tools Preview */}
-      <section className="bg-slate-900 py-24 text-white">
-        <div className="mx-auto max-w-6xl px-6 text-center">
-          <h2 className="text-4xl font-bold">
+      <section className="bg-slate-900 px-5 py-16 text-white md:py-24">
+        <div className="mx-auto max-w-6xl text-center">
+          <h2 className="text-3xl font-bold md:text-4xl">
             Free Tools for Smarter Decisions
           </h2>
 
@@ -205,10 +211,10 @@ export default function Home() {
             productivity and make better decisions.
           </p>
 
-          <div className="mt-10">
+          <div className="mt-8 md:mt-10">
             <a
               href="/tools"
-              className="inline-block rounded-xl bg-white px-8 py-4 font-semibold text-slate-900 transition hover:scale-105"
+              className="inline-block w-full rounded-xl bg-white px-8 py-4 font-semibold text-slate-900 transition hover:scale-105 sm:w-auto"
             >
               Explore Tools
             </a>
@@ -217,9 +223,9 @@ export default function Home() {
       </section>
 
       {/* Newsletter */}
-      <section className="px-6 py-24 text-center">
-        <div className="mx-auto max-w-3xl rounded-3xl border border-slate-200 bg-white p-10 shadow-sm">
-          <h2 className="text-4xl font-bold text-slate-900">
+      <section className="px-5 py-14 text-center md:px-6 md:py-24">
+        <div className="mx-auto max-w-3xl rounded-3xl border border-slate-200 bg-white p-6 shadow-sm md:p-10">
+          <h2 className="text-3xl font-bold text-slate-900 md:text-4xl">
             Join Universal Space
           </h2>
 
@@ -231,10 +237,10 @@ export default function Home() {
             <input
               type="email"
               placeholder="Enter your email"
-              className="rounded-xl border px-5 py-3 sm:w-80"
+              className="w-full rounded-xl border px-5 py-3 sm:w-80"
             />
 
-            <button className="rounded-xl bg-blue-600 px-6 py-3 font-semibold text-white hover:bg-blue-700">
+            <button className="w-full rounded-xl bg-blue-600 px-6 py-3 font-semibold text-white hover:bg-blue-700 sm:w-auto">
               Subscribe
             </button>
           </div>
