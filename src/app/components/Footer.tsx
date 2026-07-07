@@ -7,7 +7,7 @@ export default function Footer() {
 
         <div>
           <h2 className="text-2xl font-bold mb-4">
-            Universal Space
+            Venveel
           </h2>
 
           <p className="text-gray-400">
@@ -76,7 +76,7 @@ export default function Footer() {
       </div>
 
       <div className="border-t border-slate-700 text-center py-6 text-gray-400">
-        © 2026 Universal Space • Version 1.0 🚀
+        © 2026 Venveel • Version 1.0 🚀
       </div>
 
     </footer>

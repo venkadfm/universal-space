@@ -14,13 +14,12 @@ const geistMono = Geist_Mono({
 
 export const metadata = {
   title: {
-    default: "Universal Space",
-    template: "%s | Universal Space",
+    default: "Venveel",
+    template: "%s | Venveel",
   },
 
   description:
-    "Universal Space helps busy professionals simplify AI, investing, technology and online business through practical guides and powerful tools.",
-
+  "Trusted AI tools, technology reviews, buying guides, and practical insights to help busy professionals make smarter decisions.",
   keywords: [
     "Artificial Intelligence",
     "AI Tools",

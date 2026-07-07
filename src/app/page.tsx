@@ -1,4 +1,3 @@
-import { Button } from "@/components/ui/button";
 import { getAllArticles } from "@/lib/articles";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
@@ -22,93 +21,87 @@ export default function Home() {
       <Navbar />
 
       {/* Hero */}
-      <section className="relative overflow-hidden px-5 py-14 text-center md:px-6 md:py-28">
-        <div className="absolute inset-0 -z-10 bg-gradient-to-b from-blue-50 via-slate-50 to-slate-50" />
+      <section className="relative overflow-hidden px-5 py-16 text-center md:px-6 md:py-32">
+        <div className="absolute inset-0 -z-10 bg-gradient-to-b from-blue-50 via-white to-slate-50" />
 
         <div className="mx-auto max-w-6xl">
-          <div className="mb-5 inline-flex rounded-full border border-blue-200 bg-white px-3 py-2 text-xs font-semibold text-blue-700 shadow-sm md:mb-6 md:px-4 md:text-sm">
-            AI • Wealth • Business • Tools
+          <div className="mb-6 inline-flex rounded-full border border-blue-200 bg-white px-4 py-2 text-xs font-semibold text-blue-700 shadow-sm md:text-sm">
+            AI • Tech Reviews • Buying Guides • Wealth
           </div>
 
-          <h1 className="text-4xl font-extrabold leading-tight tracking-tight text-slate-900 sm:text-5xl md:text-7xl">
-            Build <span className="text-blue-600">Wealth.</span>
-            <br />
-            Master <span className="text-blue-600">AI.</span>
-            <br />
-            Grow <span className="text-blue-600">Faster.</span>
+          <h1 className="mx-auto max-w-5xl bg-gradient-to-r from-slate-950 via-blue-700 to-indigo-600 bg-clip-text text-4xl font-black leading-tight tracking-tight text-transparent sm:text-5xl md:text-7xl">
+            Smarter Technology Decisions for Busy Professionals
           </h1>
 
-          <p className="mx-auto mt-5 max-w-2xl text-base leading-7 text-gray-600 sm:text-lg md:mt-8 md:text-2xl md:leading-9">
-            Practical guides, AI tools, investing insights and business ideas
-            designed to help ambitious professionals save time, build skills,
-            and create long-term wealth.
+          <p className="mx-auto mt-6 max-w-3xl text-base leading-7 text-slate-600 sm:text-lg md:mt-7 md:text-2xl md:leading-9">
+            Venveel helps you cut through the noise with trusted AI tools,
+            practical technology reviews, buying guides, and investing insights.
           </p>
 
-          <div className="mt-7 flex flex-col justify-center gap-3 sm:flex-row md:mt-10 md:gap-5">
-            <Button
-              size="lg"
-              className="w-full rounded-xl px-6 py-6 text-base font-semibold shadow-lg transition-all hover:scale-105 sm:w-auto md:px-8 md:py-7 md:text-lg"
+          <div className="mt-8 flex flex-col justify-center gap-4 sm:flex-row md:mt-10">
+            <a
+              href="/ai"
+              className="rounded-xl bg-blue-600 px-8 py-4 text-base font-semibold text-white shadow-lg transition hover:scale-105 hover:bg-blue-700"
             >
-              Explore Articles
-            </Button>
+              Explore AI Tools
+            </a>
 
             <a
-              href="/marketplace"
-              className="w-full rounded-xl border-2 border-blue-600 px-6 py-4 text-base font-semibold text-blue-600 transition hover:scale-105 hover:bg-blue-50 sm:w-auto md:px-8 md:text-lg"
+              href="/articles/best-smartphones-2026"
+              className="rounded-xl border-2 border-blue-600 bg-white px-8 py-4 text-base font-semibold text-blue-600 transition hover:scale-105 hover:bg-blue-50"
             >
-              Marketplace
+              Latest Buying Guide
             </a>
           </div>
 
-          <div className="mx-auto mt-10 max-w-3xl md:mt-16">
+          <div className="mx-auto mt-10 max-w-3xl md:mt-14">
             <SearchBar />
           </div>
-        </div>
-      </section>
 
-      {/* Value Cards */}
-      <section className="mx-auto max-w-6xl px-5 pb-14 md:px-6 md:pb-24">
-        <div className="grid gap-5 md:grid-cols-3 md:gap-6">
-          <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm md:p-7">
-            <div className="mb-4 text-4xl">🤖</div>
-            <h3 className="text-xl font-bold text-slate-900">
-              Practical AI Guides
-            </h3>
-            <p className="mt-3 leading-7 text-gray-600">
-              Learn tools and workflows that save time and improve productivity.
-            </p>
-          </div>
+          <div className="mx-auto mt-10 grid max-w-4xl gap-4 text-left sm:grid-cols-2 md:grid-cols-4">
+            <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+              <p className="text-2xl">🤖</p>
+              <p className="mt-3 font-bold text-slate-900">AI Tools</p>
+              <p className="mt-1 text-sm text-slate-500">
+                Find tools worth paying for.
+              </p>
+            </div>
 
-          <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm md:p-7">
-            <div className="mb-4 text-4xl">💰</div>
-            <h3 className="text-xl font-bold text-slate-900">
-              Wealth Building
-            </h3>
-            <p className="mt-3 leading-7 text-gray-600">
-              Understand investing, money habits and long-term financial growth.
-            </p>
-          </div>
+            <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+              <p className="text-2xl">📱</p>
+              <p className="mt-3 font-bold text-slate-900">Buying Guides</p>
+              <p className="mt-1 text-sm text-slate-500">
+                Choose products with confidence.
+              </p>
+            </div>
 
-          <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm md:p-7">
-            <div className="mb-4 text-4xl">🚀</div>
-            <h3 className="text-xl font-bold text-slate-900">
-              Online Business
-            </h3>
-            <p className="mt-3 leading-7 text-gray-600">
-              Explore side hustles, digital products and AI-powered income ideas.
-            </p>
+            <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+              <p className="text-2xl">💻</p>
+              <p className="mt-3 font-bold text-slate-900">Tech Reviews</p>
+              <p className="mt-1 text-sm text-slate-500">
+                Understand what actually matters.
+              </p>
+            </div>
+
+            <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+              <p className="text-2xl">📈</p>
+              <p className="mt-3 font-bold text-slate-900">Wealth</p>
+              <p className="mt-1 text-sm text-slate-500">
+                Smarter money decisions.
+              </p>
+            </div>
           </div>
         </div>
       </section>
 
       {/* Featured Articles */}
-      <section className="mx-auto max-w-6xl px-5 pb-14 md:px-6 md:pb-24">
+      <section className="mx-auto max-w-6xl px-5 py-14 md:px-6 md:py-24">
         <div className="mb-8 text-center md:mb-12">
           <h2 className="text-3xl font-bold text-slate-900 md:text-4xl">
             Featured Guides
           </h2>
           <p className="mt-3 text-gray-600 md:mt-4">
-            Start with our most useful guides for AI, wealth and growth.
+            Start with our most useful guides for AI, technology, and smarter buying decisions.
           </p>
         </div>
 
@@ -152,17 +145,17 @@ export default function Home() {
             />
 
             <CategoryCard
+              emoji="📱"
+              title="Buying Guides"
+              description="Phones, laptops, accessories and product recommendations."
+              link="/articles/best-smartphones-2026"
+            />
+
+            <CategoryCard
               emoji="💰"
               title="Wealth"
               description="Investing, financial freedom and money management."
               link="/wealth"
-            />
-
-            <CategoryCard
-              emoji="🚀"
-              title="Business"
-              description="Side hustles and online business ideas."
-              link="/business"
             />
 
             <CategoryCard
@@ -182,7 +175,7 @@ export default function Home() {
             Latest Articles
           </h2>
           <p className="mt-3 text-gray-600 md:mt-4">
-            Fresh insights from Universal Space.
+            Fresh insights from Venveel.
           </p>
         </div>
 
@@ -208,7 +201,7 @@ export default function Home() {
 
           <p className="mx-auto mt-4 max-w-2xl text-gray-300">
             Use calculators and AI-powered tools to plan money, improve
-            productivity and make better decisions.
+            productivity, and make better decisions.
           </p>
 
           <div className="mt-8 md:mt-10">
@@ -226,11 +219,11 @@ export default function Home() {
       <section className="px-5 py-14 text-center md:px-6 md:py-24">
         <div className="mx-auto max-w-3xl rounded-3xl border border-slate-200 bg-white p-6 shadow-sm md:p-10">
           <h2 className="text-3xl font-bold text-slate-900 md:text-4xl">
-            Join Universal Space
+            Join Venveel
           </h2>
 
           <p className="mt-4 text-gray-600">
-            Get practical insights on AI, wealth, business and technology.
+            Get practical insights on AI, technology, buying guides, and wealth.
           </p>
 
           <div className="mt-8 flex flex-col justify-center gap-4 sm:flex-row">

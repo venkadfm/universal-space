@@ -1,86 +1,67 @@
 export default function AboutPage() {
   return (
-    <main className="max-w-5xl mx-auto px-6 py-20">
-
-      <h1 className="text-5xl font-bold mb-8">
-        About Universal Space
+    <main className="mx-auto max-w-5xl px-6 py-20">
+      <h1 className="mb-8 text-5xl font-bold text-slate-950">
+        About Venveel
       </h1>
 
-      <div className="space-y-8 text-lg text-gray-700 leading-8">
-
+      <div className="space-y-8 text-lg leading-8 text-slate-700">
         <p>
-          Welcome to <strong>Universal Space</strong> — a place created to make
-          Artificial Intelligence, investing, technology and online business
-          easier to understand and apply in everyday life.
+          <strong>Venveel</strong> helps busy professionals make smarter
+          technology decisions through trusted AI guides, practical buying
+          guides, technology reviews, and investing insights.
         </p>
 
         <p>
-          In today's fast-changing world, we are surrounded by endless
-          information. The challenge isn't finding information—it's knowing what
-          truly matters and how to use it effectively.
+          In a fast-changing world, the challenge is not finding information.
+          The challenge is knowing what matters, what to ignore, and what is
+          actually worth your time and money.
         </p>
 
-        <p>
-          Universal Space was built with one simple mission:
-        </p>
-
-        <div className="bg-blue-50 border-l-4 border-blue-600 rounded-xl p-6">
+        <div className="rounded-2xl border-l-4 border-blue-600 bg-blue-50 p-6">
           <h2 className="text-2xl font-bold text-blue-700">
-            Simplify complex ideas into practical knowledge.
+            Our mission is simple: make complex decisions easier.
           </h2>
         </div>
 
         <p>
-          Whether you're exploring Artificial Intelligence, planning your
-          investments, improving your productivity, or building an online
-          business, you'll find practical guides, trusted resources and useful
-          tools designed for busy professionals.
+          Venveel is built for professionals who want clear, practical advice on
+          AI tools, technology products, productivity, investing, and digital
+          business without unnecessary hype.
         </p>
 
-        <h2 className="text-3xl font-bold pt-6">
-          Why I Started Universal Space
+        <h2 className="pt-6 text-3xl font-bold text-slate-950">
+          What You&apos;ll Find Here
         </h2>
 
-        <p>
-          Like many professionals, I found myself constantly learning about AI,
-          finance and technology while balancing a full-time career. I realised
-          that many resources were either too technical or too overwhelming for
-          everyday people.
-        </p>
-
-        <p>
-          I created Universal Space to bring together practical knowledge that
-          helps people save time, make better decisions and build long-term
-          wealth through continuous learning.
-        </p>
-
-        <h2 className="text-3xl font-bold pt-6">
-          What You'll Find Here
-        </h2>
-
-        <ul className="list-disc pl-6 space-y-3">
-          <li>🤖 Practical AI guides and tools</li>
-          <li>💰 Investing and personal finance insights</li>
+        <ul className="list-disc space-y-3 pl-6">
+          <li>🤖 Practical AI tool guides and comparisons</li>
+          <li>📱 Technology reviews and buying guides</li>
+          <li>💰 Investing and wealth-building insights</li>
           <li>🚀 Online business and side hustle ideas</li>
-          <li>📱 Technology reviews and recommendations</li>
-          <li>🛠️ Useful calculators and productivity tools</li>
+          <li>🛠️ Useful tools, calculators, and productivity resources</li>
         </ul>
 
-        <div className="bg-slate-100 rounded-2xl p-8 mt-12">
+        <h2 className="pt-6 text-3xl font-bold text-slate-950">
+          Our Principles
+        </h2>
 
-          <h2 className="text-3xl font-bold mb-4">
-            Our Mission
-          </h2>
+        <ul className="list-disc space-y-3 pl-6">
+          <li>Be practical, not theoretical.</li>
+          <li>Recommend only what is genuinely useful.</li>
+          <li>Explain clearly without jargon.</li>
+          <li>Help readers save time, money, and effort.</li>
+        </ul>
 
-          <p className="text-xl font-medium">
-            Help millions of people make smarter decisions by simplifying AI,
-            money, technology and business.
+        <div className="mt-12 rounded-3xl bg-slate-900 p-8 text-white">
+          <h2 className="mb-4 text-3xl font-bold">Why Venveel Exists</h2>
+
+          <p className="text-xl font-medium leading-8 text-slate-200">
+            To help busy professionals cut through noise, understand technology,
+            and make better decisions with confidence.
           </p>
-
         </div>
-
       </div>
-
     </main>
   );
 }

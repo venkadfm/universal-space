@@ -22,7 +22,7 @@ export default function Navbar() {
     <header className="sticky top-0 z-50 border-b border-slate-200 bg-white/90 backdrop-blur">
       <nav className="mx-auto flex max-w-6xl items-center justify-between px-5 py-4 md:px-6">
         <Link href="/" className="text-xl font-extrabold tracking-tight text-slate-900">
-          Universal Space
+          Venveel
         </Link>
 
         <div className="hidden items-center gap-7 md:flex">
