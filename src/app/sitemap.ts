@@ -1,48 +1,62 @@
 import type { MetadataRoute } from "next";
+import { getAllArticles } from "@/lib/articles";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  return [
+  const baseUrl = "https://venveel.com";
+
+  const staticPages: MetadataRoute.Sitemap = [
     {
-      url: "https://venveel.com",
+      url: baseUrl,
       lastModified: new Date(),
       changeFrequency: "daily",
       priority: 1,
     },
     {
-      url: "https://venveel.com/about",
+      url: `${baseUrl}/about`,
       lastModified: new Date(),
       changeFrequency: "monthly",
       priority: 0.8,
     },
     {
-      url: "https://venveel.com/ai",
+      url: `${baseUrl}/ai`,
       lastModified: new Date(),
       changeFrequency: "weekly",
       priority: 0.9,
     },
     {
-      url: "https://venveel.com/business",
+      url: `${baseUrl}/business`,
       lastModified: new Date(),
       changeFrequency: "weekly",
       priority: 0.8,
     },
     {
-      url: "https://venveel.com/wealth",
+      url: `${baseUrl}/wealth`,
       lastModified: new Date(),
       changeFrequency: "weekly",
       priority: 0.8,
     },
     {
-      url: "https://venveel.com/tools",
+      url: `${baseUrl}/tools`,
       lastModified: new Date(),
       changeFrequency: "weekly",
       priority: 0.8,
     },
     {
-      url: "https://venveel.com/contact",
+      url: `${baseUrl}/contact`,
       lastModified: new Date(),
       changeFrequency: "yearly",
       priority: 0.5,
     },
   ];
+
+  const articlePages: MetadataRoute.Sitemap = getAllArticles()
+    .filter((article) => article.slug && !article.slug.startsWith("_"))
+    .map((article) => ({
+      url: `${baseUrl}/articles/${article.slug}`,
+      lastModified: new Date(),
+      changeFrequency: "weekly",
+      priority: article.featured ? 0.9 : 0.7,
+    }));
+
+  return [...staticPages, ...articlePages];
 }
