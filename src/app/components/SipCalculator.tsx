@@ -16,7 +16,7 @@ export default function SipCalculator() {
       (1 + monthlyRate));
 
   return (
-    <div className="bg-white rounded-2xl shadow-lg p-8 max-w-2xl mx-auto">
+    <div className="premium-surface mx-auto max-w-2xl rounded-2xl p-8">
 
       <h2 className="text-3xl font-bold mb-8">
         SIP Calculator
@@ -65,7 +65,7 @@ export default function SipCalculator() {
 
       </div>
 
-      <div className="mt-10 bg-blue-50 rounded-xl p-6">
+      <div className="mt-10 rounded-xl border border-blue-200 bg-blue-50/80 p-6">
 
         <h3 className="text-xl font-semibold">
           Estimated Future Value

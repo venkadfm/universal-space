@@ -1,6 +1,14 @@
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Online Business",
+  description:
+    "Practical guides for online business, side hustles, digital products, automation, and AI-powered income ideas.",
+};
+
 export default function BusinessPage() {
   return (
-    <main className="min-h-screen bg-slate-50">
+    <main className="min-h-screen">
 
       <section className="max-w-6xl mx-auto py-24 px-6">
 
@@ -15,7 +23,7 @@ export default function BusinessPage() {
 
         <div className="grid md:grid-cols-3 gap-8">
 
-          <div className="bg-white rounded-2xl shadow p-8">
+          <div className="premium-card premium-card-hover rounded-2xl p-8">
             <h2 className="text-2xl font-semibold mb-4">
               Side Hustles
             </h2>
@@ -25,7 +33,7 @@ export default function BusinessPage() {
             </p>
           </div>
 
-          <div className="bg-white rounded-2xl shadow p-8">
+          <div className="premium-card premium-card-hover rounded-2xl p-8">
             <h2 className="text-2xl font-semibold mb-4">
               Digital Products
             </h2>
@@ -35,7 +43,7 @@ export default function BusinessPage() {
             </p>
           </div>
 
-          <div className="bg-white rounded-2xl shadow p-8">
+          <div className="premium-card premium-card-hover rounded-2xl p-8">
             <h2 className="text-2xl font-semibold mb-4">
               Automation
             </h2>

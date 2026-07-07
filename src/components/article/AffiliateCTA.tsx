@@ -11,10 +11,12 @@ export default function AffiliateCTA({
   buttonText,
   href,
 }: AffiliateCTAProps) {
+  const isExternal = href.startsWith("http");
+
   return (
-    <div className="my-8 rounded-3xl border border-blue-200 bg-gradient-to-br from-blue-50 to-white p-6 shadow-sm">
+    <div className="my-8 rounded-3xl border border-slate-200 bg-[linear-gradient(135deg,#f8fafc_0%,#eff6ff_100%)] p-6 shadow-[0_18px_45px_rgba(15,23,42,0.08)]">
       <h3 className="text-xl font-bold text-slate-900">
-        ⭐ Universal Space Recommendation
+        Venveel Recommendation
       </h3>
 
       <h4 className="mt-4 text-lg font-semibold">
@@ -27,9 +29,9 @@ export default function AffiliateCTA({
 
       <a
         href={href}
-        target="_blank"
-        rel="noopener noreferrer sponsored"
-        className="mt-6 inline-flex rounded-xl bg-blue-600 px-6 py-3 font-semibold text-white transition hover:bg-blue-700"
+        target={isExternal ? "_blank" : undefined}
+        rel={isExternal ? "noopener noreferrer sponsored" : undefined}
+        className="brand-button mt-6 inline-flex rounded-xl px-6 py-3 font-semibold"
       >
         {buttonText}
       </a>

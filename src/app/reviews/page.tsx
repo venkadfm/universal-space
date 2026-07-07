@@ -1,6 +1,18 @@
+import type { Metadata } from "next";
+import ArticleListSection from "../components/ArticleListSection";
+import { getArticlesByCategory } from "@/lib/articles";
+
+export const metadata: Metadata = {
+  title: "Reviews and Buying Guides",
+  description:
+    "Honest technology reviews, product comparisons, and buying guides for better purchase decisions.",
+};
+
 export default function ReviewsPage() {
+  const buyingGuides = getArticlesByCategory("Buying Guides");
+
   return (
-    <main className="min-h-screen bg-slate-50">
+    <main className="min-h-screen">
       <section className="max-w-6xl mx-auto py-24 px-6">
 
         <h1 className="text-5xl font-bold mb-8">
@@ -14,7 +26,7 @@ export default function ReviewsPage() {
 
         <div className="grid md:grid-cols-3 gap-8">
 
-          <div className="bg-white rounded-2xl shadow p-8">
+          <div className="premium-card premium-card-hover rounded-2xl p-8">
             <h2 className="text-2xl font-semibold mb-4">
               AI Software
             </h2>
@@ -24,7 +36,7 @@ export default function ReviewsPage() {
             </p>
           </div>
 
-          <div className="bg-white rounded-2xl shadow p-8">
+          <div className="premium-card premium-card-hover rounded-2xl p-8">
             <h2 className="text-2xl font-semibold mb-4">
               Technology
             </h2>
@@ -34,7 +46,7 @@ export default function ReviewsPage() {
             </p>
           </div>
 
-          <div className="bg-white rounded-2xl shadow p-8">
+          <div className="premium-card premium-card-hover rounded-2xl p-8">
             <h2 className="text-2xl font-semibold mb-4">
               Productivity
             </h2>
@@ -47,6 +59,13 @@ export default function ReviewsPage() {
         </div>
 
       </section>
+
+      <ArticleListSection
+        eyebrow="Buying guides"
+        title="Latest Buying Guides"
+        description="Compare products with practical recommendations, decision tables, and clear buyer advice."
+        articles={buyingGuides}
+      />
     </main>
   );
 }

@@ -1,6 +1,14 @@
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Resources",
+  description:
+    "Curated resources, tools, books, websites, and downloads for AI, wealth, business, and productivity.",
+};
+
 export default function ResourcesPage() {
   return (
-    <main className="min-h-screen bg-slate-50">
+    <main className="min-h-screen">
       <section className="max-w-6xl mx-auto py-24 px-6">
 
         <h1 className="text-5xl font-bold mb-8">
@@ -14,7 +22,7 @@ export default function ResourcesPage() {
 
         <div className="grid md:grid-cols-3 gap-8">
 
-          <div className="bg-white rounded-2xl shadow p-8">
+          <div className="premium-card premium-card-hover rounded-2xl p-8">
             <h2 className="text-2xl font-semibold mb-4">
               Books
             </h2>
@@ -24,7 +32,7 @@ export default function ResourcesPage() {
             </p>
           </div>
 
-          <div className="bg-white rounded-2xl shadow p-8">
+          <div className="premium-card premium-card-hover rounded-2xl p-8">
             <h2 className="text-2xl font-semibold mb-4">
               Websites
             </h2>
@@ -34,7 +42,7 @@ export default function ResourcesPage() {
             </p>
           </div>
 
-          <div className="bg-white rounded-2xl shadow p-8">
+          <div className="premium-card premium-card-hover rounded-2xl p-8">
             <h2 className="text-2xl font-semibold mb-4">
               Downloads
             </h2>

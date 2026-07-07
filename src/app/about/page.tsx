@@ -1,3 +1,11 @@
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "About",
+  description:
+    "Learn about Venveel, a practical guide site for AI tools, technology reviews, buying guides, investing, and online business.",
+};
+
 export default function AboutPage() {
   return (
     <main className="mx-auto max-w-5xl px-6 py-20">

@@ -16,9 +16,11 @@ export default function CategoryCard({
   return (
     <Link
       href={link}
-      className="bg-white rounded-2xl shadow-md p-8 hover:shadow-xl transition block"
+      className="premium-card premium-card-hover block rounded-2xl p-8"
     >
-      <div className="text-5xl">{emoji}</div>
+      <div className="grid size-12 place-items-center rounded-xl bg-slate-950 text-lg font-black text-white shadow-sm">
+        {emoji}
+      </div>
 
       <h3 className="text-2xl font-bold mt-5">
         {title}

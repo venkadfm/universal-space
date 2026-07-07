@@ -11,6 +11,9 @@ html {
 body {
   margin: 0;
   color: #111827;
+  background:
+    radial-gradient(circle at top left, rgb(37 99 235 / 7%), transparent 32rem),
+    linear-gradient(180deg, #f8fafc 0%, #ffffff 36rem, #f8fafc 100%);
 }
 
 @theme inline {
@@ -134,5 +137,31 @@ body {
   }
   html {
     @apply font-sans;
+  }
+}
+
+@layer components {
+  .premium-surface {
+    @apply border border-slate-200/80 bg-white/90 shadow-[0_18px_55px_rgba(15,23,42,0.08)] backdrop-blur;
+  }
+
+  .premium-card {
+    @apply border border-slate-200/80 bg-white shadow-[0_14px_38px_rgba(15,23,42,0.06)] transition-all duration-300;
+  }
+
+  .premium-card-hover {
+    @apply hover:-translate-y-1 hover:border-blue-200 hover:shadow-[0_22px_60px_rgba(15,23,42,0.11)];
+  }
+
+  .brand-button {
+    @apply bg-slate-950 text-white shadow-[0_14px_30px_rgba(15,23,42,0.18)] transition hover:-translate-y-0.5 hover:bg-blue-700;
+  }
+
+  .brand-button-secondary {
+    @apply border border-slate-300 bg-white/90 text-slate-900 shadow-sm transition hover:-translate-y-0.5 hover:border-blue-300 hover:bg-blue-50;
+  }
+
+  .section-eyebrow {
+    @apply text-sm font-bold uppercase tracking-[0.18em] text-blue-700;
   }
 }

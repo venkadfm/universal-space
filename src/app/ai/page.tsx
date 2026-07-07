@@ -1,6 +1,18 @@
+import type { Metadata } from "next";
+import ArticleListSection from "../components/ArticleListSection";
+import { getArticlesByCategory } from "@/lib/articles";
+
+export const metadata: Metadata = {
+  title: "AI Tools and Guides",
+  description:
+    "Practical AI guides, AI tool comparisons, and subscription advice for busy professionals.",
+};
+
 export default function AIPage() {
+  const aiArticles = getArticlesByCategory("Artificial Intelligence");
+
   return (
-    <main className="min-h-screen bg-slate-50">
+    <main className="min-h-screen">
 
       <section className="max-w-6xl mx-auto py-24 px-6">
 
@@ -15,7 +27,7 @@ export default function AIPage() {
 
         <div className="grid md:grid-cols-3 gap-8">
 
-          <div className="bg-white rounded-2xl shadow p-8">
+          <div className="premium-card premium-card-hover rounded-2xl p-8">
             <h2 className="text-2xl font-semibold mb-4">
               AI Tools
             </h2>
@@ -25,7 +37,7 @@ export default function AIPage() {
             </p>
           </div>
 
-          <div className="bg-white rounded-2xl shadow p-8">
+          <div className="premium-card premium-card-hover rounded-2xl p-8">
             <h2 className="text-2xl font-semibold mb-4">
               Automation
             </h2>
@@ -35,7 +47,7 @@ export default function AIPage() {
             </p>
           </div>
 
-          <div className="bg-white rounded-2xl shadow p-8">
+          <div className="premium-card premium-card-hover rounded-2xl p-8">
             <h2 className="text-2xl font-semibold mb-4">
               Tutorials
             </h2>
@@ -48,6 +60,13 @@ export default function AIPage() {
         </div>
 
       </section>
+
+      <ArticleListSection
+        eyebrow="AI articles"
+        title="Latest AI Guides"
+        description="Read practical AI tool guides and comparisons connected directly from the AI section."
+        articles={aiArticles}
+      />
 
     </main>
   );

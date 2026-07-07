@@ -1,11 +1,18 @@
 import Link from "next/link";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Learn",
+  description:
+    "Explore Venveel guides for AI tools, investing, online business, technology reviews, and productivity.",
+};
 
 const categories = [
   {
     title: "Artificial Intelligence",
     description:
       "Practical AI guides, tools and workflows to help you work smarter.",
-    href: "/articles",
+    href: "/ai",
     icon: "🤖",
   },
   {

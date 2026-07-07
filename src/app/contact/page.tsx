@@ -1,3 +1,11 @@
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Contact",
+  description:
+    "Contact Venveel for feedback, collaborations, sponsorships, partnerships, and business enquiries.",
+};
+
 export default function ContactPage() {
   return (
     <main className="max-w-4xl mx-auto px-6 py-20">
@@ -7,7 +15,7 @@ export default function ContactPage() {
       </h1>
 
       <p className="text-xl text-gray-600 mb-12">
-        We'd love to hear from you. Whether you have a question, feedback,
+        We&apos;d love to hear from you. Whether you have a question, feedback,
         collaboration idea or business enquiry, feel free to get in touch.
       </p>
 
@@ -23,9 +31,16 @@ export default function ContactPage() {
             Email:
           </p>
 
-          <p className="text-gray-700">
-  Contact details will be available soon.
-</p>
+          <a
+            href="mailto:venveel.contact@gmail.com"
+            className="mt-2 inline-block font-semibold text-blue-700 underline-offset-4 hover:underline"
+          >
+            venveel.contact@gmail.com
+          </a>
+
+          <p className="mt-3 text-sm leading-6 text-gray-500">
+            A domain email like hello@venveel.com will be added later.
+          </p>
 
         </div>
 
@@ -39,9 +54,16 @@ export default function ContactPage() {
             For collaborations, sponsorships and business enquiries.
           </p>
 
-          <p className="text-gray-700">
-  Contact details will be available soon.
-</p>
+          <a
+            href="mailto:venveel.contact@gmail.com"
+            className="mt-4 inline-block font-semibold text-blue-700 underline-offset-4 hover:underline"
+          >
+            venveel.contact@gmail.com
+          </a>
+
+          <p className="mt-3 text-sm leading-6 text-gray-500">
+            Please include a short subject line so we can route your message clearly.
+          </p>
 
         </div>
 
@@ -54,7 +76,7 @@ export default function ContactPage() {
         </h2>
 
         <p className="text-gray-700 leading-8">
-          Universal Space exists to simplify AI, investing,
+          Venveel exists to simplify AI, investing,
           technology and online business for everyone.
           We welcome your ideas and feedback as we continue to grow.
         </p>

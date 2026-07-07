@@ -4,9 +4,13 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "next build --webpack",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "typecheck": "next typegen && tsc --noEmit",
+    "check": "npm run lint && npm run typecheck",
+    "article:new": "node scripts/new-article.mjs",
+    "content:check": "node scripts/check-content.mjs"
   },
   "dependencies": {
     "@mdx-js/react": "^3.1.1",

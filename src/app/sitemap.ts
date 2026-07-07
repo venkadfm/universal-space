@@ -1,5 +1,9 @@
 import type { MetadataRoute } from "next";
-import { getAllArticles } from "@/lib/articles";
+import { getAllArticles, getArticleDate } from "@/lib/articles";
+
+function getLastModified(date: string) {
+  return getArticleDate(date) ?? new Date();
+}
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = "https://venveel.com";
@@ -30,6 +34,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.8,
     },
     {
+      url: `${baseUrl}/reviews`,
+      lastModified: new Date(),
+      changeFrequency: "weekly",
+      priority: 0.8,
+    },
+    {
+      url: `${baseUrl}/resources`,
+      lastModified: new Date(),
+      changeFrequency: "weekly",
+      priority: 0.7,
+    },
+    {
       url: `${baseUrl}/wealth`,
       lastModified: new Date(),
       changeFrequency: "weekly",
@@ -40,6 +56,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified: new Date(),
       changeFrequency: "weekly",
       priority: 0.8,
+    },
+    {
+      url: `${baseUrl}/learn`,
+      lastModified: new Date(),
+      changeFrequency: "weekly",
+      priority: 0.7,
     },
     {
       url: `${baseUrl}/contact`,
@@ -53,7 +75,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     .filter((article) => article.slug && !article.slug.startsWith("_"))
     .map((article) => ({
       url: `${baseUrl}/articles/${article.slug}`,
-      lastModified: new Date(),
+      lastModified: getLastModified(article.date),
       changeFrequency: "weekly",
       priority: article.featured ? 0.9 : 0.7,
     }));

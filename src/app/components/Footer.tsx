@@ -1,17 +1,18 @@
 import Link from "next/link";
+import Logo from "./Logo";
 
 export default function Footer() {
   return (
-    <footer className="bg-slate-900 text-white mt-24">
+    <footer className="bg-[linear-gradient(135deg,#020617_0%,#0f172a_58%,#0b3b4a_100%)] text-white">
       <div className="max-w-6xl mx-auto px-6 py-12 grid md:grid-cols-4 gap-10">
 
         <div>
-          <h2 className="text-2xl font-bold mb-4">
-            Venveel
-          </h2>
+          <div className="[&_span_span:first-child]:text-white [&_span_span:last-child]:text-slate-400">
+            <Logo />
+          </div>
 
-          <p className="text-gray-400">
-            Your Space for AI, Wealth & Growth.
+          <p className="mt-5 text-gray-400">
+            Practical AI, tech, money, and buying guides for busy professionals.
           </p>
         </div>
 
@@ -68,15 +69,18 @@ export default function Footer() {
             Weekly insights on AI, investing and online business.
           </p>
 
-          <button className="bg-blue-600 px-5 py-3 rounded-lg hover:bg-blue-700">
-            Join Newsletter
-          </button>
+          <Link
+            href="/contact"
+            className="inline-flex rounded-lg bg-white px-5 py-3 font-semibold text-slate-950 transition hover:bg-blue-50"
+          >
+            Get in Touch
+          </Link>
         </div>
 
       </div>
 
       <div className="border-t border-slate-700 text-center py-6 text-gray-400">
-        © 2026 Venveel • Version 1.0 🚀
+        © 2026 Venveel. Independent guides for smarter decisions.
       </div>
 
     </footer>

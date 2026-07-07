@@ -1,6 +1,5 @@
 import { getAllArticles } from "@/lib/articles";
-import Navbar from "./components/Navbar";
-import Footer from "./components/Footer";
+import Link from "next/link";
 import SearchBar from "./components/SearchBar";
 import CategoryCard from "./components/CategoryCard";
 import ArticleCard from "./components/Articlecard";
@@ -17,19 +16,17 @@ export default function Home() {
     .slice(0, 3);
 
   return (
-    <main className="min-h-screen bg-slate-50">
-      <Navbar />
-
+    <main className="min-h-screen">
       {/* Hero */}
-      <section className="relative overflow-hidden px-5 py-16 text-center md:px-6 md:py-32">
-        <div className="absolute inset-0 -z-10 bg-gradient-to-b from-blue-50 via-white to-slate-50" />
+      <section className="relative overflow-hidden px-5 py-16 text-center md:px-6 md:py-28">
+        <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_20%_10%,rgba(37,99,235,0.15),transparent_30rem),radial-gradient(circle_at_80%_0%,rgba(20,184,166,0.10),transparent_28rem),linear-gradient(180deg,#f8fafc_0%,#ffffff_54%,#f8fafc_100%)]" />
 
         <div className="mx-auto max-w-6xl">
-          <div className="mb-6 inline-flex rounded-full border border-blue-200 bg-white px-4 py-2 text-xs font-semibold text-blue-700 shadow-sm md:text-sm">
-            AI • Tech Reviews • Buying Guides • Wealth
+          <div className="mb-6 inline-flex rounded-full border border-blue-200/70 bg-white/80 px-4 py-2 text-xs font-semibold text-blue-800 shadow-sm backdrop-blur md:text-sm">
+            AI, tech reviews, buying guides, and wealth
           </div>
 
-          <h1 className="mx-auto max-w-5xl bg-gradient-to-r from-slate-950 via-blue-700 to-indigo-600 bg-clip-text text-4xl font-black leading-tight tracking-tight text-transparent sm:text-5xl md:text-7xl">
+          <h1 className="mx-auto max-w-5xl text-4xl font-black leading-tight tracking-tight text-slate-950 sm:text-5xl md:text-7xl">
             Smarter Technology Decisions for Busy Professionals
           </h1>
 
@@ -39,52 +36,52 @@ export default function Home() {
           </p>
 
           <div className="mt-8 flex flex-col justify-center gap-4 sm:flex-row md:mt-10">
-            <a
+            <Link
               href="/ai"
-              className="rounded-xl bg-blue-600 px-8 py-4 text-base font-semibold text-white shadow-lg transition hover:scale-105 hover:bg-blue-700"
+              className="brand-button rounded-xl px-8 py-4 text-base font-semibold"
             >
               Explore AI Tools
-            </a>
+            </Link>
 
-            <a
+            <Link
               href="/articles/best-smartphones-2026"
-              className="rounded-xl border-2 border-blue-600 bg-white px-8 py-4 text-base font-semibold text-blue-600 transition hover:scale-105 hover:bg-blue-50"
+              className="brand-button-secondary rounded-xl px-8 py-4 text-base font-semibold"
             >
               Latest Buying Guide
-            </a>
+            </Link>
           </div>
 
           <div className="mx-auto mt-10 max-w-3xl md:mt-14">
-            <SearchBar />
+            <SearchBar articles={articles} />
           </div>
 
           <div className="mx-auto mt-10 grid max-w-4xl gap-4 text-left sm:grid-cols-2 md:grid-cols-4">
-            <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-              <p className="text-2xl">🤖</p>
+            <div className="premium-card rounded-2xl p-5">
+              <p className="text-2xl">AI</p>
               <p className="mt-3 font-bold text-slate-900">AI Tools</p>
               <p className="mt-1 text-sm text-slate-500">
                 Find tools worth paying for.
               </p>
             </div>
 
-            <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-              <p className="text-2xl">📱</p>
+            <div className="premium-card rounded-2xl p-5">
+              <p className="text-2xl">01</p>
               <p className="mt-3 font-bold text-slate-900">Buying Guides</p>
               <p className="mt-1 text-sm text-slate-500">
                 Choose products with confidence.
               </p>
             </div>
 
-            <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-              <p className="text-2xl">💻</p>
+            <div className="premium-card rounded-2xl p-5">
+              <p className="text-2xl">RX</p>
               <p className="mt-3 font-bold text-slate-900">Tech Reviews</p>
               <p className="mt-1 text-sm text-slate-500">
                 Understand what actually matters.
               </p>
             </div>
 
-            <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-              <p className="text-2xl">📈</p>
+            <div className="premium-card rounded-2xl p-5">
+              <p className="text-2xl">₹</p>
               <p className="mt-3 font-bold text-slate-900">Wealth</p>
               <p className="mt-1 text-sm text-slate-500">
                 Smarter money decisions.
@@ -97,6 +94,7 @@ export default function Home() {
       {/* Featured Articles */}
       <section className="mx-auto max-w-6xl px-5 py-14 md:px-6 md:py-24">
         <div className="mb-8 text-center md:mb-12">
+          <p className="section-eyebrow mb-3">Editor&apos;s picks</p>
           <h2 className="text-3xl font-bold text-slate-900 md:text-4xl">
             Featured Guides
           </h2>
@@ -113,6 +111,7 @@ export default function Home() {
                 category={article.category}
                 title={article.title}
                 description={article.description}
+                readTime={article.readTime}
                 link={`/articles/${article.slug}`}
               />
             ))
@@ -125,9 +124,10 @@ export default function Home() {
       </section>
 
       {/* Categories */}
-      <section className="bg-white py-14 md:py-24">
+      <section className="border-y border-slate-200/80 bg-white/70 py-14 backdrop-blur md:py-24">
         <div className="mx-auto max-w-6xl px-5 md:px-6">
           <div className="mb-8 text-center md:mb-12">
+            <p className="section-eyebrow mb-3">Start here</p>
             <h2 className="text-3xl font-bold text-slate-900 md:text-4xl">
               Explore Categories
             </h2>
@@ -171,6 +171,7 @@ export default function Home() {
       {/* Latest Articles */}
       <section className="mx-auto max-w-6xl px-5 py-14 md:px-6 md:py-24">
         <div className="mb-8 text-center md:mb-12">
+          <p className="section-eyebrow mb-3">New notes</p>
           <h2 className="text-3xl font-bold text-slate-900 md:text-4xl">
             Latest Articles
           </h2>
@@ -186,6 +187,7 @@ export default function Home() {
               category={article.category}
               title={article.title}
               description={article.description}
+              readTime={article.readTime}
               link={`/articles/${article.slug}`}
             />
           ))}
@@ -193,7 +195,7 @@ export default function Home() {
       </section>
 
       {/* Tools Preview */}
-      <section className="bg-slate-900 px-5 py-16 text-white md:py-24">
+      <section className="bg-[linear-gradient(135deg,#020617_0%,#0f172a_58%,#0b3b4a_100%)] px-5 py-16 text-white md:py-24">
         <div className="mx-auto max-w-6xl text-center">
           <h2 className="text-3xl font-bold md:text-4xl">
             Free Tools for Smarter Decisions
@@ -205,19 +207,19 @@ export default function Home() {
           </p>
 
           <div className="mt-8 md:mt-10">
-            <a
+            <Link
               href="/tools"
-              className="inline-block w-full rounded-xl bg-white px-8 py-4 font-semibold text-slate-900 transition hover:scale-105 sm:w-auto"
+              className="inline-block w-full rounded-xl bg-white px-8 py-4 font-semibold text-slate-900 shadow-lg transition hover:-translate-y-0.5 hover:bg-blue-50 sm:w-auto"
             >
               Explore Tools
-            </a>
+            </Link>
           </div>
         </div>
       </section>
 
       {/* Newsletter */}
       <section className="px-5 py-14 text-center md:px-6 md:py-24">
-        <div className="mx-auto max-w-3xl rounded-3xl border border-slate-200 bg-white p-6 shadow-sm md:p-10">
+        <div className="premium-surface mx-auto max-w-3xl rounded-3xl p-6 md:p-10">
           <h2 className="text-3xl font-bold text-slate-900 md:text-4xl">
             Join Venveel
           </h2>
@@ -230,17 +232,16 @@ export default function Home() {
             <input
               type="email"
               placeholder="Enter your email"
-              className="w-full rounded-xl border px-5 py-3 sm:w-80"
+              className="w-full rounded-xl border border-slate-300 bg-white px-5 py-3 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 sm:w-80"
             />
 
-            <button className="w-full rounded-xl bg-blue-600 px-6 py-3 font-semibold text-white hover:bg-blue-700 sm:w-auto">
+            <button className="brand-button w-full rounded-xl px-6 py-3 font-semibold sm:w-auto">
               Subscribe
             </button>
           </div>
         </div>
       </section>
 
-      <Footer />
     </main>
   );
 }

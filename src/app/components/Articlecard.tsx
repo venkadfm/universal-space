@@ -5,6 +5,7 @@ type ArticleCardProps = {
   description: string;
   category: string;
   link: string;
+  readTime?: string;
 };
 
 export default function ArticleCard({
@@ -12,18 +13,19 @@ export default function ArticleCard({
   description,
   category,
   link,
+  readTime = "5 min read",
 }: ArticleCardProps) {
   return (
     <Link href={link} className="group block">
-      <article className="h-full rounded-3xl border border-slate-200 bg-white p-7 shadow-sm transition-all duration-300 hover:-translate-y-2 hover:border-blue-200 hover:shadow-2xl">
+      <article className="premium-card premium-card-hover h-full rounded-2xl p-7">
 
         {/* Category Badge */}
-        <div className="inline-flex rounded-full bg-blue-100 px-3 py-1 text-sm font-semibold text-blue-700">
+        <div className="inline-flex rounded-full border border-blue-200 bg-blue-50 px-3 py-1 text-sm font-semibold text-blue-800">
           {category}
         </div>
 
         {/* Title */}
-        <h3 className="mt-5 text-2xl font-bold leading-tight text-slate-900 group-hover:text-blue-600 transition-colors">
+        <h3 className="mt-5 text-2xl font-bold leading-tight text-slate-950 transition-colors group-hover:text-blue-700">
           {title}
         </h3>
 
@@ -36,10 +38,10 @@ export default function ArticleCard({
         <div className="mt-8 flex items-center justify-between border-t border-slate-100 pt-5">
 
           <span className="text-sm text-gray-500">
-            5 min read
+            {readTime}
           </span>
 
-          <span className="font-semibold text-blue-600 group-hover:translate-x-1 transition-transform">
+          <span className="font-semibold text-blue-700 transition-transform group-hover:translate-x-1">
             Read →
           </span>
 

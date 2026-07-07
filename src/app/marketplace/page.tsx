@@ -1,11 +1,23 @@
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Marketplace",
+  description:
+    "Upcoming Venveel digital products, templates, scripts, and practical toolkits.",
+  robots: {
+    index: false,
+    follow: true,
+  },
+};
+
 export default function MarketplacePage() {
   return (
-    <main className="min-h-screen bg-slate-50">
+    <main className="min-h-screen">
 
       <section className="max-w-6xl mx-auto py-20 px-6">
 
         <h1 className="text-5xl font-extrabold text-center">
-          Universal Space Marketplace
+          Venveel Marketplace
         </h1>
 
         <p className="text-xl text-gray-600 text-center mt-6 max-w-3xl mx-auto">
@@ -79,7 +91,7 @@ function ProductCard({
   status,
 }: ProductCardProps) {
   return (
-    <div className="bg-white rounded-2xl shadow-lg p-8 hover:shadow-xl transition">
+    <div className="premium-card premium-card-hover rounded-2xl p-8">
 
       <div className="text-5xl">
         {emoji}
@@ -93,7 +105,7 @@ function ProductCard({
         {description}
       </p>
 
-      <span className="inline-block mt-8 bg-yellow-100 text-yellow-800 px-4 py-2 rounded-full text-sm font-semibold">
+      <span className="mt-8 inline-block rounded-full border border-slate-300 bg-slate-100 px-4 py-2 text-sm font-semibold text-slate-700">
         {status}
       </span>
 

@@ -1,7 +1,15 @@
+import type { Metadata } from "next";
 import SipCalculator from "../components/SipCalculator";
+
+export const metadata: Metadata = {
+  title: "Tools",
+  description:
+    "Free calculators and practical tools to help you make smarter productivity and money decisions.",
+};
+
 export default function ToolsPage() {
   return (
-    <main className="min-h-screen bg-slate-50">
+    <main className="min-h-screen">
 
       <section className="max-w-6xl mx-auto py-20 px-6">
 

@@ -1,17 +1,8 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
 import { GoogleAnalytics } from "@next/third-parties/google";
+import Footer from "./components/Footer";
+import Navbar from "./components/Navbar";
 import "./globals.css";
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
 
 export const metadata: Metadata = {
   title: {
@@ -67,13 +58,33 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const websiteJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: "Venveel",
+    url: "https://venveel.com",
+    description:
+      "Trusted AI tools, technology reviews, buying guides, and practical insights for busy professionals.",
+    publisher: {
+      "@type": "Organization",
+      name: "Venveel",
+      url: "https://venveel.com",
+    },
+  };
+
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className="h-full antialiased"
     >
-      <body className="flex min-h-full flex-col">
-        {children}
+      <body className="flex min-h-full flex-col bg-slate-50 text-slate-950">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
+        />
+        <Navbar />
+        <div className="flex-1">{children}</div>
+        <Footer />
       </body>
 
       <GoogleAnalytics gaId="G-44HMMJ18PY" />
