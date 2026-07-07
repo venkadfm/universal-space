@@ -12,22 +12,23 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export const metadata = {
+export const metadata: Metadata = {
   title: {
     default: "Venveel",
     template: "%s | Venveel",
   },
 
   description:
-  "Trusted AI tools, technology reviews, buying guides, and practical insights to help busy professionals make smarter decisions.",
+    "Trusted AI tools, technology reviews, buying guides, and practical insights to help busy professionals make smarter decisions.",
+
   keywords: [
     "Artificial Intelligence",
     "AI Tools",
+    "Technology Reviews",
+    "Buying Guides",
     "Personal Finance",
     "Investing",
-    "Technology",
     "Online Business",
-    "Side Hustle",
     "Productivity",
   ],
 
@@ -36,6 +37,28 @@ export const metadata = {
       name: "Venkadesh",
     },
   ],
+
+  verification: {
+    google: "4Dqsw6ooXaL5lBR4xK0shH6NN1iovaIqoSE30Z5eYR4",
+  },
+
+  metadataBase: new URL("https://venveel.com"),
+
+  openGraph: {
+    title: "Venveel",
+    description:
+      "Trusted AI tools, technology reviews, buying guides, and practical insights for busy professionals.",
+    url: "https://venveel.com",
+    siteName: "Venveel",
+    type: "website",
+  },
+
+  twitter: {
+    card: "summary_large_image",
+    title: "Venveel",
+    description:
+      "Trusted AI tools, technology reviews, buying guides, and practical insights for busy professionals.",
+  },
 };
 
 export default function RootLayout({
@@ -48,7 +71,7 @@ export default function RootLayout({
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="flex min-h-full flex-col">{children}</body>
     </html>
   );
 }
