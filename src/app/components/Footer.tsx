@@ -1,86 +1,86 @@
 import Link from "next/link";
 import Logo from "./Logo";
 
+const footerSections = [
+  {
+    title: "Categories",
+    links: [
+      { label: "AI Tools", href: "/ai" },
+      { label: "Reviews", href: "/reviews" },
+      { label: "Buying Guides", href: "/buying-guides" },
+      { label: "Productivity", href: "/tools" },
+    ],
+  },
+  {
+    title: "Company",
+    links: [
+      { label: "About", href: "/about" },
+      { label: "Contact", href: "/contact" },
+      { label: "Resources", href: "/resources" },
+      { label: "Learn", href: "/learn" },
+    ],
+  },
+  {
+    title: "Trust",
+    links: [
+      { label: "Editorial Policy", href: "/editorial-policy" },
+      { label: "Review Methodology", href: "/review-methodology" },
+      { label: "Affiliate Disclosure", href: "/affiliate-disclosure" },
+      { label: "Privacy Policy", href: "/privacy" },
+      { label: "Terms", href: "/terms" },
+    ],
+  },
+];
+
 export default function Footer() {
   return (
     <footer className="bg-[linear-gradient(135deg,#020617_0%,#0f172a_58%,#0b3b4a_100%)] text-white">
-      <div className="max-w-6xl mx-auto px-6 py-12 grid md:grid-cols-4 gap-10">
+      <div className="mx-auto grid max-w-6xl gap-10 px-6 py-12 md:grid-cols-[1.4fr_repeat(3,1fr)]">
 
         <div>
           <div className="[&_span_span:first-child]:text-white [&_span_span:last-child]:text-slate-400">
             <Logo />
           </div>
 
-          <p className="mt-5 text-gray-400">
-            Practical AI, tech, money, and buying guides for busy professionals.
+          <p className="mt-5 max-w-sm text-slate-400">
+            Practical AI, technology reviews, and buying guides for busy
+            professionals who want clearer decisions.
           </p>
-        </div>
 
-        <div>
-          <h3 className="font-semibold mb-4">Explore</h3>
-
-          <div className="space-y-2">
-            <Link href="/ai" className="block hover:text-blue-400">
-              AI
+          <div className="mt-6 flex flex-wrap gap-3 text-sm text-slate-400">
+            <Link href="/contact" className="hover:text-white">
+              Contact
             </Link>
-
-            <Link href="/wealth" className="block hover:text-blue-400">
-              Wealth
-            </Link>
-
-            <Link href="/business" className="block hover:text-blue-400">
-              Business
-            </Link>
-
-            <Link href="/marketplace" className="block hover:text-blue-400">
+            <span aria-hidden="true">/</span>
+            <Link href="/marketplace" className="hover:text-white">
               Marketplace
             </Link>
+            <span aria-hidden="true">/</span>
+            <span>Social profiles coming soon</span>
           </div>
         </div>
 
-        <div>
-          <h3 className="font-semibold mb-4">Resources</h3>
+        {footerSections.map((section) => (
+          <div key={section.title}>
+            <h3 className="mb-4 font-semibold text-white">{section.title}</h3>
 
-          <div className="space-y-2">
-            <Link href="/tools" className="block hover:text-blue-400">
-              Tools
-            </Link>
-
-            <Link href="/reviews" className="block hover:text-blue-400">
-              Reviews
-            </Link>
-
-            <Link href="/resources" className="block hover:text-blue-400">
-              Resources
-            </Link>
-
-            <Link href="/about" className="block hover:text-blue-400">
-              About
-            </Link>
+            <div className="space-y-2">
+              {section.links.map((link) => (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className="block text-slate-400 transition hover:text-blue-300"
+                >
+                  {link.label}
+                </Link>
+              ))}
+            </div>
           </div>
-        </div>
-
-        <div>
-          <h3 className="font-semibold mb-4">
-            Stay Updated
-          </h3>
-
-          <p className="text-gray-400 mb-4">
-            Weekly insights on AI, investing and online business.
-          </p>
-
-          <Link
-            href="/contact"
-            className="inline-flex rounded-lg bg-white px-5 py-3 font-semibold text-slate-950 transition hover:bg-blue-50"
-          >
-            Get in Touch
-          </Link>
-        </div>
-
+        ))}
       </div>
 
-      <div className="border-t border-slate-700 text-center py-6 text-gray-400">
-        © 2026 Venveel. Independent guides for smarter decisions.
+      <div className="border-t border-slate-700 px-6 py-6 text-center text-sm text-slate-400">
+        © 2026 Venveel. Independent guides for smarter technology decisions.
       </div>
 
     </footer>

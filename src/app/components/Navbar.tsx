@@ -6,13 +6,12 @@ import { useState } from "react";
 import Logo from "./Logo";
 
 const navLinks = [
-  { name: "Home", href: "/" },
-  { name: "AI", href: "/ai" },
-  { name: "Wealth", href: "/wealth" },
-  { name: "Business", href: "/business" },
+  { name: "AI Tools", href: "/ai" },
   { name: "Reviews", href: "/reviews" },
-  { name: "Resources", href: "/resources" },
-  { name: "Marketplace", href: "/marketplace" },
+  { name: "Buying Guides", href: "/buying-guides" },
+  { name: "Productivity", href: "/tools" },
+  { name: "Business", href: "/business" },
+  { name: "About", href: "/about" },
 ];
 
 export default function Navbar() {

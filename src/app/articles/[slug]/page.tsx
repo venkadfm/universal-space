@@ -7,6 +7,7 @@ import {
   WarningBox,
 } from "@/components/article/ArticleCallouts";
 import { MDXRemote } from "next-mdx-remote/rsc";
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { getAllArticles, getArticleBySlug, getArticleDate } from "@/lib/articles";
@@ -148,6 +149,24 @@ export default async function ArticlePage({ params }: Props) {
 
   const articleUrl = `https://venveel.com/articles/${article.meta.slug}`;
   const articleDateIso = getArticleDate(article.meta.date)?.toISOString();
+  const articles = getAllArticles().filter(
+    (item) => item.slug && !item.slug.startsWith("_")
+  );
+  const currentIndex = articles.findIndex((item) => item.slug === slug);
+  const previousArticle = currentIndex > 0 ? articles[currentIndex - 1] : null;
+  const nextArticle =
+    currentIndex >= 0 && currentIndex < articles.length - 1
+      ? articles[currentIndex + 1]
+      : null;
+  const relatedArticles = articles
+    .filter(
+      (item) =>
+        item.slug !== article.meta.slug &&
+        (item.category === article.meta.category ||
+          item.tags?.some((tag) => article.meta.tags?.includes(tag)))
+    )
+    .slice(0, 3);
+
   const articleJsonLd = {
     "@context": "https://schema.org",
     "@type": "Article",
@@ -169,12 +188,43 @@ export default async function ArticlePage({ params }: Props) {
     articleSection: article.meta.category,
     keywords: article.meta.tags?.join(", "),
   };
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "Home",
+        item: "https://venveel.com",
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: article.meta.category,
+        item:
+          article.meta.category === "Buying Guides"
+            ? "https://venveel.com/buying-guides"
+            : "https://venveel.com/ai",
+      },
+      {
+        "@type": "ListItem",
+        position: 3,
+        name: article.meta.title,
+        item: articleUrl,
+      },
+    ],
+  };
 
   return (
     <main className="min-h-screen px-5 py-10 md:px-6 md:py-14">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
       />
       <article className="premium-surface mx-auto max-w-5xl rounded-3xl p-7 md:p-10">
         <header className="mb-7 border-b border-slate-200 pb-7">
@@ -214,6 +264,75 @@ export default async function ArticlePage({ params }: Props) {
               },
             }}
           />
+
+          {(relatedArticles.length > 0 || previousArticle || nextArticle) && (
+            <footer className="mt-12 border-t border-slate-200 pt-8">
+              {relatedArticles.length > 0 && (
+                <section>
+                  <p className="section-eyebrow mb-3">Keep reading</p>
+                  <h2 className="text-2xl font-bold tracking-tight text-slate-950">
+                    Related Articles
+                  </h2>
+
+                  <div className="mt-5 grid gap-4 md:grid-cols-3">
+                    {relatedArticles.map((relatedArticle) => (
+                      <Link
+                        key={relatedArticle.slug}
+                        href={`/articles/${relatedArticle.slug}`}
+                        className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition hover:-translate-y-0.5 hover:border-blue-200 hover:shadow-md"
+                      >
+                        <span className="text-xs font-bold uppercase tracking-[0.18em] text-blue-700">
+                          {relatedArticle.category}
+                        </span>
+                        <h3 className="mt-3 text-base font-bold leading-6 text-slate-950">
+                          {relatedArticle.title}
+                        </h3>
+                        {relatedArticle.readTime && (
+                          <p className="mt-3 text-sm text-slate-500">
+                            {relatedArticle.readTime}
+                          </p>
+                        )}
+                      </Link>
+                    ))}
+                  </div>
+                </section>
+              )}
+
+              {(previousArticle || nextArticle) && (
+                <nav className="mt-8 grid gap-4 md:grid-cols-2">
+                  {previousArticle ? (
+                    <Link
+                      href={`/articles/${previousArticle.slug}`}
+                      className="rounded-2xl border border-slate-200 bg-slate-50 p-5 transition hover:bg-white hover:shadow-sm"
+                    >
+                      <span className="text-sm font-semibold text-slate-500">
+                        Previous
+                      </span>
+                      <p className="mt-2 font-bold text-slate-950">
+                        {previousArticle.title}
+                      </p>
+                    </Link>
+                  ) : (
+                    <div />
+                  )}
+
+                  {nextArticle && (
+                    <Link
+                      href={`/articles/${nextArticle.slug}`}
+                      className="rounded-2xl border border-slate-200 bg-slate-50 p-5 text-left transition hover:bg-white hover:shadow-sm md:text-right"
+                    >
+                      <span className="text-sm font-semibold text-slate-500">
+                        Next
+                      </span>
+                      <p className="mt-2 font-bold text-slate-950">
+                        {nextArticle.title}
+                      </p>
+                    </Link>
+                  )}
+                </nav>
+              )}
+            </footer>
+          )}
         </div>
       </article>
     </main>

@@ -148,7 +148,7 @@ export default function Home() {
               emoji="📱"
               title="Buying Guides"
               description="Phones, laptops, accessories and product recommendations."
-              link="/articles/best-smartphones-2026"
+              link="/buying-guides"
             />
 
             <CategoryCard
@@ -217,28 +217,72 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Trust */}
+      <section className="border-y border-slate-200/80 bg-white/75 px-5 py-14 md:px-6 md:py-20">
+        <div className="mx-auto grid max-w-6xl gap-10 md:grid-cols-[0.9fr_1.1fr] md:items-center">
+          <div>
+            <p className="section-eyebrow mb-3">Why trust Venveel</p>
+            <h2 className="text-3xl font-bold tracking-tight text-slate-950 md:text-4xl">
+              Practical advice, written for real decisions.
+            </h2>
+            <p className="mt-4 text-lg leading-8 text-slate-600">
+              Venveel focuses on clear recommendations, visible tradeoffs, and
+              plain-English explanations so readers can act with confidence.
+            </p>
+          </div>
+
+          <div className="grid gap-4 sm:grid-cols-3">
+            <Link
+              href="/editorial-policy"
+              className="premium-card premium-card-hover rounded-2xl p-5"
+            >
+              <p className="font-bold text-slate-950">Editorial policy</p>
+              <p className="mt-2 text-sm leading-6 text-slate-600">
+                How content is researched, written, and updated.
+              </p>
+            </Link>
+
+            <Link
+              href="/review-methodology"
+              className="premium-card premium-card-hover rounded-2xl p-5"
+            >
+              <p className="font-bold text-slate-950">Review method</p>
+              <p className="mt-2 text-sm leading-6 text-slate-600">
+                The criteria used for products, tools, and guides.
+              </p>
+            </Link>
+
+            <Link
+              href="/affiliate-disclosure"
+              className="premium-card premium-card-hover rounded-2xl p-5"
+            >
+              <p className="font-bold text-slate-950">Disclosure</p>
+              <p className="mt-2 text-sm leading-6 text-slate-600">
+                Clear context for affiliate links and partnerships.
+              </p>
+            </Link>
+          </div>
+        </div>
+      </section>
+
       {/* Newsletter */}
       <section className="px-5 py-14 text-center md:px-6 md:py-24">
         <div className="premium-surface mx-auto max-w-3xl rounded-3xl p-6 md:p-10">
           <h2 className="text-3xl font-bold text-slate-900 md:text-4xl">
-            Join Venveel
+            Get Venveel Updates
           </h2>
 
           <p className="mt-4 text-gray-600">
-            Get practical insights on AI, technology, buying guides, and wealth.
+            The email list is being set up. For now, send a quick note and we
+            will add you when updates go live.
           </p>
 
-          <div className="mt-8 flex flex-col justify-center gap-4 sm:flex-row">
-            <input
-              type="email"
-              placeholder="Enter your email"
-              className="w-full rounded-xl border border-slate-300 bg-white px-5 py-3 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 sm:w-80"
-            />
-
-            <button className="brand-button w-full rounded-xl px-6 py-3 font-semibold sm:w-auto">
-              Subscribe
-            </button>
-          </div>
+          <Link
+            href="mailto:venveel.contact@gmail.com?subject=Add%20me%20to%20Venveel%20updates"
+            className="brand-button mt-8 inline-flex rounded-xl px-6 py-3 font-semibold"
+          >
+            Request Updates
+          </Link>
         </div>
       </section>
 
