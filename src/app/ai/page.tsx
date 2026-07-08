@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 };
 
 export default function AIPage() {
-  const aiArticles = getArticlesByCategory("Artificial Intelligence");
+  const aiArticles = getArticlesByCategory("AI Tools");
 
   return (
     <main className="min-h-screen">
@@ -17,7 +17,7 @@ export default function AIPage() {
       <section className="max-w-6xl mx-auto py-24 px-6">
 
         <h1 className="text-5xl font-bold mb-8">
-          Artificial Intelligence
+          AI Tools
         </h1>
 
         <p className="text-xl text-gray-600 mb-12">

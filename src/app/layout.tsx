@@ -11,17 +11,15 @@ export const metadata: Metadata = {
   },
 
   description:
-    "Trusted AI tools, technology reviews, buying guides, and practical insights to help busy professionals make smarter decisions.",
+    "Trusted AI tools, buying guides, wealth insights, and practical resources to help busy professionals make smarter decisions.",
 
   keywords: [
-    "Artificial Intelligence",
     "AI Tools",
-    "Technology Reviews",
     "Buying Guides",
+    "Wealth",
+    "Resources",
     "Personal Finance",
     "Investing",
-    "Online Business",
-    "Productivity",
   ],
 
   authors: [
@@ -39,7 +37,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Venveel",
     description:
-      "Trusted AI tools, technology reviews, buying guides, and practical insights for busy professionals.",
+      "Trusted AI tools, buying guides, wealth insights, and practical resources for busy professionals.",
     url: "https://venveel.com",
     siteName: "Venveel",
     type: "website",
@@ -49,7 +47,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Venveel",
     description:
-      "Trusted AI tools, technology reviews, buying guides, and practical insights for busy professionals.",
+      "Trusted AI tools, buying guides, wealth insights, and practical resources for busy professionals.",
   },
 };
 
@@ -64,7 +62,7 @@ export default function RootLayout({
     name: "Venveel",
     url: "https://venveel.com",
     description:
-      "Trusted AI tools, technology reviews, buying guides, and practical insights for busy professionals.",
+      "Trusted AI tools, buying guides, wealth insights, and practical resources for busy professionals.",
     publisher: {
       "@type": "Organization",
       name: "Venveel",

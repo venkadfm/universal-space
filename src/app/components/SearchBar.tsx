@@ -35,7 +35,7 @@ export default function SearchBar({ articles }: SearchBarProps) {
         type="text"
         value={query}
         onChange={(event) => setQuery(event.target.value)}
-        placeholder="Search articles, AI tools, investing, business..."
+        placeholder="Search AI tools, buying guides, wealth, resources..."
         className="w-full rounded-2xl border border-slate-300 bg-white/95 px-6 py-4 text-base shadow-[0_16px_40px_rgba(15,23,42,0.08)] backdrop-blur focus:outline-none focus:ring-2 focus:ring-blue-500 md:text-lg"
       />
 

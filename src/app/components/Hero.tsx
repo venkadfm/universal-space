@@ -7,7 +7,7 @@ export default function Hero() {
 
       <div className="mx-auto max-w-6xl">
         <div className="mb-6 inline-flex rounded-full border border-blue-200/70 bg-white/80 px-4 py-2 text-sm font-semibold text-blue-800 shadow-sm backdrop-blur">
-          AI, tech reviews, buying guides, and wealth
+          AI tools, buying guides, wealth, and resources
         </div>
 
         <h1 className="mx-auto max-w-5xl text-5xl font-black leading-tight tracking-tight text-slate-950 md:text-7xl">
@@ -16,7 +16,7 @@ export default function Hero() {
 
         <p className="mx-auto mt-7 max-w-3xl text-lg leading-8 text-slate-600 md:text-2xl md:leading-9">
           Venveel helps you cut through the noise with trusted AI tools,
-          practical technology reviews, buying guides, and investing insights.
+          practical buying guides, wealth insights, and useful resources.
         </p>
 
         <div className="mt-10 flex flex-col justify-center gap-4 sm:flex-row">
@@ -35,31 +35,6 @@ export default function Hero() {
           </Link>
         </div>
 
-        <div className="mx-auto mt-14 grid max-w-4xl gap-4 text-left sm:grid-cols-2 md:grid-cols-4">
-          <div className="premium-card rounded-2xl p-5">
-            <p className="text-2xl">AI</p>
-            <p className="mt-3 font-bold text-slate-900">AI Tools</p>
-            <p className="mt-1 text-sm text-slate-500">Find tools worth paying for.</p>
-          </div>
-
-          <div className="premium-card rounded-2xl p-5">
-            <p className="text-2xl">01</p>
-            <p className="mt-3 font-bold text-slate-900">Buying Guides</p>
-            <p className="mt-1 text-sm text-slate-500">Choose products with confidence.</p>
-          </div>
-
-          <div className="premium-card rounded-2xl p-5">
-            <p className="text-2xl">RX</p>
-            <p className="mt-3 font-bold text-slate-900">Tech Reviews</p>
-            <p className="mt-1 text-sm text-slate-500">Understand what actually matters.</p>
-          </div>
-
-          <div className="premium-card rounded-2xl p-5">
-            <p className="text-2xl">₹</p>
-            <p className="mt-3 font-bold text-slate-900">Wealth</p>
-            <p className="mt-1 text-sm text-slate-500">Smarter money decisions.</p>
-          </div>
-        </div>
       </div>
     </section>
   );

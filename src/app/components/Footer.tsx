@@ -1,22 +1,17 @@
 import Link from "next/link";
+import { mainCategories } from "@/lib/site-categories";
 import Logo from "./Logo";
 
 const footerSections = [
   {
     title: "Categories",
-    links: [
-      { label: "AI Tools", href: "/ai" },
-      { label: "Reviews", href: "/reviews" },
-      { label: "Buying Guides", href: "/buying-guides" },
-      { label: "Productivity", href: "/tools" },
-    ],
+    links: mainCategories,
   },
   {
     title: "Company",
     links: [
       { label: "About", href: "/about" },
       { label: "Contact", href: "/contact" },
-      { label: "Resources", href: "/resources" },
       { label: "Learn", href: "/learn" },
     ],
   },
@@ -43,7 +38,7 @@ export default function Footer() {
           </div>
 
           <p className="mt-5 max-w-sm text-slate-400">
-            Practical AI, technology reviews, and buying guides for busy
+            Practical AI tools, buying guides, wealth, and resources for busy
             professionals who want clearer decisions.
           </p>
 
@@ -52,8 +47,8 @@ export default function Footer() {
               Contact
             </Link>
             <span aria-hidden="true">/</span>
-            <Link href="/marketplace" className="hover:text-white">
-              Marketplace
+            <Link href="/resources" className="hover:text-white">
+              Resources
             </Link>
             <span aria-hidden="true">/</span>
             <span>Social profiles coming soon</span>

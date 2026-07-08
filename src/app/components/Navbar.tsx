@@ -3,16 +3,10 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
+import { mainCategories } from "@/lib/site-categories";
 import Logo from "./Logo";
 
-const navLinks = [
-  { name: "AI Tools", href: "/ai" },
-  { name: "Reviews", href: "/reviews" },
-  { name: "Buying Guides", href: "/buying-guides" },
-  { name: "Productivity", href: "/tools" },
-  { name: "Business", href: "/business" },
-  { name: "About", href: "/about" },
-];
+const navLinks = mainCategories;
 
 export default function Navbar() {
   const pathname = usePathname();
@@ -37,7 +31,7 @@ export default function Navbar() {
                     : "text-slate-600 hover:text-slate-950"
                 }`}
               >
-                {link.name}
+                {link.label}
               </Link>
             );
           })}
@@ -69,18 +63,10 @@ export default function Navbar() {
                       : "text-slate-700 hover:bg-slate-50"
                   }`}
                 >
-                  {link.name}
+                  {link.label}
                 </Link>
               );
             })}
-
-            <Link
-              href="/contact"
-              onClick={() => setOpen(false)}
-              className="brand-button rounded-xl px-4 py-3 text-center font-semibold"
-            >
-              Contact
-            </Link>
           </div>
         </div>
       )}
