@@ -6,6 +6,14 @@ This file is the running summary of changes made by Codex to the Venveel project
 
 ---
 
+## July 7, 2026 - Deployment Checkpoint
+
+- User confirmed the project was deployed after the branding, article, SEO, navigation, footer, trust-page, sitemap, and launch-readiness updates.
+- This point can be treated as the current deployed baseline for future Codex changes.
+- Future changes should be added above this section with a new date or checkpoint title.
+
+---
+
 ## July 7, 2026 - Sprint Polish and Launch Readiness
 
 ### Navigation and Site Structure
@@ -165,4 +173,3 @@ Previously passed:
 - `npm run lint`
 - `npm run typecheck`
 - `npm run build`
-
