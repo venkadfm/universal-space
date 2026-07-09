@@ -12,7 +12,7 @@ function getLastModified(date: string) {
 }
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = "https://venveel.com";
+  const baseUrl = "https://www.venveel.com";
 
   const staticPages: MetadataRoute.Sitemap = [
     {

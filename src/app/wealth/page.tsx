@@ -104,7 +104,7 @@ export default function WealthPage() {
     name: "Tax Calculator",
     applicationCategory: "FinanceApplication",
     operatingSystem: "Web",
-    url: "https://venveel.com/wealth#indian-tax-calculator",
+    url: "https://www.venveel.com/wealth#indian-tax-calculator",
     description:
       "Free tax calculator to know your exact tax amount and compare new and old tax regime with salary, HRA, house property, deductions, TDS and tax relief.",
     offers: {
@@ -115,7 +115,7 @@ export default function WealthPage() {
     publisher: {
       "@type": "Organization",
       name: "Venveel",
-      url: "https://venveel.com",
+      url: "https://www.venveel.com",
     },
   };
   const sipCalculatorJsonLd = {
@@ -124,7 +124,7 @@ export default function WealthPage() {
     name: "SIP and Lump Sum Calculator",
     applicationCategory: "FinanceApplication",
     operatingSystem: "Web",
-    url: "https://venveel.com/wealth#sip-calculator",
+    url: "https://www.venveel.com/wealth#sip-calculator",
     description:
       "Free SIP and lump sum calculator with monthly, quarterly and yearly SIP options.",
     offers: {
@@ -135,7 +135,7 @@ export default function WealthPage() {
     publisher: {
       "@type": "Organization",
       name: "Venveel",
-      url: "https://venveel.com",
+      url: "https://www.venveel.com",
     },
   };
 

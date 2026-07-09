@@ -210,7 +210,7 @@ export default async function ArticlePage({ params }: Props) {
     notFound();
   }
 
-  const articleUrl = `https://venveel.com/articles/${article.meta.slug}`;
+  const articleUrl = `https://www.venveel.com/articles/${article.meta.slug}`;
   const articleDateIso = getArticleDate(article.meta.date)?.toISOString();
   const articles = getAllArticles().filter(
     (item) => item.slug && !item.slug.startsWith("_")
@@ -242,7 +242,7 @@ export default async function ArticlePage({ params }: Props) {
     publisher: {
       "@type": "Organization",
       name: "Venveel",
-      url: "https://venveel.com",
+      url: "https://www.venveel.com",
     },
     datePublished: articleDateIso,
     dateModified: articleDateIso,
@@ -259,7 +259,7 @@ export default async function ArticlePage({ params }: Props) {
         "@type": "ListItem",
         position: 1,
         name: "Home",
-        item: "https://venveel.com",
+        item: "https://www.venveel.com",
       },
       {
         "@type": "ListItem",
@@ -267,10 +267,10 @@ export default async function ArticlePage({ params }: Props) {
         name: article.meta.category,
           item:
             article.meta.category === "Buying Guides"
-              ? "https://venveel.com/buying-guides"
+              ? "https://www.venveel.com/buying-guides"
               : article.meta.category === "Wealth"
-                ? "https://venveel.com/wealth"
-                : "https://venveel.com/ai",
+                ? "https://www.venveel.com/wealth"
+                : "https://www.venveel.com/ai",
       },
       {
         "@type": "ListItem",

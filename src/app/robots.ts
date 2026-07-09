@@ -6,6 +6,6 @@ export default function robots(): MetadataRoute.Robots {
       userAgent: "*",
       allow: "/",
     },
-    sitemap: "https://venveel.com/sitemap.xml",
+    sitemap: "https://www.venveel.com/sitemap.xml",
   };
 }

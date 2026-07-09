@@ -32,13 +32,17 @@ export const metadata: Metadata = {
     google: "4Dqsw6ooXaL5lBR4xK0shH6NN1iovaIqoSE30Z5eYR4",
   },
 
-  metadataBase: new URL("https://venveel.com"),
+  metadataBase: new URL("https://www.venveel.com"),
+
+  alternates: {
+    canonical: "/",
+  },
 
   openGraph: {
     title: "Venveel",
     description:
       "Trusted AI tools, buying guides, wealth insights, and practical resources for busy professionals.",
-    url: "https://venveel.com",
+    url: "https://www.venveel.com",
     siteName: "Venveel",
     type: "website",
   },
@@ -60,13 +64,13 @@ export default function RootLayout({
     "@context": "https://schema.org",
     "@type": "WebSite",
     name: "Venveel",
-    url: "https://venveel.com",
+    url: "https://www.venveel.com",
     description:
       "Trusted AI tools, buying guides, wealth insights, and practical resources for busy professionals.",
     publisher: {
       "@type": "Organization",
       name: "Venveel",
-      url: "https://venveel.com",
+      url: "https://www.venveel.com",
     },
   };
 
