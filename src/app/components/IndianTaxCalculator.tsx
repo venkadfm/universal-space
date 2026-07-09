@@ -412,24 +412,59 @@ function reportedHousePropertyInterest(text: string) {
   return amountMatch ? parseAmount(amountMatch[1]) : null;
 }
 
+function moneyAmounts(segment: string) {
+  return [...segment.matchAll(/(?:rs\.?|inr|₹)?\s*([0-9]{1,3}(?:,[0-9]{2,3})+|[0-9]{4,})(?:\.\d{1,2})?/gi)]
+    .map((item) => parseAmount(item[1]))
+    .filter((item): item is number => item !== null && item > 100);
+}
+
+function decimalAmounts(segment: string) {
+  return [...segment.matchAll(/(?:rs\.?|inr|₹)?\s*([0-9]{1,3}(?:,[0-9]{2,3})+|[0-9]+)\.\d{1,2}/gi)]
+    .map((item) => parseAmount(item[1]))
+    .filter((item): item is number => item !== null);
+}
+
+function amountFromForm16Row(text: string, pattern: RegExp, maxCharacters = 220) {
+  const match = pattern.exec(text);
+
+  if (!match) {
+    return null;
+  }
+
+  const rawSegment = text.slice(match.index, match.index + maxCharacters);
+  const segment = rawSegment.split(/\s\([a-z]\)\s|page\s+\d+\s+of\s+\d+/i)[0] || rawSegment;
+  const amounts = decimalAmounts(segment);
+
+  if (amounts.length > 0) {
+    return amounts[amounts.length - 1];
+  }
+
+  const wholeNumberAmounts = moneyAmounts(segment);
+
+  return wholeNumberAmounts.length > 0 ? wholeNumberAmounts[wholeNumberAmounts.length - 1] : null;
+}
+
+function form16HraReceived(text: string) {
+  return firstDecimalAmountAfter(text, /\bhra\b/i, 80) ??
+    firstAmountAfter(text, /\bhra\b/i, 80);
+}
+
 function form16HraExemption(text: string) {
   const hraSectionPatterns = [
+    /\([a-z]\)\s*house\s+rent\s+allowance\s+under\s+section\s+10\s*\(?\s*13a\s*\)?/i,
     /house\s+rent\s+allowance\s+under\s+section\s+10\s*\(?\s*13a\s*\)?/i,
     /house\s+rent\s+allowance[^0-9]{0,120}?10\s*\(?\s*13a\s*\)?/i,
   ];
 
   for (const pattern of hraSectionPatterns) {
-    const amount =
-      firstDecimalAmountAfter(text, pattern, 160) ??
-      firstAmountAfter(text, pattern, 160);
+    const amount = amountFromForm16Row(text, pattern, 260);
 
     if (amount !== null) {
       return amount;
     }
   }
 
-  return firstDecimalAmountAfter(text, /house\s+rent\s+allowance/i, 140) ??
-    firstAmountAfter(text, /house\s+rent\s+allowance/i, 140);
+  return null;
 }
 
 function partATaxDeducted(text: string) {
@@ -487,6 +522,12 @@ function extractForm16Values(text: string): ExtractedValue[] {
       "Basic salary for HRA",
       bestAmount(normalized, [/basic salary/gi, /\bbasic\b/gi], 180),
       "Basic salary line, if available"
+    ),
+    buildExtractedValue(
+      "hraReceived",
+      "HRA received",
+      form16HraReceived(normalized),
+      "Payroll HRA line, if available"
     ),
     buildExtractedValue(
       "hraExemptionOverride",
