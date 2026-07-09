@@ -18,6 +18,13 @@ type Props = {
   }>;
 };
 
+type HowToStepJsonLd = {
+  "@type": "HowToStep";
+  position: number;
+  name: string;
+  text: string;
+};
+
 const mdxComponents = {
   RecommendationBox,
   ProTip,
@@ -121,6 +128,38 @@ function extractFaqItems(content: string) {
       return question && answer ? { question, answer } : null;
     })
     .filter((item): item is { question: string; answer: string } => Boolean(item));
+}
+
+function stripMdxToText(content: string) {
+  return content
+    .replace(/\|/g, " ")
+    .replace(/\[([^\]]+)\]\([^)]+\)/g, "$1")
+    .replace(/<[^>]+>/g, "")
+    .replace(/[#*_`>-]/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function extractHowToSteps(content: string) {
+  const matches = [
+    ...content.matchAll(/^## Screen\s+\d+:\s+(.+)\n+([\s\S]*?)(?=^## Screen\s+\d+:|^## After Filing|^## Frequently Asked Questions|\s*$)/gm),
+  ];
+
+  return matches
+    .map((match, index) => {
+      const name = match[1].trim();
+      const text = stripMdxToText(match[2]).slice(0, 500);
+
+      return name && text
+        ? {
+            "@type": "HowToStep",
+            position: index + 1,
+            name,
+            text,
+          }
+        : null;
+    })
+    .filter((item): item is HowToStepJsonLd => Boolean(item));
 }
 
 export function generateStaticParams() {
@@ -257,6 +296,21 @@ export default async function ArticlePage({ params }: Props) {
           })),
         }
       : null;
+  const howToSteps =
+    article.meta.slug === "how-to-file-new-tax-regime-itr-india"
+      ? extractHowToSteps(article.content)
+      : [];
+  const howToJsonLd =
+    howToSteps.length > 0
+      ? {
+          "@context": "https://schema.org",
+          "@type": "HowTo",
+          name: article.meta.title,
+          description: article.meta.description,
+          totalTime: "PT45M",
+          step: howToSteps,
+        }
+      : null;
 
   return (
     <main className="min-h-screen px-5 py-10 md:px-6 md:py-14">
@@ -272,6 +326,12 @@ export default async function ArticlePage({ params }: Props) {
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+        />
+      )}
+      {howToJsonLd && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(howToJsonLd) }}
         />
       )}
       <article className="premium-surface mx-auto max-w-5xl rounded-3xl p-7 md:p-10">

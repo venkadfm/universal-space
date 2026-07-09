@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowRight, FileText } from "lucide-react";
+import { ArrowRight, Calculator, FileText, TrendingUp } from "lucide-react";
 import IndianTaxCalculator from "../components/IndianTaxCalculator";
 import SipCalculator from "../components/SipCalculator";
 
@@ -20,12 +20,63 @@ const taxGuides = [
     description: "Know exactly where to find every number before entering it.",
     href: "/articles/how-to-use-indian-tax-calculator",
   },
+  {
+    title: "Download AIS and TIS",
+    description: "Find AIS, TIS and the income details to check before filing.",
+    href: "/articles/how-to-download-ais-tis-income-tax-portal",
+  },
+  {
+    title: "Form 16 vs AIS vs 26AS",
+    description: "Understand which document shows salary, income and tax credits.",
+    href: "/articles/form-16-vs-ais-vs-26as",
+  },
+  {
+    title: "ITR-1 Filing Checklist",
+    description: "A quick checklist for salaried users before using ITR-1.",
+    href: "/articles/itr-1-filing-checklist-salaried-employees",
+  },
+  {
+    title: "New Regime Deductions",
+    description: "Know what is usually allowed and what is usually not allowed.",
+    href: "/articles/new-tax-regime-deductions-allowed",
+  },
+  {
+    title: "Section 87A Rebate",
+    description: "Understand how rebate can change tax payable under the new regime.",
+    href: "/articles/section-87a-rebate-new-tax-regime",
+  },
+  {
+    title: "Capital Gains and AIS",
+    description: "Why broker reports still matter when AIS shows transactions.",
+    href: "/articles/capital-gains-ais-broker-report-itr",
+  },
+];
+
+const wealthTabs = [
+  {
+    title: "Tax filing",
+    description: "ITR guides, regime comparison and document checklist",
+    href: "#tax-filing-guides",
+    icon: FileText,
+  },
+  {
+    title: "Tax calculator",
+    description: "Know your exact tax amount before filing",
+    href: "#indian-tax-calculator",
+    icon: Calculator,
+  },
+  {
+    title: "SIP calculator",
+    description: "Plan monthly, quarterly, yearly and lump sum investing",
+    href: "#sip-calculator",
+    icon: TrendingUp,
+  },
 ];
 
 export const metadata: Metadata = {
-  title: "Indian Tax Calculator, SIP Calculator and Personal Finance Guides",
+  title: "Tax Calculator, SIP Calculator and Personal Finance Guides",
   description:
-    "Use free Indian income tax and SIP calculators, compare new vs old tax regime, and read practical personal finance guides for Indian users.",
+    "Use the free tax calculator to know your exact tax amount, compare new vs old tax regime, calculate SIP returns, and read personal finance guides.",
   keywords: [
     "Indian tax calculator",
     "new vs old tax regime calculator",
@@ -38,9 +89,9 @@ export const metadata: Metadata = {
     canonical: "/wealth",
   },
   openGraph: {
-    title: "Indian Tax Calculator and Personal Finance Tools",
+    title: "Tax Calculator and Personal Finance Tools",
     description:
-      "Compare new vs old tax regime, estimate tax payable, calculate SIP returns, and read practical Indian personal finance guides.",
+      "Know your exact tax amount, compare new vs old tax regime, calculate SIP returns, and read practical Indian personal finance guides.",
     url: "/wealth",
     type: "website",
   },
@@ -50,12 +101,12 @@ export default function WealthPage() {
   const taxCalculatorJsonLd = {
     "@context": "https://schema.org",
     "@type": "SoftwareApplication",
-    name: "Indian Income Tax Calculator",
+    name: "Tax Calculator",
     applicationCategory: "FinanceApplication",
     operatingSystem: "Web",
     url: "https://venveel.com/wealth#indian-tax-calculator",
     description:
-      "Free Indian income tax calculator to compare new and old tax regime with salary, HRA, house property, deductions, TDS and tax relief.",
+      "Free tax calculator to know your exact tax amount and compare new and old tax regime with salary, HRA, house property, deductions, TDS and tax relief.",
     offers: {
       "@type": "Offer",
       price: "0",
@@ -110,7 +161,32 @@ export default function WealthPage() {
           personal finance, tax planning and financial discipline.
         </p>
 
-        <div className="grid md:grid-cols-3 gap-8">
+        <div className="grid gap-4 rounded-2xl border border-slate-200 bg-white p-4 shadow-[0_14px_38px_rgba(15,23,42,0.06)] md:grid-cols-3 md:p-5">
+          {wealthTabs.map((tab) => {
+            const Icon = tab.icon;
+
+            return (
+              <Link
+                key={tab.href}
+                href={tab.href}
+                className="group rounded-xl border border-slate-200 bg-slate-50 p-5 transition hover:-translate-y-0.5 hover:border-blue-200 hover:bg-blue-50"
+              >
+                <div className="flex items-start justify-between gap-4">
+                  <Icon className="size-5 shrink-0 text-blue-700" />
+                  <ArrowRight className="size-4 shrink-0 text-slate-400 transition group-hover:translate-x-1 group-hover:text-blue-700" />
+                </div>
+                <h2 className="mt-4 text-lg font-bold text-slate-950">
+                  {tab.title}
+                </h2>
+                <p className="mt-2 text-sm leading-6 text-slate-600">
+                  {tab.description}
+                </p>
+              </Link>
+            );
+          })}
+        </div>
+
+        <div className="mt-12 grid gap-8 md:grid-cols-3">
 
           <div className="premium-card premium-card-hover rounded-2xl p-8">
             <h2 className="text-2xl font-semibold mb-4">
@@ -144,7 +220,10 @@ export default function WealthPage() {
 
         </div>
 
-        <section className="mt-16 rounded-2xl border border-slate-200 bg-white p-6 shadow-[0_14px_38px_rgba(15,23,42,0.06)] md:p-8">
+        <section
+          id="tax-filing-guides"
+          className="mt-16 scroll-mt-24 rounded-2xl border border-slate-200 bg-white p-6 shadow-[0_14px_38px_rgba(15,23,42,0.06)] md:p-8"
+        >
           <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
             <div>
               <p className="section-eyebrow mb-3">
@@ -152,12 +231,13 @@ export default function WealthPage() {
               </p>
 
               <h2 className="text-3xl font-bold tracking-tight text-slate-950">
-                Indian Tax Hub
+                Indian Tax Filing Guides
               </h2>
 
               <p className="mt-3 max-w-2xl text-slate-600">
-                Compare regimes, understand the inputs, and prepare your ITR
-                review before filing.
+                Step-by-step ITR help for salaried Indians: compare regimes,
+                find Form 16, AIS and 26AS inputs, and review your tax before
+                filing.
               </p>
             </div>
 

@@ -1,8 +1,10 @@
 "use client";
 
+import Link from "next/link";
 import { useMemo, useState } from "react";
 import type { ChangeEvent } from "react";
 import {
+  ArrowRight,
   BadgeIndianRupee,
   CheckCircle2,
   ChevronDown,
@@ -282,13 +284,36 @@ export default function IndianTaxCalculator() {
         <div>
           <p className="section-eyebrow mb-2">Personal finance tool</p>
           <h2 className="text-3xl font-black tracking-tight text-slate-950 md:text-4xl">
-            Indian Income Tax Calculator
+            Tax Calculator
           </h2>
           <p className="mt-3 max-w-3xl text-sm leading-6 text-slate-600 md:text-base">
-            Compare old and new regime tax using detailed inputs across salary,
-            HRA, house property, capital gains, other income, deductions, TDS,
-            and foreign tax relief.
+            Know your exact tax amount before filing. Compare old and new
+            regime tax using salary, HRA, house property, capital gains, other
+            income, deductions, TDS, and foreign tax relief.
           </p>
+          <div className="mt-5 flex flex-wrap gap-3">
+            <Link
+              href="/articles/how-to-use-indian-tax-calculator"
+              className="inline-flex items-center gap-2 rounded-xl border border-blue-200 bg-blue-50 px-4 py-2 text-sm font-bold text-blue-800 transition hover:border-blue-300 hover:bg-blue-100"
+            >
+              Need help filling inputs?
+              <ArrowRight className="size-4" />
+            </Link>
+            <Link
+              href="/articles/form-16-vs-ais-vs-26as"
+              className="inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-bold text-slate-700 transition hover:border-blue-200 hover:text-blue-800"
+            >
+              Form 16 vs AIS vs 26AS
+              <ArrowRight className="size-4" />
+            </Link>
+            <Link
+              href="/wealth#tax-filing-guides"
+              className="inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-bold text-slate-700 transition hover:border-blue-200 hover:text-blue-800"
+            >
+              All tax guides
+              <ArrowRight className="size-4" />
+            </Link>
+          </div>
         </div>
 
         <div className="rounded-xl border border-emerald-200 bg-emerald-50 p-4 text-sm text-emerald-900">
@@ -459,6 +484,22 @@ export default function IndianTaxCalculator() {
               Reconcile the result with Form 16, AIS, Form 26AS, bank interest,
               broker reports, and deduction proofs before filing.
             </p>
+            <div className="mt-4 grid gap-2">
+              <Link
+                href="/articles/how-to-use-indian-tax-calculator"
+                className="inline-flex items-center justify-between gap-3 rounded-lg border border-slate-200 px-3 py-2 font-bold text-blue-800 transition hover:bg-blue-50"
+              >
+                Calculator input guide
+                <ArrowRight className="size-4" />
+              </Link>
+              <Link
+                href="/articles/how-to-file-new-tax-regime-itr-india"
+                className="inline-flex items-center justify-between gap-3 rounded-lg border border-slate-200 px-3 py-2 font-bold text-blue-800 transition hover:bg-blue-50"
+              >
+                New tax filing guide
+                <ArrowRight className="size-4" />
+              </Link>
+            </div>
           </div>
         </aside>
       </div>

@@ -32,8 +32,8 @@ const decisionPillars = [
 
 const taxHubLinks = [
   {
-    title: "Indian Tax Calculator",
-    description: "Compare old and new regime with salary, HRA, house property, deductions and TDS.",
+    title: "Tax Calculator",
+    description: "Know your exact tax amount before filing your ITR.",
     href: "/wealth#indian-tax-calculator",
     label: "Use tool",
   },
@@ -160,8 +160,11 @@ export default function Home() {
                       Most useful right now
                     </p>
                     <h3 className="mt-2 text-2xl font-black">
-                      Indian Tax Calculator
+                      Tax Calculator
                     </h3>
+                    <p className="mt-2 text-sm leading-6 text-slate-300">
+                      Know your exact tax amount before filing.
+                    </p>
                   </div>
                   <TrendingUp className="size-8 text-teal-300" />
                 </div>
