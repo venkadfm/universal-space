@@ -53,8 +53,10 @@ type ExtractedKey =
   | "grossSalary"
   | "basicSalary"
   | "hraReceived"
+  | "otherExemptAllowances"
   | "professionalTax"
   | "employerNps"
+  | "selfOccupiedInterest"
   | "section80c"
   | "section80dSelf"
   | "npsSelf"
@@ -223,7 +225,7 @@ function loadPdfJs() {
 
 function parseAmount(raw: string) {
   const amount = Number(raw.replace(/[,\s]/g, ""));
-  return Number.isFinite(amount) && amount > 0 ? Math.round(amount) : 0;
+  return Number.isFinite(amount) && amount >= 0 ? Math.round(amount) : null;
 }
 
 function amountsNear(text: string, pattern: RegExp, maxCharacters = 260) {
@@ -235,7 +237,7 @@ function amountsNear(text: string, pattern: RegExp, maxCharacters = 260) {
     const segment = text.slice(start, start + maxCharacters);
     const amounts = [...segment.matchAll(/(?:rs\.?|inr|₹)?\s*([0-9]{1,3}(?:,[0-9]{2,3})+|[0-9]{5,})(?:\.\d{1,2})?/gi)]
       .map((item) => parseAmount(item[1]))
-      .filter(Boolean);
+      .filter((item): item is number => item !== null);
 
     found.push(...amounts);
   }
@@ -244,84 +246,270 @@ function amountsNear(text: string, pattern: RegExp, maxCharacters = 260) {
 }
 
 function bestAmount(text: string, patterns: RegExp[], maxCharacters?: number) {
-  const amounts = patterns.flatMap((pattern) => amountsNear(text, pattern, maxCharacters));
+  const amounts = patterns
+    .flatMap((pattern) => amountsNear(text, pattern, maxCharacters))
+    .filter((amount) => amount > 0);
 
   if (amounts.length === 0) {
-    return 0;
+    return null;
   }
 
   return Math.max(...amounts);
 }
 
+function firstAmountAfter(text: string, pattern: RegExp, maxCharacters = 220) {
+  const match = pattern.exec(text);
+
+  if (!match) {
+    return null;
+  }
+
+  const segment = text.slice(match.index + match[0].length, match.index + match[0].length + maxCharacters);
+  const amountMatch = segment.match(/(?:rs\.?|inr|₹)?\s*([0-9]{1,3}(?:,[0-9]{2,3})+|[0-9]+)(?:\.\d{1,2})?/i);
+
+  return amountMatch ? parseAmount(amountMatch[1]) : null;
+}
+
+function firstDecimalAmountAfter(text: string, pattern: RegExp, maxCharacters = 220) {
+  const match = pattern.exec(text);
+
+  if (!match) {
+    return null;
+  }
+
+  const segment = text.slice(match.index + match[0].length, match.index + match[0].length + maxCharacters);
+  const amountMatch = segment.match(/(?:rs\.?|inr|₹)?\s*([0-9]{1,3}(?:,[0-9]{2,3})+|[0-9]+)\.\d{1,2}/i);
+
+  return amountMatch ? parseAmount(amountMatch[1]) : null;
+}
+
+function lastAmountAfter(text: string, pattern: RegExp, maxCharacters = 260) {
+  const match = pattern.exec(text);
+
+  if (!match) {
+    return null;
+  }
+
+  const segment = text.slice(match.index + match[0].length, match.index + match[0].length + maxCharacters);
+  const amounts = [...segment.matchAll(/(?:rs\.?|inr|₹)?\s*([0-9]{1,3}(?:,[0-9]{2,3})+|[0-9]+)(?:\.\d{1,2})?/gi)]
+    .map((item) => parseAmount(item[1]))
+    .filter((item): item is number => item !== null);
+
+  return amounts.length > 0 ? amounts[amounts.length - 1] : null;
+}
+
+function lastDecimalAmountAfter(text: string, pattern: RegExp, maxCharacters = 260) {
+  const match = pattern.exec(text);
+
+  if (!match) {
+    return null;
+  }
+
+  const segment = text.slice(match.index + match[0].length, match.index + match[0].length + maxCharacters);
+  const amounts = [...segment.matchAll(/(?:rs\.?|inr|₹)?\s*([0-9]{1,3}(?:,[0-9]{2,3})+|[0-9]+)\.\d{1,2}/gi)]
+    .map((item) => parseAmount(item[1]))
+    .filter((item): item is number => item !== null);
+
+  return amounts.length > 0 ? amounts[amounts.length - 1] : null;
+}
+
+function nthDecimalAmountAfter(text: string, pattern: RegExp, index: number, maxCharacters = 180) {
+  const match = pattern.exec(text);
+
+  if (!match) {
+    return null;
+  }
+
+  const segment = text.slice(match.index + match[0].length, match.index + match[0].length + maxCharacters);
+  const amounts = [...segment.matchAll(/(?:rs\.?|inr|₹)?\s*([0-9]{1,3}(?:,[0-9]{2,3})+|[0-9]+)\.\d{1,2}/gi)]
+    .map((item) => parseAmount(item[1]))
+    .filter((item): item is number => item !== null);
+
+  return amounts[index] ?? null;
+}
+
+function lastAmountBefore(text: string, pattern: RegExp, maxCharacters = 180) {
+  const match = pattern.exec(text);
+
+  if (!match) {
+    return null;
+  }
+
+  const segment = text.slice(Math.max(0, match.index - maxCharacters), match.index);
+  const amounts = [...segment.matchAll(/(?:rs\.?|inr|₹)?\s*([0-9]{1,3}(?:,[0-9]{2,3})+|[0-9]+)(?:\.\d{1,2})?/gi)]
+    .map((item) => parseAmount(item[1]))
+    .filter((item): item is number => item !== null);
+
+  return amounts.length > 0 ? amounts[amounts.length - 1] : null;
+}
+
+function lastDecimalAmountBefore(text: string, pattern: RegExp, maxCharacters = 180) {
+  const match = pattern.exec(text);
+
+  if (!match) {
+    return null;
+  }
+
+  const segment = text.slice(Math.max(0, match.index - maxCharacters), match.index);
+  const amounts = [...segment.matchAll(/(?:rs\.?|inr|₹)?\s*([0-9]{1,3}(?:,[0-9]{2,3})+|[0-9]+)\.\d{1,2}/gi)]
+    .map((item) => parseAmount(item[1]))
+    .filter((item): item is number => item !== null);
+
+  return amounts.length > 0 ? amounts[amounts.length - 1] : null;
+}
+
+function firstFoundAmount(text: string, patterns: RegExp[], maxCharacters?: number) {
+  for (const pattern of patterns) {
+    const amount = firstAmountAfter(text, pattern, maxCharacters);
+
+    if (amount !== null) {
+      return amount;
+    }
+  }
+
+  return null;
+}
+
+function buildExtractedValue(
+  key: ExtractedKey,
+  label: string,
+  value: number | null,
+  source: string
+): ExtractedValue | null {
+  return value === null ? null : { key, label, value, source };
+}
+
+function reportedHousePropertyInterest(text: string) {
+  const match = /income \(or admissible loss\) from house property/i.exec(text);
+
+  if (!match) {
+    return null;
+  }
+
+  const segment = text.slice(match.index + match[0].length, match.index + match[0].length + 260);
+  const amountMatch = segment.match(/-([0-9]{1,3}(?:,[0-9]{2,3})+|[0-9]+)\.\d{1,2}/);
+
+  return amountMatch ? parseAmount(amountMatch[1]) : null;
+}
+
 function extractForm16Values(text: string): ExtractedValue[] {
   const normalized = text.replace(/\s+/g, " ");
+  const parts = detectForm16Parts(normalized);
   const candidates: Array<ExtractedValue | null> = [
-    {
-      key: "grossSalary",
-      label: "Gross salary",
-      value: bestAmount(normalized, [
+    buildExtractedValue(
+      "grossSalary",
+      "Gross salary",
+      firstDecimalAmountAfter(normalized, /salary as per provisions contained in section 17\(1\)/i, 220) ??
+        firstDecimalAmountAfter(normalized, /total amount of salary received from current employer\s*3\.?/i, 220) ??
+        firstDecimalAmountAfter(normalized, /\(d\)\s*total/i, 180) ??
+        firstFoundAmount(normalized, [
+          /salary as per provisions contained in section 17\(1\)/i,
+          /total amount of salary received from current employer\s*3\.?/i,
+          /\(d\)\s*total/i,
+        ], 220) ??
+        bestAmount(normalized, [
         /gross salary/gi,
         /total amount of salary/gi,
         /income chargeable under the head salaries/gi,
         /salary as per provisions contained in section 17/gi,
       ], 420),
-      source: "Form 16 salary section",
-    },
-    {
-      key: "basicSalary",
-      label: "Basic salary for HRA",
-      value: bestAmount(normalized, [/basic salary/gi, /\bbasic\b/gi], 180),
-      source: "Basic salary line, if available",
-    },
-    {
-      key: "hraReceived",
-      label: "HRA received",
-      value: bestAmount(normalized, [/house rent allowance/gi, /\bhra\b/gi], 220),
-      source: "HRA / house rent allowance line",
-    },
-    {
-      key: "professionalTax",
-      label: "Professional tax",
-      value: bestAmount(normalized, [/professional tax/gi, /tax on employment/gi], 220),
-      source: "Professional tax line",
-    },
-    {
-      key: "employerNps",
-      label: "Employer NPS contribution",
-      value: bestAmount(normalized, [/80ccd\s*\(?2\)?/gi, /employer'?s? contribution.*nps/gi], 260),
-      source: "Employer NPS / 80CCD(2)",
-    },
-    {
-      key: "section80c",
-      label: "80C investments",
-      value: bestAmount(normalized, [/80c\b/gi, /section 80c/gi], 240),
-      source: "Section 80C deduction",
-    },
-    {
-      key: "section80dSelf",
-      label: "80D self/family",
-      value: bestAmount(normalized, [/80d\b/gi, /section 80d/gi], 240),
-      source: "Section 80D deduction",
-    },
-    {
-      key: "npsSelf",
-      label: "80CCD(1B) self NPS",
-      value: bestAmount(normalized, [/80ccd\s*\(?1b\)?/gi, /section 80ccd\s*\(?1b\)?/gi], 240),
-      source: "Section 80CCD(1B)",
-    },
-    {
-      key: "tdsTcs",
-      label: "TDS / TCS",
-      value: bestAmount(normalized, [
-        /total tax deducted/gi,
-        /tax deducted at source/gi,
-        /amount of tax deducted/gi,
-      ], 360),
-      source: "Tax deducted section",
-    },
+      "Form 16 Part B salary section"
+    ),
+    buildExtractedValue(
+      "basicSalary",
+      "Basic salary for HRA",
+      bestAmount(normalized, [/basic salary/gi, /\bbasic\b/gi], 180),
+      "Basic salary line, if available"
+    ),
+    buildExtractedValue(
+      "hraReceived",
+      "HRA exemption / HRA line",
+      firstDecimalAmountAfter(normalized, /house rent allowance under section 10\(13a\)/i, 180) ??
+        firstFoundAmount(normalized, [/house rent allowance under section 10\(13a\)/i], 180) ??
+        bestAmount(normalized, [/house rent allowance/gi, /\bhra\b/gi], 220),
+      "Form 16 Part B HRA exemption line"
+    ),
+    buildExtractedValue(
+      "otherExemptAllowances",
+      "Other section 10 exemptions",
+      firstDecimalAmountAfter(
+        normalized,
+        /total amount of any other exemption under section 10/i,
+        180
+      ),
+      "Other Section 10 exemption line"
+    ),
+    buildExtractedValue(
+      "professionalTax",
+      "Professional tax",
+      firstDecimalAmountAfter(normalized, /tax on employment under section 16\(iii\)/i, 180) ??
+        firstFoundAmount(normalized, [/tax on employment under section 16\(iii\)/i], 180) ??
+        bestAmount(normalized, [/professional tax/gi, /tax on employment/gi], 220),
+      "Professional tax line"
+    ),
+    buildExtractedValue(
+      "employerNps",
+      "Employer NPS contribution",
+      lastDecimalAmountBefore(normalized, /scheme under section 80ccd\s*\(2\)/i, 120) ??
+        lastAmountBefore(normalized, /scheme under section 80ccd\s*\(2\)/i, 120) ??
+        firstFoundAmount(normalized, [/scheme under section 80ccd\s*\(2\)/i], 160) ??
+        firstFoundAmount(normalized, [/80ccd\s*\(2\)/i, /employer'?s? contribution.*nps/i], 260),
+      "Employer NPS / 80CCD(2)"
+    ),
+    buildExtractedValue(
+      "selfOccupiedInterest",
+      "Self-occupied home loan interest",
+      reportedHousePropertyInterest(normalized),
+      "House property loss reported to employer"
+    ),
+    buildExtractedValue(
+      "section80c",
+      "80C investments",
+      nthDecimalAmountAfter(
+        normalized,
+        /total deduction under section 80c,\s*80ccc and 80ccd\(1\)/i,
+        1,
+        90
+      ) ??
+        lastDecimalAmountAfter(normalized, /total deduction under section 80c,\s*80ccc and 80ccd\(1\)/i, 90) ??
+        lastAmountAfter(normalized, /total deduction under section 80c,\s*80ccc and 80ccd\(1\)/i, 120) ??
+        firstFoundAmount(normalized, [/section 80c/i], 240),
+      "Section 80C deduction"
+    ),
+    buildExtractedValue(
+      "section80dSelf",
+      "80D self/family",
+      lastDecimalAmountBefore(normalized, /\b80d\b/i, 120) ??
+        lastAmountBefore(normalized, /\b80d\b/i, 120) ??
+        firstFoundAmount(normalized, [/\b80d\b/i], 180),
+      "Section 80D deduction"
+    ),
+    buildExtractedValue(
+      "npsSelf",
+      "80CCD(1B) self NPS",
+      lastDecimalAmountBefore(normalized, /scheme under section 80ccd\s*\(1b\)/i, 120) ??
+        lastAmountBefore(normalized, /scheme under section 80ccd\s*\(1b\)/i, 120) ??
+        firstFoundAmount(normalized, [/scheme under section 80ccd\s*\(1b\)/i], 160) ??
+        firstFoundAmount(normalized, [/80ccd\s*\(1b\)/i], 240),
+      "Section 80CCD(1B)"
+    ),
+    parts.partA
+      ? buildExtractedValue(
+          "tdsTcs",
+          "TDS / TCS",
+          lastDecimalAmountAfter(normalized, /total \(rs\.\)/i, 140) ??
+            lastAmountAfter(normalized, /total \(rs\.\)/i, 140) ??
+            firstFoundAmount(normalized, [
+              /total tax deducted/gi,
+              /tax deducted at source/gi,
+              /amount of tax deducted/gi,
+            ], 360),
+          "Form 16 Part A tax deducted section"
+        )
+      : null,
   ];
 
-  return candidates.filter((item): item is ExtractedValue => Boolean(item?.value));
+  return candidates.filter((item): item is ExtractedValue => item !== null);
 }
 
 function detectForm16Parts(text: string) {
@@ -329,13 +517,12 @@ function detectForm16Parts(text: string) {
 
   return {
     partA:
-      /part\s*a/i.test(normalized) ||
-      /certificate under section 203/i.test(normalized) ||
-      /tan of the deductor/i.test(normalized) ||
-      /summary of tax deducted at source/i.test(normalized),
+      (/part\s*a/i.test(normalized) &&
+        /summary of amount paid\/credited and tax deducted at source/i.test(normalized)) ||
+      /quarter\(s\).*amount paid\/credited/i.test(normalized) ||
+      /receipt numbers of original quarterly statements of tds/i.test(normalized),
     partB:
-      /part\s*b/i.test(normalized) ||
-      /annexure/i.test(normalized) ||
+      (/part\s*b/i.test(normalized) && /details of salary paid/i.test(normalized)) ||
       /salary as per provisions contained in section 17/i.test(normalized) ||
       /deductions under chapter vi-a/i.test(normalized) ||
       /income chargeable under the head salaries/i.test(normalized),
@@ -444,8 +631,10 @@ export default function IndianTaxCalculator() {
     grossSalary: true,
     basicSalary: true,
     hraReceived: true,
+    otherExemptAllowances: true,
     professionalTax: true,
     employerNps: true,
+    selfOccupiedInterest: true,
     section80c: true,
     section80dSelf: true,
     npsSelf: true,
@@ -563,8 +752,10 @@ export default function IndianTaxCalculator() {
     grossSalary: setGrossSalary,
     basicSalary: setBasicSalary,
     hraReceived: setHraReceived,
+    otherExemptAllowances: setOtherExemptAllowances,
     professionalTax: setProfessionalTax,
     employerNps: setEmployerNps,
+    selfOccupiedInterest: setSelfOccupiedInterest,
     section80c: setSection80c,
     section80dSelf: setSection80dSelf,
     npsSelf: setNpsSelf,
