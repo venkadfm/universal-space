@@ -1,0 +1,31 @@
+--- PAGE 1 ---
+ONLINE PAYMENT ACKNOWLEDGEMENT RECEIPT
+# Contribution Amount
+Merchant Order Number
+Transaction Reference Number
+Permanent Retirement Account Number(PRAN) :
+Transaction Date
+Contribution Receipt Number
+VENKADESH MALLAIASAMY
+eNPS38361277
+2026-01-12 14:19:52
+pay_S2sTCOwYAmrKk3
+Successful
+INR
+110118271895
+12639695077483267
+Thank you for contributing through eNPS. Please quote Transaction Reference Number for any queries related to this transaction.
+Name of the Subscriber
+This is a system generated document and does not require signature. Any unauthorized use, disclosure,dissemination, or copying of this
+National Pension System Trust (NPS Trust), 14th Floor, IFCI Tower, 61, Nehru Place, New Delhi-110019
+ 
+25000.00
+INR 0.00
+Transaction Status
+INR 0
+# Credit of units will take at least two working days and is subject to receipt of clear funds from Payment Gateway Service Provider. SMS and
+Contribution Tier Type Tier I
+Payment Gateway RAZORPAY PAYMENT GATEWAY
+POP trail commission + Goods & Services Tax
+Payment Gateway Charge + Goods & Services Tax (GST)
+Acknowledgement Number 12449435

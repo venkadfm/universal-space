@@ -1,0 +1,305 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Venveel Tax Filing Reel</title>
+    <style>
+      :root {
+        color-scheme: light;
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        background: #07111f;
+      }
+
+      .reel {
+        position: relative;
+        width: 1080px;
+        height: 1920px;
+        overflow: hidden;
+        background:
+          radial-gradient(circle at 15% 10%, rgba(45, 212, 191, 0.35), transparent 360px),
+          radial-gradient(circle at 88% 16%, rgba(59, 130, 246, 0.38), transparent 420px),
+          linear-gradient(145deg, #f8fafc 0%, #eff6ff 46%, #dbeafe 100%);
+        color: #0f172a;
+      }
+
+      .brand {
+        position: absolute;
+        left: 72px;
+        top: 62px;
+        z-index: 10;
+        display: flex;
+        align-items: center;
+        gap: 18px;
+        font-weight: 900;
+        letter-spacing: 0;
+        color: #0f172a;
+      }
+
+      .mark {
+        display: grid;
+        width: 58px;
+        height: 58px;
+        place-items: center;
+        border-radius: 16px;
+        background: #2563eb;
+        color: white;
+        font-size: 28px;
+        box-shadow: 0 18px 50px rgba(37, 99, 235, 0.32);
+      }
+
+      .brand-name {
+        font-size: 38px;
+      }
+
+      .progress {
+        position: absolute;
+        left: 72px;
+        right: 72px;
+        bottom: 64px;
+        z-index: 20;
+        height: 10px;
+        overflow: hidden;
+        border-radius: 999px;
+        background: rgba(15, 23, 42, 0.16);
+      }
+
+      .progress::after {
+        display: block;
+        width: 100%;
+        height: 100%;
+        border-radius: inherit;
+        background: linear-gradient(90deg, #2563eb, #14b8a6);
+        content: "";
+        transform-origin: left center;
+        animation: progress 25s linear both;
+      }
+
+      .slide {
+        position: absolute;
+        inset: 0;
+        display: grid;
+        align-content: center;
+        padding: 180px 72px 160px;
+        opacity: 0;
+        transform: translateY(44px) scale(0.985);
+      }
+
+      .slide-1 { animation: show 25s linear both 0s; }
+      .slide-2 { animation: show 25s linear both 4s; }
+      .slide-3 { animation: show 25s linear both 8s; }
+      .slide-4 { animation: show 25s linear both 12s; }
+      .slide-5 { animation: show 25s linear both 16s; }
+      .slide-6 { animation: show-last 25s linear both 20s; }
+
+      .eyebrow {
+        width: fit-content;
+        margin-bottom: 34px;
+        border: 2px solid rgba(37, 99, 235, 0.18);
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.86);
+        padding: 18px 28px;
+        color: #1d4ed8;
+        font-size: 30px;
+        font-weight: 900;
+        box-shadow: 0 14px 34px rgba(15, 23, 42, 0.08);
+      }
+
+      h1,
+      h2 {
+        margin: 0;
+        max-width: 930px;
+        color: #020617;
+        font-size: 92px;
+        font-weight: 950;
+        line-height: 0.98;
+        letter-spacing: 0;
+      }
+
+      h2 {
+        font-size: 78px;
+        line-height: 1.03;
+      }
+
+      .support {
+        margin-top: 34px;
+        max-width: 860px;
+        color: #334155;
+        font-size: 42px;
+        font-weight: 650;
+        line-height: 1.24;
+      }
+
+      .grid {
+        display: grid;
+        gap: 22px;
+        margin-top: 42px;
+      }
+
+      .pill {
+        display: flex;
+        align-items: center;
+        gap: 18px;
+        width: fit-content;
+        max-width: 900px;
+        border: 2px solid rgba(15, 23, 42, 0.08);
+        border-radius: 26px;
+        background: rgba(255, 255, 255, 0.9);
+        padding: 22px 28px;
+        color: #0f172a;
+        font-size: 38px;
+        font-weight: 900;
+        box-shadow: 0 20px 44px rgba(15, 23, 42, 0.08);
+      }
+
+      .icon {
+        display: grid;
+        width: 54px;
+        height: 54px;
+        flex: 0 0 auto;
+        place-items: center;
+        border-radius: 16px;
+        background: #dbeafe;
+        color: #1d4ed8;
+      }
+
+      .card {
+        margin-top: 46px;
+        max-width: 900px;
+        border: 2px solid rgba(37, 99, 235, 0.16);
+        border-radius: 34px;
+        background: rgba(255, 255, 255, 0.92);
+        padding: 36px;
+        box-shadow: 0 28px 70px rgba(15, 23, 42, 0.12);
+      }
+
+      .card-title {
+        color: #1d4ed8;
+        font-size: 34px;
+        font-weight: 950;
+        text-transform: uppercase;
+      }
+
+      .card-main {
+        margin-top: 12px;
+        color: #020617;
+        font-size: 60px;
+        font-weight: 950;
+        line-height: 1.04;
+      }
+
+      .url {
+        width: fit-content;
+        margin-top: 44px;
+        border-radius: 24px;
+        background: #0f172a;
+        padding: 24px 30px;
+        color: white;
+        font-size: 36px;
+        font-weight: 950;
+        box-shadow: 0 22px 58px rgba(15, 23, 42, 0.28);
+      }
+
+      .footer {
+        position: absolute;
+        left: 72px;
+        right: 72px;
+        bottom: 92px;
+        display: flex;
+        justify-content: space-between;
+        color: rgba(15, 23, 42, 0.64);
+        font-size: 26px;
+        font-weight: 850;
+      }
+
+      @keyframes progress {
+        from { transform: scaleX(0); }
+        to { transform: scaleX(1); }
+      }
+
+      @keyframes show {
+        0% { opacity: 0; transform: translateY(44px) scale(0.985); }
+        2.5% { opacity: 1; transform: translateY(0) scale(1); }
+        14% { opacity: 1; transform: translateY(0) scale(1); }
+        16% { opacity: 0; transform: translateY(-34px) scale(1.01); }
+        100% { opacity: 0; transform: translateY(-34px) scale(1.01); }
+      }
+
+      @keyframes show-last {
+        0% { opacity: 0; transform: translateY(44px) scale(0.985); }
+        2.5% { opacity: 1; transform: translateY(0) scale(1); }
+        100% { opacity: 1; transform: translateY(0) scale(1); }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="reel">
+      <div class="brand">
+        <div class="mark">V</div>
+        <div class="brand-name">Venveel</div>
+      </div>
+
+      <section class="slide slide-1">
+        <div class="eyebrow">ITR filing season</div>
+        <h1>Filing under the new tax regime?</h1>
+        <p class="support">Do not submit your return blindly.</p>
+      </section>
+
+      <section class="slide slide-2">
+        <div class="eyebrow">Before you file</div>
+        <h2>Check the documents that change your tax.</h2>
+        <div class="grid">
+          <div class="pill"><span class="icon">1</span>Form 16</div>
+          <div class="pill"><span class="icon">2</span>AIS / TIS</div>
+          <div class="pill"><span class="icon">3</span>Form 26AS</div>
+        </div>
+      </section>
+
+      <section class="slide slide-3">
+        <div class="eyebrow">Common mistake</div>
+        <h2>Many taxpayers miss AIS income or TDS credits.</h2>
+        <p class="support">Interest, dividends, refund interest, TCS and capital gains can change the final amount.</p>
+      </section>
+
+      <section class="slide slide-4">
+        <div class="eyebrow">Free tool</div>
+        <h2>Use the Tax Calculator before filing.</h2>
+        <div class="card">
+          <div class="card-title">Know your exact tax amount</div>
+          <div class="card-main">Compare new vs old regime in one place.</div>
+        </div>
+      </section>
+
+      <section class="slide slide-5">
+        <div class="eyebrow">Guides included</div>
+        <h2>Step-by-step help for the full filing flow.</h2>
+        <div class="grid">
+          <div class="pill"><span class="icon">✓</span>New regime portal guide</div>
+          <div class="pill"><span class="icon">✓</span>AIS download guide</div>
+          <div class="pill"><span class="icon">✓</span>Form 16 vs AIS vs 26AS</div>
+        </div>
+      </section>
+
+      <section class="slide slide-6">
+        <div class="eyebrow">Start here</div>
+        <h2>Open Wealth → Tax filing guides.</h2>
+        <p class="support">Free calculator, ITR checklist, rebate guide and document help.</p>
+        <div class="url">www.venveel.com/wealth</div>
+      </section>
+
+      <div class="footer">
+        <span>Tax Calculator</span>
+        <span>New regime ITR guides</span>
+      </div>
+      <div class="progress"></div>
+    </main>
+  </body>
+</html>

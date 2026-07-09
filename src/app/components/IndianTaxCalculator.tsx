@@ -10,6 +10,7 @@ import {
   ChevronDown,
   ChevronUp,
   FileText,
+  Upload,
   ShieldCheck,
 } from "lucide-react";
 
@@ -23,6 +24,48 @@ type SectionKey =
   | "credits";
 
 type Regime = "new" | "old";
+
+type PdfJsDocument = {
+  numPages: number;
+  getPage: (pageNumber: number) => Promise<{
+    getTextContent: () => Promise<{
+      items: Array<{ str?: string }>;
+    }>;
+  }>;
+};
+
+type PdfJsLib = {
+  GlobalWorkerOptions: {
+    workerSrc: string;
+  };
+  getDocument: (source: { data: Uint8Array }) => {
+    promise: Promise<PdfJsDocument>;
+  };
+};
+
+declare global {
+  interface Window {
+    pdfjsLib?: PdfJsLib;
+  }
+}
+
+type ExtractedKey =
+  | "grossSalary"
+  | "basicSalary"
+  | "hraReceived"
+  | "professionalTax"
+  | "employerNps"
+  | "section80c"
+  | "section80dSelf"
+  | "npsSelf"
+  | "tdsTcs";
+
+type ExtractedValue = {
+  key: ExtractedKey;
+  label: string;
+  value: number;
+  source: string;
+};
 
 const sections: Array<{ key: SectionKey; label: string }> = [
   { key: "profile", label: "Profile" },
@@ -131,6 +174,169 @@ function numberInputProps(value: number, onChange: (value: number) => void) {
   };
 }
 
+const pdfJsUrl = "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js";
+const pdfWorkerUrl =
+  "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
+
+function loadPdfJs() {
+  return new Promise<PdfJsLib>((resolve, reject) => {
+    if (window.pdfjsLib) {
+      window.pdfjsLib.GlobalWorkerOptions.workerSrc = pdfWorkerUrl;
+      resolve(window.pdfjsLib);
+      return;
+    }
+
+    const existingScript = document.querySelector<HTMLScriptElement>(
+      `script[src="${pdfJsUrl}"]`
+    );
+
+    const onLoad = () => {
+      if (!window.pdfjsLib) {
+        reject(new Error("PDF reader could not be loaded."));
+        return;
+      }
+
+      window.pdfjsLib.GlobalWorkerOptions.workerSrc = pdfWorkerUrl;
+      resolve(window.pdfjsLib);
+    };
+
+    if (existingScript) {
+      existingScript.addEventListener("load", onLoad, { once: true });
+      existingScript.addEventListener(
+        "error",
+        () => reject(new Error("PDF reader could not be loaded.")),
+        { once: true }
+      );
+      return;
+    }
+
+    const script = document.createElement("script");
+    script.src = pdfJsUrl;
+    script.async = true;
+    script.onload = onLoad;
+    script.onerror = () => reject(new Error("PDF reader could not be loaded."));
+    document.head.appendChild(script);
+  });
+}
+
+function parseAmount(raw: string) {
+  const amount = Number(raw.replace(/[,\s]/g, ""));
+  return Number.isFinite(amount) && amount > 0 ? Math.round(amount) : 0;
+}
+
+function amountsNear(text: string, pattern: RegExp, maxCharacters = 260) {
+  const found: number[] = [];
+  const matches = text.matchAll(pattern);
+
+  for (const match of matches) {
+    const start = match.index ?? 0;
+    const segment = text.slice(start, start + maxCharacters);
+    const amounts = [...segment.matchAll(/(?:rs\.?|inr|₹)?\s*([0-9]{1,3}(?:,[0-9]{2,3})+|[0-9]{5,})(?:\.\d{1,2})?/gi)]
+      .map((item) => parseAmount(item[1]))
+      .filter(Boolean);
+
+    found.push(...amounts);
+  }
+
+  return found;
+}
+
+function bestAmount(text: string, patterns: RegExp[], maxCharacters?: number) {
+  const amounts = patterns.flatMap((pattern) => amountsNear(text, pattern, maxCharacters));
+
+  if (amounts.length === 0) {
+    return 0;
+  }
+
+  return Math.max(...amounts);
+}
+
+function extractForm16Values(text: string): ExtractedValue[] {
+  const normalized = text.replace(/\s+/g, " ");
+  const candidates: Array<ExtractedValue | null> = [
+    {
+      key: "grossSalary",
+      label: "Gross salary",
+      value: bestAmount(normalized, [
+        /gross salary/gi,
+        /total amount of salary/gi,
+        /income chargeable under the head salaries/gi,
+        /salary as per provisions contained in section 17/gi,
+      ], 420),
+      source: "Form 16 salary section",
+    },
+    {
+      key: "basicSalary",
+      label: "Basic salary for HRA",
+      value: bestAmount(normalized, [/basic salary/gi, /\bbasic\b/gi], 180),
+      source: "Basic salary line, if available",
+    },
+    {
+      key: "hraReceived",
+      label: "HRA received",
+      value: bestAmount(normalized, [/house rent allowance/gi, /\bhra\b/gi], 220),
+      source: "HRA / house rent allowance line",
+    },
+    {
+      key: "professionalTax",
+      label: "Professional tax",
+      value: bestAmount(normalized, [/professional tax/gi, /tax on employment/gi], 220),
+      source: "Professional tax line",
+    },
+    {
+      key: "employerNps",
+      label: "Employer NPS contribution",
+      value: bestAmount(normalized, [/80ccd\s*\(?2\)?/gi, /employer'?s? contribution.*nps/gi], 260),
+      source: "Employer NPS / 80CCD(2)",
+    },
+    {
+      key: "section80c",
+      label: "80C investments",
+      value: bestAmount(normalized, [/80c\b/gi, /section 80c/gi], 240),
+      source: "Section 80C deduction",
+    },
+    {
+      key: "section80dSelf",
+      label: "80D self/family",
+      value: bestAmount(normalized, [/80d\b/gi, /section 80d/gi], 240),
+      source: "Section 80D deduction",
+    },
+    {
+      key: "npsSelf",
+      label: "80CCD(1B) self NPS",
+      value: bestAmount(normalized, [/80ccd\s*\(?1b\)?/gi, /section 80ccd\s*\(?1b\)?/gi], 240),
+      source: "Section 80CCD(1B)",
+    },
+    {
+      key: "tdsTcs",
+      label: "TDS / TCS",
+      value: bestAmount(normalized, [
+        /total tax deducted/gi,
+        /tax deducted at source/gi,
+        /amount of tax deducted/gi,
+      ], 360),
+      source: "Tax deducted section",
+    },
+  ];
+
+  return candidates.filter((item): item is ExtractedValue => Boolean(item?.value));
+}
+
+async function extractTextFromPdf(file: File) {
+  const pdfjsLib = await loadPdfJs();
+  const buffer = await file.arrayBuffer();
+  const pdf = await pdfjsLib.getDocument({ data: new Uint8Array(buffer) }).promise;
+  const pageTexts: string[] = [];
+
+  for (let pageNumber = 1; pageNumber <= pdf.numPages; pageNumber += 1) {
+    const page = await pdf.getPage(pageNumber);
+    const content = await page.getTextContent();
+    pageTexts.push(content.items.map((item) => item.str ?? "").join(" "));
+  }
+
+  return pageTexts.join("\n");
+}
+
 export default function IndianTaxCalculator() {
   const [openSections, setOpenSections] = useState<Record<SectionKey, boolean>>({
     profile: true,
@@ -170,6 +376,20 @@ export default function IndianTaxCalculator() {
   const [tdsTcs, setTdsTcs] = useState(0);
   const [foreignRelief, setForeignRelief] = useState(0);
   const [advanceTax, setAdvanceTax] = useState(0);
+  const [form16Status, setForm16Status] = useState<string>("");
+  const [form16Error, setForm16Error] = useState<string>("");
+  const [extractedValues, setExtractedValues] = useState<ExtractedValue[]>([]);
+  const [selectedExtractedKeys, setSelectedExtractedKeys] = useState<Record<ExtractedKey, boolean>>({
+    grossSalary: true,
+    basicSalary: true,
+    hraReceived: true,
+    professionalTax: true,
+    employerNps: true,
+    section80c: true,
+    section80dSelf: true,
+    npsSelf: true,
+    tdsTcs: true,
+  });
 
   const result = useMemo(() => {
     const hraPercent = metroCity ? 0.5 : 0.4;
@@ -278,6 +498,78 @@ export default function IndianTaxCalculator() {
     setOpenSections((current) => ({ ...current, [key]: !current[key] }));
   };
 
+  const setters: Record<ExtractedKey, (value: number) => void> = {
+    grossSalary: setGrossSalary,
+    basicSalary: setBasicSalary,
+    hraReceived: setHraReceived,
+    professionalTax: setProfessionalTax,
+    employerNps: setEmployerNps,
+    section80c: setSection80c,
+    section80dSelf: setSection80dSelf,
+    npsSelf: setNpsSelf,
+    tdsTcs: setTdsTcs,
+  };
+
+  const handleForm16Upload = async (event: ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+
+    if (!file) {
+      return;
+    }
+
+    setForm16Error("");
+    setExtractedValues([]);
+    setForm16Status("Reading Form 16 in your browser...");
+
+    try {
+      if (file.type !== "application/pdf" && !file.name.toLowerCase().endsWith(".pdf")) {
+        throw new Error("Please upload a PDF Form 16 file.");
+      }
+
+      const text = await extractTextFromPdf(file);
+      const extracted = extractForm16Values(text);
+
+      if (extracted.length === 0) {
+        setForm16Status("");
+        setForm16Error(
+          "We could not confidently read values from this Form 16. You can still enter values manually or use the input guide."
+        );
+        return;
+      }
+
+      setSelectedExtractedKeys((current) => ({
+        ...current,
+        ...Object.fromEntries(extracted.map((item) => [item.key, true])),
+      }));
+      setExtractedValues(extracted);
+      setForm16Status(`Found ${extracted.length} possible value${extracted.length === 1 ? "" : "s"}. Review before applying.`);
+    } catch (error) {
+      setForm16Status("");
+      setForm16Error(
+        error instanceof Error
+          ? error.message
+          : "We could not read this Form 16. Please enter values manually."
+      );
+    } finally {
+      event.target.value = "";
+    }
+  };
+
+  const applyExtractedValues = () => {
+    extractedValues.forEach((item) => {
+      if (selectedExtractedKeys[item.key]) {
+        setters[item.key](item.value);
+      }
+    });
+    setOpenSections((current) => ({
+      ...current,
+      salary: true,
+      deductions: true,
+      credits: true,
+    }));
+    setForm16Status("Selected Form 16 values applied. Please review the fields before filing.");
+  };
+
   return (
     <section className="premium-surface rounded-2xl p-5 md:p-8">
       <div className="flex flex-col gap-5 border-b border-slate-200 pb-6 lg:flex-row lg:items-start lg:justify-between">
@@ -326,6 +618,127 @@ export default function IndianTaxCalculator() {
             document passwords.
           </p>
         </div>
+      </div>
+
+      <div className="mt-6 rounded-2xl border border-blue-200 bg-blue-50/70 p-5">
+        <div className="flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
+          <div>
+            <div className="flex items-center gap-2 font-black text-slate-950">
+              <Upload className="size-5 text-blue-700" />
+              Upload Form 16 to autofill
+            </div>
+            <p className="mt-2 max-w-3xl text-sm leading-6 text-slate-700">
+              Optional beta feature. Upload your Form 16 PDF and we will try to
+              read salary, deductions and TDS in your browser. The file is not
+              stored. You can still enter everything manually below.
+            </p>
+          </div>
+
+          <label className="inline-flex cursor-pointer items-center justify-center gap-2 rounded-xl bg-slate-950 px-5 py-3 text-sm font-bold text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-blue-900">
+            Choose Form 16 PDF
+            <input
+              type="file"
+              accept="application/pdf,.pdf"
+              onChange={handleForm16Upload}
+              className="sr-only"
+            />
+          </label>
+        </div>
+
+        <div className="mt-4 grid gap-3 md:grid-cols-3">
+          <div className="rounded-xl border border-white bg-white/80 p-4 text-sm leading-6 text-slate-700">
+            <p className="font-bold text-slate-950">1. Upload</p>
+            <p className="mt-1">Select Form 16 PDF from your device.</p>
+          </div>
+          <div className="rounded-xl border border-white bg-white/80 p-4 text-sm leading-6 text-slate-700">
+            <p className="font-bold text-slate-950">2. Review</p>
+            <p className="mt-1">Confirm the values we detect before applying.</p>
+          </div>
+          <div className="rounded-xl border border-white bg-white/80 p-4 text-sm leading-6 text-slate-700">
+            <p className="font-bold text-slate-950">3. Edit</p>
+            <p className="mt-1">Adjust any field manually using the guide.</p>
+          </div>
+        </div>
+
+        {form16Status && (
+          <p className="mt-4 rounded-xl border border-blue-200 bg-white px-4 py-3 text-sm font-semibold text-blue-800">
+            {form16Status}
+          </p>
+        )}
+
+        {form16Error && (
+          <div className="mt-4 rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm leading-6 text-amber-900">
+            <p className="font-bold">Manual entry is still available</p>
+            <p className="mt-1">{form16Error}</p>
+            <Link
+              href="/articles/how-to-use-indian-tax-calculator"
+              className="mt-2 inline-flex items-center gap-2 font-bold text-amber-950 underline-offset-4 hover:underline"
+            >
+              Open calculator input guide
+              <ArrowRight className="size-4" />
+            </Link>
+          </div>
+        )}
+
+        {extractedValues.length > 0 && (
+          <div className="mt-4 rounded-2xl border border-slate-200 bg-white p-4">
+            <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+              <div>
+                <p className="font-black text-slate-950">Review detected values</p>
+                <p className="mt-1 text-sm leading-6 text-slate-600">
+                  Keep only the rows that look correct, then apply them to the
+                  calculator. You can edit every field after applying.
+                </p>
+              </div>
+              <button
+                type="button"
+                onClick={applyExtractedValues}
+                className="rounded-xl bg-blue-700 px-5 py-3 text-sm font-bold text-white transition hover:bg-blue-800"
+              >
+                Apply selected values
+              </button>
+            </div>
+
+            <div className="mt-4 overflow-x-auto">
+              <table className="w-full min-w-[620px] border-collapse text-left text-sm">
+                <thead>
+                  <tr className="border-b border-slate-200 text-slate-600">
+                    <th className="py-3 pr-4 font-bold">Use</th>
+                    <th className="py-3 pr-4 font-bold">Field</th>
+                    <th className="py-3 pr-4 font-bold">Detected value</th>
+                    <th className="py-3 pr-4 font-bold">Source</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {extractedValues.map((item) => (
+                    <tr key={item.key} className="border-b border-slate-100">
+                      <td className="py-3 pr-4">
+                        <input
+                          type="checkbox"
+                          checked={selectedExtractedKeys[item.key]}
+                          onChange={(event) =>
+                            setSelectedExtractedKeys((current) => ({
+                              ...current,
+                              [item.key]: event.target.checked,
+                            }))
+                          }
+                          className="size-4"
+                        />
+                      </td>
+                      <td className="py-3 pr-4 font-semibold text-slate-950">
+                        {item.label}
+                      </td>
+                      <td className="py-3 pr-4 font-black text-slate-950">
+                        {formatCurrency(item.value)}
+                      </td>
+                      <td className="py-3 pr-4 text-slate-600">{item.source}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        )}
       </div>
 
       <div className="mt-6 grid gap-5 lg:grid-cols-[1fr_360px]">

@@ -1,0 +1,286 @@
+--- PAGE 1 ---
+Consolidated Account Statement
+To Date : 31-Mar-2026 )( From Date : 01-Apr-2025
+PAN: APVPV8429C
+Venkadesh Mallaiasamy
+13116A-1 BAINGKALA STREET
+VILLATHIKULAM Vilathikulam Tuticorin
+Tuticorin
+Tuticorin - 628907, Tamil Nadu, India
+Mobile: 7411298528
+Email: venkadeshm10@gmail.com
+The Consolidated Account Statement is brought to you as an investor friendly initiative by
+CAMS and KFintech, and list the transactions, balances and valuation of Mutual Funds in which you
+are holding investments. The consolidation has been carried out based on your PAN.
+If you find any folios missing in this consolidation, please check if your PAN is updated across all your
+Mutual Fund folios.
+Page 1 of 14MFCentralDetailCAS_v1.2_1817334851-205246664_01-Apr-2025_31-Mar-2026 _-23/06/2026 7:50:55am
+SoA Holdings Demat Holdings
+Allocation by Asset Class
+42.09%
+57.91%
+ELSS
+EQUITY
+
+--- PAGE 2 ---
+Consolidated Account Statement
+To Date : 31-Mar-2026 )( From Date : 01-Apr-2025
+Page 2 of 14MFCentralDetailCAS_v1.2_1817334851-205246664_01-Apr-2025_31-Mar-2026 _-23/06/2026 7:50:55am
+SoA Holdings Demat Holdings
+Transaction Amount (INR) Units Price
+(INR) Unit BalanceDate
+Aditya Birla Sun Life Mutual Fund
+FOLIO NO: 1036816291
+Aditya Birla Sun Life ELSS Tax Saver Fund- (ELSS U/S 80C of IT ACT) - Growth-Direct Plan  (Advisor: DIRECT/DIRECT)  ISIN: INF209K01UN8
+KYC : OK
+Opening Unit Balance: 31.046
+--- --- No Transaction during this statement period --- --- --- --- ---
+Closing Unit Balance: 31.046 Nav as on 31-MAR-2026: INR 60.97 Valuation on 31-Mar-2026 : INR 1,892.87
+FOLIO NO: 1036816291
+Aditya Birla Sun Life ELSS Tax Saver Fund- (ELSS U/S 80C of IT ACT) - Growth-Regular Plan  (Advisor: KOTAKWEB/Kotak Securities Ltd)  ISIN: INF209K01108
+KYC : OK
+Opening Unit Balance: 31.949
+--- --- No Transaction during this statement period --- --- --- --- ---
+Closing Unit Balance: 31.949 Nav as on 31-MAR-2026: INR 54.36 Valuation on 31-Mar-2026 : INR 1,736.75
+FOLIO NO: 1037929392
+Aditya Birla Sun Life ELSS Tax Saver Fund- (ELSS U/S 80C of IT ACT) - Growth-Direct Plan  (Advisor: DIRECT/DIRECT)  ISIN: INF209K01UN8
+KYC : OK
+Opening Unit Balance: 2,768.582
+03-MAY-2025 SIPTerminated 0.00 0.000 0.00 2,768.582
+03-MAY-2025 SIPTerminated 0.00 0.000 0.00 2,768.582
+Closing Unit Balance: 2,768.582 Nav as on 31-MAR-2026: INR 60.97 Valuation on 31-Mar-2026 : INR 1,68,800.44
+
+--- PAGE 3 ---
+Consolidated Account Statement
+To Date : 31-Mar-2026 )( From Date : 01-Apr-2025
+Page 3 of 14MFCentralDetailCAS_v1.2_1817334851-205246664_01-Apr-2025_31-Mar-2026 _-23/06/2026 7:50:55am
+SoA Holdings Demat Holdings
+Transaction Amount (INR) Units Price
+(INR) Unit BalanceDate
+PPFAS Mutual Fund
+FOLIO NO: 11867495
+Parag Parikh Flexi Cap Fund - Direct Plan Growth (formerly Parag Parikh Long Term Value Fund) (Advisor: DIRECT/ARN-DIRECT)  ISIN: INF879O01027
+KYC : OK
+Opening Unit Balance: 1,042.033
+03-MAY-2025 SIPCancelled 0.00 0.000 0.00 1,042.033
+Closing Unit Balance: 1,042.033 Nav as on 31-MAR-2026: INR 85.6779 Valuation on 31-Mar-2026 : INR 89,279.20
+ICICI Prudential Mutual Fund
+FOLIO NO: 17982333
+ICICI Prudential  BSE Sensex Index Fund Direct Plan Growth  (Advisor: DIRECT/Direct)  ISIN: INF109KB10X0
+KYC : OK
+Opening Unit Balance: 3,699.703
+--- --- No Transaction during this statement period --- --- --- --- ---
+Closing Unit Balance: 3,699.703 Nav as on 31-MAR-2026: INR 23.8765 Valuation on 31-Mar-2026 : INR 88,335.96
+Quant MF
+FOLIO NO: 51021084641
+quant ELSS Tax Saver Fund - Direct Plan - Growth (Advisor: INZ000208032/DIRECT)  ISIN: INF966L01986
+KYC : NOT OK
+Opening Unit Balance: 46.753
+--- --- No Transaction during this statement period --- --- --- --- ---
+Closing Unit Balance: 46.753 Nav as on 31-MAR-2026: INR 376.1232 Valuation on 31-Mar-2026 : INR 17,584.89
+
+--- PAGE 4 ---
+Consolidated Account Statement
+To Date : 31-Mar-2026 )( From Date : 01-Apr-2025
+Page 4 of 14MFCentralDetailCAS_v1.2_1817334851-205246664_01-Apr-2025_31-Mar-2026 _-23/06/2026 7:50:55am
+SoA Holdings Demat Holdings
+Transaction Amount (INR) Units Price
+(INR) Unit BalanceDate
+Mirae Asset Mutual Fund
+FOLIO NO: 79916022825
+Mirae Asset ELSS Tax Saver Fund (formerly Mirae Asset Tax Saver Fund ) - Direct Plan (Advisor: INA100009859/DIRECT)  ISIN: INF769K01DM9
+KYC : OK
+Opening Unit Balance: 6,777.530
+--- --- No Transaction during this statement period --- --- --- --- ---
+Closing Unit Balance: 6,777.530 Nav as on 31-MAR-2026: INR 49.630 Valuation on 31-Mar-2026 : INR 3,36,368.81
+Kotak Mutual Fund
+FOLIO NO: 8714326
+Kotak Nifty 50 Index Fund Direct - Growth  (Advisor: INA100009859/Paytm Money Limited)  ISIN: INF174KA1HA7
+KYC : OK
+Opening Unit Balance: 369.576
+29-JUN-2025 SIPCancelled 0.00 0.000 0.00 369.576
+Closing Unit Balance: 369.576 Nav as on 31-MAR-2026: INR 14.7400 Valuation on 31-Mar-2026 : INR 5,447.55
+Axis Mutual Fund
+FOLIO NO: 91068804385
+Axis ELSS Tax Saver Fund - Direct Growth (Advisor: INA100009859/DIRECT)  ISIN: INF846K01EW2
+KYC : OK
+Opening Unit Balance: 932.126
+--- --- No Transaction during this statement period --- --- --- --- ---
+Closing Unit Balance: 932.126 Nav as on 31-MAR-2026: INR 96.2753 Valuation on 31-Mar-2026 : INR 89,740.71
+
+--- PAGE 5 ---
+Consolidated Account Statement
+To Date : 31-Mar-2026 )( From Date : 01-Apr-2025
+Page 5 of 14MFCentralDetailCAS_v1.2_1817334851-205246664_01-Apr-2025_31-Mar-2026 _-23/06/2026 7:50:55am
+SoA Holdings Demat Holdings
+Allocation by Asset Class
+19.59%
+8.45%
+13.57%
+58.39%
+CASHDEB
+TELSS
+EQUITY
+
+--- PAGE 6 ---
+Consolidated Account Statement
+To Date : 31-Mar-2026 )( From Date : 01-Apr-2025
+Page 6 of 14MFCentralDetailCAS_v1.2_1817334851-205246664_01-Apr-2025_31-Mar-2026 _-23/06/2026 7:50:55am
+SoA Holdings Demat Holdings
+Transaction Amount (INR) Units Price
+(INR) Unit BalanceDate
+PPFAS Mutual Fund
+FOLIO NO: 15830303
+Parag Parikh Conservative Hybrid Fund - Direct Plan Growth  (Advisor: INZ000031633/INZ000031633  ISIN: INF879O01175 Opening Unit Balance: 3,452.270
+09-OCT-2025 Purchase 49,997.50 3,226.561 15.50 6,678.831
+Closing Unit Balance: 6,678.831 Nav as on 31-MAR-2026: INR 15.5671 Valuation on 31-Mar-2026 : INR 1,03,970.03
+
+--- PAGE 7 ---
+Consolidated Account Statement
+To Date : 31-Mar-2026 )( From Date : 01-Apr-2025
+Page 7 of 14MFCentralDetailCAS_v1.2_1817334851-205246664_01-Apr-2025_31-Mar-2026 _-23/06/2026 7:50:55am
+SoA Holdings Demat Holdings
+Transaction Amount (INR) Units Price
+(INR) Unit BalanceDate
+FOLIO NO: 15830303
+Parag Parikh Flexi Cap Fund - Direct Plan Growth (formerly Parag Parikh Long Term Value Fund) (Advisor: INZ000031633/INZ000031633  ISIN: INF879O01027 Opening Unit Balance: 174.292
+02-APR-2025 Purchase 4,999.75 58.740 85.12 233.032
+02-MAY-2025 Purchase 4,999.75 56.825 87.98 289.857
+02-JUN-2025 Purchase 4,999.75 55.564 89.98 345.421
+01-JUL-2025 Purchase 4,999.75 53.947 92.68 399.368
+01-AUG-2025 Purchase 4,999.75 54.744 91.33 454.112
+01-SEP-2025 Purchase 4,999.75 54.630 91.52 508.742
+01-OCT-2025 Purchase 4,999.75 54.066 92.47 562.808
+03-NOV-2025 Purchase 4,999.75 52.931 94.46 615.739
+01-DEC-2025 Purchase 4,999.75 52.662 94.94 668.401
+01-JAN-2026 Purchase 4,999.75 52.666 94.93 721.067
+02-FEB-2026 Purchase 4,999.75 53.682 93.14 774.749
+02-MAR-2026 Purchase 4,999.75 54.689 91.42 829.438
+
+--- PAGE 8 ---
+Consolidated Account Statement
+To Date : 31-Mar-2026 )( From Date : 01-Apr-2025
+Page 8 of 14MFCentralDetailCAS_v1.2_1817334851-205246664_01-Apr-2025_31-Mar-2026 _-23/06/2026 7:50:55am
+SoA Holdings Demat Holdings
+Transaction Amount (INR) Units Price
+(INR) Unit BalanceDate
+Closing Unit Balance: 829.438 Nav as on 31-MAR-2026: INR 85.6779 Valuation on 31-Mar-2026 : INR 71,064.51
+
+--- PAGE 9 ---
+Consolidated Account Statement
+To Date : 31-Mar-2026 )( From Date : 01-Apr-2025
+Page 9 of 14MFCentralDetailCAS_v1.2_1817334851-205246664_01-Apr-2025_31-Mar-2026 _-23/06/2026 7:50:55am
+SoA Holdings Demat Holdings
+Transaction Amount (INR) Units Price
+(INR) Unit BalanceDate
+HDFC Mutual Fund
+FOLIO NO: 22433934
+HDFC BSE Sensex Index Fund - Direct Plan - Growth Option (erstwhile HDFC Index Fund - Sensex Plus Plan merged) (Advisor: INZ000031633/Zerodha Broking Limited  ISIN: INF179K01WN9Opening Unit Balance: 144.640
+07-APR-2025 Purchase Online 4,999.75 7.253 689.35 151.893
+06-MAY-2025 Purchase Online 4,999.75 6.578 760.10 158.471
+06-JUN-2025 Purchase Online 4,999.75 6.433 777.26 164.904
+07-JUL-2025 Purchase Online 4,999.75 6.321 790.93 171.225
+06-AUG-2025 Purchase Online 4,999.75 6.542 764.20 177.767
+08-SEP-2025 Purchase Online 4,999.75 6.514 767.50 184.281
+06-OCT-2025 Purchase Online 4,999.75 6.436 776.89 190.717
+06-NOV-2025 Purchase Online 4,999.75 6.312 792.12 197.029
+08-DEC-2025 Purchase Online 4,999.75 6.178 809.34 203.207
+06-JAN-2026 Purchase Online 4,999.75 6.182 808.80 209.389
+06-FEB-2026 Purchase Online 4,999.75 6.289 794.94 215.678
+
+--- PAGE 10 ---
+Consolidated Account Statement
+To Date : 31-Mar-2026 )( From Date : 01-Apr-2025
+Page 10 of 14MFCentralDetailCAS_v1.2_1817334851-205246664_01-Apr-2025_31-Mar-2026 _-23/06/2026 7:50:55am
+SoA Holdings Demat Holdings
+Transaction Amount (INR) Units Price
+(INR) Unit BalanceDate
+06-MAR-2026 Purchase Online 4,999.75 6.660 750.67 222.338
+Closing Unit Balance: 222.338 Nav as on 31-MAR-2026: INR 684.0718 Valuation on 31-Mar-2026 : INR 1,52,095.16
+FOLIO NO: 22433934
+HDFC Liquid Fund-Direct Plan-Growth Option  (Advisor: INZ000031633/Zerodha Broking Limited  ISIN: INF179KB1HP9 Opening Unit Balance: 0.000
+17-NOV-2025 Purchase Online 3,99,980.00 75.558 5,293.65 75.558
+22-DEC-2025 Redemption  - NEFT PAYOUT - 1381644277 (3,61,937.11) (68.000) 5,322.60 7.558
+29-MAR-2026 Purchase Online 1,99,990.00 36.993 5,406.13 44.551
+Closing Unit Balance: 44.551 Nav as on 31-MAR-2026: INR 5,409.8849 Valuation on 31-Mar-2026 : INR 2,41,015.78
+
+--- PAGE 11 ---
+Consolidated Account Statement
+To Date : 31-Mar-2026 )( From Date : 01-Apr-2025
+Page 11 of 14MFCentralDetailCAS_v1.2_1817334851-205246664_01-Apr-2025_31-Mar-2026 _-23/06/2026 7:50:55am
+SoA Holdings Demat Holdings
+Transaction Amount (INR) Units Price
+(INR) Unit BalanceDate
+ICICI Prudential Mutual Fund
+FOLIO NO: 35463336
+ICICI Prudential Nifty 50 Index Fund - Direct Plan Growth  (Advisor: INZ000031633/ZERODHA BROKING LIMITED  ISIN: INF109K012M7 Opening Unit Balance: 710.480
+03-APR-2025 Purchase - INZ000031633 25,498.73 105.278 242.20 815.758
+05-MAY-2025 Purchase - INZ000031633 25,498.73 100.080 254.78 915.838
+03-JUN-2025 Purchase - INZ000031633 25,498.73 99.521 256.21 1,015.359
+03-JUL-2025 Purchase - INZ000031633 25,498.73 95.947 265.76 1,111.306
+04-AUG-2025 Purchase - INZ000031633 25,498.73 98.415 259.09 1,209.721
+04-SEP-2025 Purchase - INZ000031633 25,498.73 98.224 259.60 1,307.945
+03-OCT-2025 Purchase - INZ000031633 25,498.73 97.615 261.22 1,405.560
+03-NOV-2025 Purchase - INZ000031633 26,008.70 96.131 270.55 1,501.691
+03-DEC-2025 Purchase - INZ000031633 26,008.70 95.280 272.97 1,596.971
+05-JAN-2026 Purchase - INZ000031633 26,008.70 94.338 275.70 1,691.309
+03-FEB-2026 Purchase - INZ000031633 26,008.70 96.215 270.32 1,787.524
+
+--- PAGE 12 ---
+Consolidated Account Statement
+To Date : 31-Mar-2026 )( From Date : 01-Apr-2025
+Page 12 of 14MFCentralDetailCAS_v1.2_1817334851-205246664_01-Apr-2025_31-Mar-2026 _-23/06/2026 7:50:55am
+SoA Holdings Demat Holdings
+Transaction Amount (INR) Units Price
+(INR) Unit BalanceDate
+04-MAR-2026 Purchase - INZ000031633 26,008.70 101.074 257.32 1,888.598
+Closing Unit Balance: 1,888.598 Nav as on 31-MAR-2026: INR 234.7593 Valuation on 31-Mar-2026 : INR 4,43,365.94
+Quant MF
+FOLIO NO: 51073259561
+quant ELSS Tax Saver Fund - Direct Plan - Growth (Advisor: INZ000031633/DIRECT  ISIN: INF966L01986
+KYC : NOT OK
+Opening Unit Balance: 106.489
+--- --- No Transaction during this statement period --- --- --- --- ---
+Closing Unit Balance: 106.489 Nav as on 31-MAR-2026: INR 376.1232 Valuation on 31-Mar-2026 : INR 40,052.98
+Bandhan Mutual Fund
+FOLIO NO: 6701766
+Bandhan Small Cap Fund-Direct Plan-Growth  (Advisor: INZ000031633/Zerodha  ISIN: INF194KB1AL4 Opening Unit Balance: 0.000
+25-JUL-2025 Net Purchase via Online 4,999.75 97.002 51.54 97.002
+07-NOV-2025 Net Purchase via Online 8,599.57 164.740 52.20 261.742
+Closing Unit Balance: 261.742 Nav as on 31-MAR-2026: INR 44.632 Valuation on 31-Mar-2026 : INR 11,682.07
+
+--- PAGE 13 ---
+Consolidated Account Statement
+To Date : 31-Mar-2026 )( From Date : 01-Apr-2025
+Page 13 of 14MFCentralDetailCAS_v1.2_1817334851-205246664_01-Apr-2025_31-Mar-2026 _-23/06/2026 7:50:55am
+SoA Holdings Demat Holdings
+Transaction Amount (INR) Units Price
+(INR) Unit BalanceDate
+Mirae Asset Mutual Fund
+FOLIO NO: 78866158701
+Mirae Asset ELSS Tax Saver Fund (formerly Mirae Asset Tax Saver Fund ) - Direct Plan (Advisor: INZ000031633/DIRECT  ISIN: INF769K01DM9
+KYC : NOT OK
+Opening Unit Balance: 2,270.576
+07-APR-2025 Purchase 4,999.75 105.810 47.25 2,376.386
+05-MAY-2025 Purchase 4,999.75 95.678 52.26 2,472.064
+05-JUN-2025 Purchase 4,999.75 92.430 54.09 2,564.494
+07-JUL-2025 Purchase 4,999.75 89.449 55.90 2,653.943
+05-AUG-2025 Purchase 4,999.75 91.623 54.57 2,745.566
+05-SEP-2025 Purchase 4,999.75 90.913 55.00 2,836.479
+06-OCT-2025 Purchase 4,999.75 89.332 55.97 2,925.811
+06-NOV-2025 Purchase 4,999.75 87.480 57.15 3,013.291
+05-DEC-2025 Purchase 4,999.75 86.152 58.03 3,099.443
+05-JAN-2026 Purchase 4,999.75 85.733 58.32 3,185.176
+05-FEB-2026 Purchase 4,999.75 87.817 56.93 3,272.993
+
+--- PAGE 14 ---
+Consolidated Account Statement
+To Date : 31-Mar-2026 )( From Date : 01-Apr-2025
+Page 14 of 14MFCentralDetailCAS_v1.2_1817334851-205246664_01-Apr-2025_31-Mar-2026 _-23/06/2026 7:50:55am
+SoA Holdings Demat Holdings
+Transaction Amount (INR) Units Price
+(INR) Unit BalanceDate
+05-MAR-2026 Purchase 4,999.75 90.784 55.07 3,363.777
+Closing Unit Balance: 3,363.777 Nav as on 31-MAR-2026: INR 49.630 Valuation on 31-Mar-2026 : INR 1,66,944.25
+#IDCW - Income Distribution cum Capital Withdrawal
+*SoA - Statement of Account
