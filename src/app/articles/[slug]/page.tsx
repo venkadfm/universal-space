@@ -1,4 +1,5 @@
 import AffiliateCTA from "@/components/article/AffiliateCTA";
+import EmailSignup from "@/app/components/EmailSignup";
 import ProductCard from "@/components/article/ProductCard";
 import remarkGfm from "remark-gfm";
 import {
@@ -375,6 +376,15 @@ export default async function ArticlePage({ params }: Props) {
 
           {(relatedArticles.length > 0 || previousArticle || nextArticle) && (
             <footer className="mt-12 border-t border-slate-200 pt-8">
+              <section className="mb-8">
+                <EmailSignup
+                  compact
+                  title="Get more guides like this"
+                  description="Join Venveel updates for tax tools, personal finance guides, AI comparisons, and buying advice."
+                  source={`Article: ${article.meta.slug}`}
+                />
+              </section>
+
               {relatedArticles.length > 0 && (
                 <section>
                   <p className="section-eyebrow mb-3">Keep reading</p>

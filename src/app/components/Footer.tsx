@@ -51,6 +51,13 @@ export default function Footer() {
               Resources
             </Link>
             <span aria-hidden="true">/</span>
+            <a
+              href="mailto:hello.venveel@gmail.com?subject=Add%20me%20to%20Venveel%20updates"
+              className="hover:text-white"
+            >
+              Join updates
+            </a>
+            <span aria-hidden="true">/</span>
             <span>Social profiles coming soon</span>
           </div>
         </div>

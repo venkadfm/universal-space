@@ -67,6 +67,8 @@ type ExtractedValue = {
   source: string;
 };
 
+type Form16Part = "partA" | "partB";
+
 const sections: Array<{ key: SectionKey; label: string }> = [
   { key: "profile", label: "Profile" },
   { key: "salary", label: "Salary" },
@@ -322,6 +324,61 @@ function extractForm16Values(text: string): ExtractedValue[] {
   return candidates.filter((item): item is ExtractedValue => Boolean(item?.value));
 }
 
+function detectForm16Parts(text: string) {
+  const normalized = text.replace(/\s+/g, " ");
+
+  return {
+    partA:
+      /part\s*a/i.test(normalized) ||
+      /certificate under section 203/i.test(normalized) ||
+      /tan of the deductor/i.test(normalized) ||
+      /summary of tax deducted at source/i.test(normalized),
+    partB:
+      /part\s*b/i.test(normalized) ||
+      /annexure/i.test(normalized) ||
+      /salary as per provisions contained in section 17/i.test(normalized) ||
+      /deductions under chapter vi-a/i.test(normalized) ||
+      /income chargeable under the head salaries/i.test(normalized),
+  };
+}
+
+function mergeExtractedValues(current: ExtractedValue[], incoming: ExtractedValue[]) {
+  const byKey = new Map<ExtractedKey, ExtractedValue>();
+
+  current.forEach((item) => byKey.set(item.key, item));
+  incoming.forEach((item) => byKey.set(item.key, item));
+
+  return Array.from(byKey.values());
+}
+
+function form16PartMessage(parts: Record<Form16Part, boolean>) {
+  if (parts.partA && parts.partB) {
+    return "Combined Form 16 or both Part A and Part B detected. Review salary, deductions and TDS before applying.";
+  }
+
+  if (parts.partA) {
+    return "Part A detected. This usually helps with TDS. Upload Part B or a combined Form 16 PDF to detect salary and deduction values.";
+  }
+
+  if (parts.partB) {
+    return "Part B detected. This usually helps with salary and deductions. Upload Part A or a combined Form 16 PDF to detect TDS.";
+  }
+
+  return "Form 16 part could not be identified confidently. Review any detected values carefully.";
+}
+
+function getForm16UploadError(error: unknown) {
+  const message = error instanceof Error ? error.message : String(error);
+
+  if (/password|encrypted|decrypt|protected/i.test(message)) {
+    return "File is password protected. Please upload an unlocked Form 16 PDF, or enter values manually using the input guide.";
+  }
+
+  return error instanceof Error
+    ? error.message
+    : "We could not read this Form 16. Please enter values manually.";
+}
+
 async function extractTextFromPdf(file: File) {
   const pdfjsLib = await loadPdfJs();
   const buffer = await file.arrayBuffer();
@@ -379,6 +436,10 @@ export default function IndianTaxCalculator() {
   const [form16Status, setForm16Status] = useState<string>("");
   const [form16Error, setForm16Error] = useState<string>("");
   const [extractedValues, setExtractedValues] = useState<ExtractedValue[]>([]);
+  const [detectedForm16Parts, setDetectedForm16Parts] = useState<Record<Form16Part, boolean>>({
+    partA: false,
+    partB: false,
+  });
   const [selectedExtractedKeys, setSelectedExtractedKeys] = useState<Record<ExtractedKey, boolean>>({
     grossSalary: true,
     basicSalary: true,
@@ -518,7 +579,6 @@ export default function IndianTaxCalculator() {
     }
 
     setForm16Error("");
-    setExtractedValues([]);
     setForm16Status("Reading Form 16 in your browser...");
 
     try {
@@ -528,11 +588,17 @@ export default function IndianTaxCalculator() {
 
       const text = await extractTextFromPdf(file);
       const extracted = extractForm16Values(text);
+      const parts = detectForm16Parts(text);
+
+      setDetectedForm16Parts((current) => ({
+        partA: current.partA || parts.partA,
+        partB: current.partB || parts.partB,
+      }));
 
       if (extracted.length === 0) {
         setForm16Status("");
         setForm16Error(
-          "We could not confidently read values from this Form 16. You can still enter values manually or use the input guide."
+          `${form16PartMessage(parts)} We could not confidently read calculator values from this PDF. You can upload another Form 16 part or enter values manually.`
         );
         return;
       }
@@ -541,15 +607,15 @@ export default function IndianTaxCalculator() {
         ...current,
         ...Object.fromEntries(extracted.map((item) => [item.key, true])),
       }));
-      setExtractedValues(extracted);
-      setForm16Status(`Found ${extracted.length} possible value${extracted.length === 1 ? "" : "s"}. Review before applying.`);
+      setExtractedValues((current) => mergeExtractedValues(current, extracted));
+      setForm16Status(
+        `${form16PartMessage(parts)} Found ${extracted.length} possible value${
+          extracted.length === 1 ? "" : "s"
+        } from this upload. You can upload the other part now or review and apply selected values.`
+      );
     } catch (error) {
       setForm16Status("");
-      setForm16Error(
-        error instanceof Error
-          ? error.message
-          : "We could not read this Form 16. Please enter values manually."
-      );
+      setForm16Error(getForm16UploadError(error));
     } finally {
       event.target.value = "";
     }
@@ -628,9 +694,14 @@ export default function IndianTaxCalculator() {
               Upload Form 16 to autofill
             </div>
             <p className="mt-2 max-w-3xl text-sm leading-6 text-slate-700">
-              Optional beta feature. Upload your Form 16 PDF and we will try to
-              read salary, deductions and TDS in your browser. The file is not
-              stored. You can still enter everything manually below.
+              Optional beta feature. Upload Form 16 Part A, Part B, or a
+              combined PDF. We will try to read salary, deductions and TDS in
+              your browser. The file is not stored. You can upload the second
+              part later or enter everything manually below.
+            </p>
+            <p className="mt-2 max-w-3xl text-sm font-semibold leading-6 text-blue-900">
+              Password-protected PDF? Please upload an unlocked Form 16. For
+              privacy, Venveel does not ask for your Form 16 password.
             </p>
           </div>
 
@@ -648,17 +719,40 @@ export default function IndianTaxCalculator() {
         <div className="mt-4 grid gap-3 md:grid-cols-3">
           <div className="rounded-xl border border-white bg-white/80 p-4 text-sm leading-6 text-slate-700">
             <p className="font-bold text-slate-950">1. Upload</p>
-            <p className="mt-1">Select Form 16 PDF from your device.</p>
+            <p className="mt-1">Select Part A, Part B, or combined Form 16.</p>
           </div>
           <div className="rounded-xl border border-white bg-white/80 p-4 text-sm leading-6 text-slate-700">
             <p className="font-bold text-slate-950">2. Review</p>
-            <p className="mt-1">Confirm the values we detect before applying.</p>
+            <p className="mt-1">Upload the other part if anything is missing.</p>
           </div>
           <div className="rounded-xl border border-white bg-white/80 p-4 text-sm leading-6 text-slate-700">
             <p className="font-bold text-slate-950">3. Edit</p>
             <p className="mt-1">Adjust any field manually using the guide.</p>
           </div>
         </div>
+
+        {(detectedForm16Parts.partA || detectedForm16Parts.partB) && (
+          <div className="mt-4 flex flex-wrap gap-2">
+            <span
+              className={`rounded-full border px-3 py-1 text-xs font-bold ${
+                detectedForm16Parts.partA
+                  ? "border-emerald-200 bg-emerald-50 text-emerald-800"
+                  : "border-slate-200 bg-white text-slate-500"
+              }`}
+            >
+              {detectedForm16Parts.partA ? "Part A detected" : "Part A not detected yet"}
+            </span>
+            <span
+              className={`rounded-full border px-3 py-1 text-xs font-bold ${
+                detectedForm16Parts.partB
+                  ? "border-emerald-200 bg-emerald-50 text-emerald-800"
+                  : "border-slate-200 bg-white text-slate-500"
+              }`}
+            >
+              {detectedForm16Parts.partB ? "Part B detected" : "Part B not detected yet"}
+            </span>
+          </div>
+        )}
 
         {form16Status && (
           <p className="mt-4 rounded-xl border border-blue-200 bg-white px-4 py-3 text-sm font-semibold text-blue-800">
@@ -687,7 +781,9 @@ export default function IndianTaxCalculator() {
                 <p className="font-black text-slate-950">Review detected values</p>
                 <p className="mt-1 text-sm leading-6 text-slate-600">
                   Keep only the rows that look correct, then apply them to the
-                  calculator. You can edit every field after applying.
+                  calculator. If you uploaded only Part A or only Part B, you
+                  can upload the other part before applying. You can edit every
+                  field after applying.
                 </p>
               </div>
               <button

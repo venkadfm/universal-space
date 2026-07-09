@@ -13,6 +13,7 @@ import {
 import SearchBar from "./components/SearchBar";
 import CategoryCard from "./components/CategoryCard";
 import ArticleCard from "./components/Articlecard";
+import EmailSignup from "./components/EmailSignup";
 import { mainCategories } from "@/lib/site-categories";
 
 const decisionPillars = [
@@ -514,23 +515,11 @@ export default function Home() {
 
       {/* Newsletter */}
       <section className="px-5 py-14 text-center md:px-6 md:py-24">
-        <div className="premium-surface mx-auto max-w-3xl rounded-3xl p-6 md:p-10">
-          <h2 className="text-3xl font-bold text-slate-900 md:text-4xl">
-            Get Venveel Updates
-          </h2>
-
-          <p className="mt-4 text-gray-600">
-            The email list is being set up. For now, send a quick note and we
-            will add you when updates go live.
-          </p>
-
-          <Link
-            href="mailto:hello.venveel@gmail.com?subject=Add%20me%20to%20Venveel%20updates"
-            className="brand-button mt-8 inline-flex rounded-xl px-6 py-3 font-semibold"
-          >
-            Request Updates
-          </Link>
-        </div>
+        <EmailSignup
+          title="Get Venveel updates before everyone else"
+          description="Join for tax-season tools, personal finance guides, AI tool comparisons, and practical buying advice."
+          source="Homepage newsletter"
+        />
       </section>
 
     </main>

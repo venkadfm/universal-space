@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, Calculator, FileText, TrendingUp } from "lucide-react";
+import EmailSignup from "../components/EmailSignup";
 import IndianTaxCalculator from "../components/IndianTaxCalculator";
 import SipCalculator from "../components/SipCalculator";
 
@@ -266,6 +267,15 @@ export default function WealthPage() {
                 </p>
               </Link>
             ))}
+          </div>
+
+          <div className="mt-6">
+            <EmailSignup
+              compact
+              title="Want tax-season reminders?"
+              description="Join for ITR guides, calculator updates, AIS/Form 16 tips, and personal finance notes."
+              source="Wealth tax filing guides"
+            />
           </div>
         </section>
 
