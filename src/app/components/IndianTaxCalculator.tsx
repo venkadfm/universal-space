@@ -198,18 +198,6 @@ function oldRegimeBaseTax(income: number) {
   ]);
 }
 
-function numberInputProps(value: number, onChange: (value: number) => void) {
-  return {
-    type: "number",
-    min: 0,
-    value,
-    onChange: (event: ChangeEvent<HTMLInputElement>) =>
-      onChange(positive(Number(event.target.value))),
-    className:
-      "w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-950 outline-none transition focus:border-blue-400 focus:ring-4 focus:ring-blue-100",
-  };
-}
-
 const pdfJsUrl = "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js";
 const pdfWorkerUrl =
   "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
@@ -424,6 +412,26 @@ function reportedHousePropertyInterest(text: string) {
   return amountMatch ? parseAmount(amountMatch[1]) : null;
 }
 
+function form16HraExemption(text: string) {
+  const hraSectionPatterns = [
+    /house\s+rent\s+allowance\s+under\s+section\s+10\s*\(?\s*13a\s*\)?/i,
+    /house\s+rent\s+allowance[^0-9]{0,120}?10\s*\(?\s*13a\s*\)?/i,
+  ];
+
+  for (const pattern of hraSectionPatterns) {
+    const amount =
+      firstDecimalAmountAfter(text, pattern, 160) ??
+      firstAmountAfter(text, pattern, 160);
+
+    if (amount !== null) {
+      return amount;
+    }
+  }
+
+  return firstDecimalAmountAfter(text, /house\s+rent\s+allowance/i, 140) ??
+    firstAmountAfter(text, /house\s+rent\s+allowance/i, 140);
+}
+
 function partATaxDeducted(text: string) {
   const matches = [...text.matchAll(/total\s*\(rs\.?\)/gi)];
 
@@ -483,9 +491,7 @@ function extractForm16Values(text: string): ExtractedValue[] {
     buildExtractedValue(
       "hraExemptionOverride",
       "HRA exemption from Form 16",
-      firstDecimalAmountAfter(normalized, /house rent allowance under section 10\(13a\)/i, 180) ??
-        firstFoundAmount(normalized, [/house rent allowance under section 10\(13a\)/i], 180) ??
-        bestAmount(normalized, [/house rent allowance/gi, /\bhra\b/gi], 220),
+      form16HraExemption(normalized),
       "Form 16 Part B HRA exemption line"
     ),
     buildExtractedValue(
@@ -1330,10 +1336,31 @@ function Field({
   value: number;
   onChange: (value: number) => void;
 }) {
+  const [draft, setDraft] = useState(String(value));
+  const [isDirty, setIsDirty] = useState(false);
+
+  const updateValue = (rawValue: string) => {
+    setDraft(rawValue);
+    setIsDirty(true);
+    onChange(rawValue === "" ? 0 : positive(Number(rawValue)));
+  };
+
   return (
     <label className="block">
       <span className="mb-2 block text-sm font-semibold text-slate-700">{label}</span>
-      <input {...numberInputProps(value, onChange)} />
+      <input
+        type="number"
+        min="0"
+        value={isDirty ? draft : String(value)}
+        onFocus={() => {
+          setDraft(String(value));
+        }}
+        onBlur={() => {
+          setIsDirty(false);
+        }}
+        onChange={(event) => updateValue(event.target.value)}
+        className="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-950 outline-none transition focus:border-blue-400 focus:ring-4 focus:ring-blue-100"
+      />
     </label>
   );
 }

@@ -30,6 +30,39 @@ function clampNumber(value: number) {
   return Number.isFinite(value) && value > 0 ? value : 0;
 }
 
+function NumericInput({
+  value,
+  onChange,
+}: {
+  value: number;
+  onChange: (value: number) => void;
+}) {
+  const [draft, setDraft] = useState(String(value));
+  const [isDirty, setIsDirty] = useState(false);
+
+  const updateValue = (rawValue: string) => {
+    setDraft(rawValue);
+    setIsDirty(true);
+    onChange(rawValue === "" ? 0 : clampNumber(Number(rawValue)));
+  };
+
+  return (
+    <input
+      type="number"
+      min="0"
+      value={isDirty ? draft : String(value)}
+      onFocus={() => {
+        setDraft(String(value));
+      }}
+      onBlur={() => {
+        setIsDirty(false);
+      }}
+      onChange={(event) => updateValue(event.target.value)}
+      className="w-full rounded-xl border border-slate-200 bg-white p-3 text-slate-950 outline-none transition focus:border-blue-400 focus:ring-4 focus:ring-blue-100"
+    />
+  );
+}
+
 export default function SipCalculator() {
   const [mode, setMode] = useState<InvestmentMode>("sip");
   const [sipAmount, setSipAmount] = useState(0);
@@ -124,13 +157,7 @@ export default function SipCalculator() {
             {selectedFrequency.label} SIP Investment (₹)
             </label>
 
-            <input
-              type="number"
-              min="0"
-              value={sipAmount}
-              onChange={(e) => setSipAmount(clampNumber(Number(e.target.value)))}
-              className="w-full rounded-xl border border-slate-200 bg-white p-3 text-slate-950 outline-none transition focus:border-blue-400 focus:ring-4 focus:ring-blue-100"
-            />
+            <NumericInput value={sipAmount} onChange={setSipAmount} />
           </div>
         )}
 
@@ -165,13 +192,7 @@ export default function SipCalculator() {
               Lump Sum Investment (₹)
             </label>
 
-            <input
-              type="number"
-              min="0"
-              value={lumpsum}
-              onChange={(e) => setLumpsum(clampNumber(Number(e.target.value)))}
-              className="w-full rounded-xl border border-slate-200 bg-white p-3 text-slate-950 outline-none transition focus:border-blue-400 focus:ring-4 focus:ring-blue-100"
-            />
+            <NumericInput value={lumpsum} onChange={setLumpsum} />
           </div>
         )}
 
@@ -180,13 +201,7 @@ export default function SipCalculator() {
             Expected Annual Return (%)
           </label>
 
-          <input
-            type="number"
-            min="0"
-            value={rate}
-            onChange={(e) => setRate(clampNumber(Number(e.target.value)))}
-            className="w-full rounded-xl border border-slate-200 bg-white p-3 text-slate-950 outline-none transition focus:border-blue-400 focus:ring-4 focus:ring-blue-100"
-          />
+          <NumericInput value={rate} onChange={setRate} />
         </div>
 
         <div>
@@ -194,13 +209,7 @@ export default function SipCalculator() {
             Investment Years
           </label>
 
-          <input
-            type="number"
-            min="0"
-            value={years}
-            onChange={(e) => setYears(clampNumber(Number(e.target.value)))}
-            className="w-full rounded-xl border border-slate-200 bg-white p-3 text-slate-950 outline-none transition focus:border-blue-400 focus:ring-4 focus:ring-blue-100"
-          />
+          <NumericInput value={years} onChange={setYears} />
         </div>
       </div>
 
