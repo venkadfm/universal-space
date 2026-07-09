@@ -32,11 +32,11 @@ function clampNumber(value: number) {
 
 export default function SipCalculator() {
   const [mode, setMode] = useState<InvestmentMode>("sip");
-  const [sipAmount, setSipAmount] = useState(5000);
+  const [sipAmount, setSipAmount] = useState(0);
   const [frequency, setFrequency] = useState<SipFrequency>("monthly");
-  const [lumpsum, setLumpsum] = useState(100000);
-  const [years, setYears] = useState(20);
-  const [rate, setRate] = useState(12);
+  const [lumpsum, setLumpsum] = useState(0);
+  const [years, setYears] = useState(0);
+  const [rate, setRate] = useState(0);
 
   const selectedFrequency =
     frequencies.find((item) => item.value === frequency) ?? frequencies[0];
@@ -196,7 +196,7 @@ export default function SipCalculator() {
 
           <input
             type="number"
-            min="1"
+            min="0"
             value={years}
             onChange={(e) => setYears(clampNumber(Number(e.target.value)))}
             className="w-full rounded-xl border border-slate-200 bg-white p-3 text-slate-950 outline-none transition focus:border-blue-400 focus:ring-4 focus:ring-blue-100"

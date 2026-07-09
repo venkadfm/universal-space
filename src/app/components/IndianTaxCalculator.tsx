@@ -9,6 +9,7 @@ import {
   CheckCircle2,
   ChevronDown,
   ChevronUp,
+  Keyboard,
   FileText,
   Upload,
   ShieldCheck,
@@ -24,6 +25,7 @@ type SectionKey =
   | "credits";
 
 type Regime = "new" | "old";
+type EntryMode = "upload" | "manual";
 
 type PdfJsDocument = {
   numPages: number;
@@ -53,12 +55,14 @@ type ExtractedKey =
   | "grossSalary"
   | "basicSalary"
   | "hraReceived"
+  | "hraExemptionOverride"
   | "otherExemptAllowances"
   | "professionalTax"
   | "employerNps"
   | "selfOccupiedInterest"
   | "section80c"
   | "section80dSelf"
+  | "section80dParents"
   | "npsSelf"
   | "tdsTcs";
 
@@ -71,14 +75,42 @@ type ExtractedValue = {
 
 type Form16Part = "partA" | "partB";
 
-const sections: Array<{ key: SectionKey; label: string }> = [
-  { key: "profile", label: "Profile" },
-  { key: "salary", label: "Salary" },
-  { key: "house", label: "House Property" },
-  { key: "capital", label: "Capital Gains" },
-  { key: "other", label: "Other Income" },
-  { key: "deductions", label: "Old Regime Deductions" },
-  { key: "credits", label: "TDS & Relief" },
+const sections: Array<{ key: SectionKey; label: string; description: string }> = [
+  {
+    key: "salary",
+    label: "Salary details",
+    description: "Form 16 salary, HRA, exemptions and professional tax.",
+  },
+  {
+    key: "other",
+    label: "Other income",
+    description: "AIS income such as bank interest, FD interest and dividends.",
+  },
+  {
+    key: "deductions",
+    label: "Deductions",
+    description: "80C, NPS, 80D and other old-regime deductions.",
+  },
+  {
+    key: "credits",
+    label: "Tax already paid",
+    description: "TDS, TCS, advance tax and relief already available.",
+  },
+  {
+    key: "profile",
+    label: "Profile settings",
+    description: "Residence and HRA city settings.",
+  },
+  {
+    key: "house",
+    label: "Home loan & property",
+    description: "Self-occupied or let-out house property income/loss.",
+  },
+  {
+    key: "capital",
+    label: "Capital gains",
+    description: "Shares, mutual funds and other taxable capital gains.",
+  },
 ];
 
 function formatCurrency(value: number) {
@@ -392,6 +424,33 @@ function reportedHousePropertyInterest(text: string) {
   return amountMatch ? parseAmount(amountMatch[1]) : null;
 }
 
+function partATaxDeducted(text: string) {
+  const matches = [...text.matchAll(/total\s*\(rs\.?\)/gi)];
+
+  for (const match of matches) {
+    const segment = text.slice(match.index + match[0].length, match.index + match[0].length + 220);
+    const amounts = [...segment.matchAll(/(?:rs\.?|inr|₹)?\s*([0-9]{1,3}(?:,[0-9]{2,3})+|[0-9]+)\.\d{1,2}/gi)]
+      .map((item) => parseAmount(item[1]))
+      .filter((item): item is number => item !== null);
+
+    if (amounts.length >= 3) {
+      const taxColumns = amounts.slice(1, 3).filter((amount) => amount > 0);
+
+      if (taxColumns.length > 0) {
+        return Math.min(...taxColumns);
+      }
+    }
+
+    if (amounts.length === 2 && amounts[1] > 0) {
+      return amounts[1];
+    }
+  }
+
+  const verificationMatch = /a sum of rs\.\s*([0-9]{1,3}(?:,[0-9]{2,3})+|[0-9]+)\.\d{1,2}[^.]{0,140}has been deducted/i.exec(text);
+
+  return verificationMatch ? parseAmount(verificationMatch[1]) : null;
+}
+
 function extractForm16Values(text: string): ExtractedValue[] {
   const normalized = text.replace(/\s+/g, " ");
   const parts = detectForm16Parts(normalized);
@@ -422,8 +481,8 @@ function extractForm16Values(text: string): ExtractedValue[] {
       "Basic salary line, if available"
     ),
     buildExtractedValue(
-      "hraReceived",
-      "HRA exemption / HRA line",
+      "hraExemptionOverride",
+      "HRA exemption from Form 16",
       firstDecimalAmountAfter(normalized, /house rent allowance under section 10\(13a\)/i, 180) ??
         firstFoundAmount(normalized, [/house rent allowance under section 10\(13a\)/i], 180) ??
         bestAmount(normalized, [/house rent allowance/gi, /\bhra\b/gi], 220),
@@ -476,14 +535,32 @@ function extractForm16Values(text: string): ExtractedValue[] {
         firstFoundAmount(normalized, [/section 80c/i], 240),
       "Section 80C deduction"
     ),
-    buildExtractedValue(
-      "section80dSelf",
-      "80D self/family",
-      lastDecimalAmountBefore(normalized, /\b80d\b/i, 120) ??
+    (() => {
+      const section80d =
+        lastDecimalAmountBefore(normalized, /\b80d\b/i, 120) ??
         lastAmountBefore(normalized, /\b80d\b/i, 120) ??
-        firstFoundAmount(normalized, [/\b80d\b/i], 180),
-      "Section 80D deduction"
-    ),
+        firstFoundAmount(normalized, [/\b80d\b/i], 180);
+
+      return buildExtractedValue(
+        "section80dSelf",
+        "80D self/family",
+        section80d === null ? null : Math.min(section80d, 25000),
+        "Section 80D deduction"
+      );
+    })(),
+    (() => {
+      const section80d =
+        lastDecimalAmountBefore(normalized, /\b80d\b/i, 120) ??
+        lastAmountBefore(normalized, /\b80d\b/i, 120) ??
+        firstFoundAmount(normalized, [/\b80d\b/i], 180);
+
+      return buildExtractedValue(
+        "section80dParents",
+        "80D parents / additional",
+        section80d !== null && section80d > 25000 ? section80d - 25000 : null,
+        "Section 80D balance"
+      );
+    })(),
     buildExtractedValue(
       "npsSelf",
       "80CCD(1B) self NPS",
@@ -497,7 +574,8 @@ function extractForm16Values(text: string): ExtractedValue[] {
       ? buildExtractedValue(
           "tdsTcs",
           "TDS / TCS",
-          lastDecimalAmountAfter(normalized, /total \(rs\.\)/i, 140) ??
+          partATaxDeducted(normalized) ??
+            lastDecimalAmountAfter(normalized, /total \(rs\.\)/i, 140) ??
             lastAmountAfter(normalized, /total \(rs\.\)/i, 140) ??
             firstFoundAmount(normalized, [
               /total tax deducted/gi,
@@ -529,18 +607,9 @@ function detectForm16Parts(text: string) {
   };
 }
 
-function mergeExtractedValues(current: ExtractedValue[], incoming: ExtractedValue[]) {
-  const byKey = new Map<ExtractedKey, ExtractedValue>();
-
-  current.forEach((item) => byKey.set(item.key, item));
-  incoming.forEach((item) => byKey.set(item.key, item));
-
-  return Array.from(byKey.values());
-}
-
 function form16PartMessage(parts: Record<Form16Part, boolean>) {
   if (parts.partA && parts.partB) {
-    return "Combined Form 16 or both Part A and Part B detected. Review salary, deductions and TDS before applying.";
+    return "Combined Form 16 or both Part A and Part B detected. Review salary, deductions and TDS after autofill.";
   }
 
   if (parts.partA) {
@@ -583,23 +652,25 @@ async function extractTextFromPdf(file: File) {
 
 export default function IndianTaxCalculator() {
   const [openSections, setOpenSections] = useState<Record<SectionKey, boolean>>({
-    profile: true,
+    profile: false,
     salary: true,
-    house: true,
+    house: false,
     capital: false,
     other: true,
     deductions: true,
     credits: true,
   });
+  const [entryMode, setEntryMode] = useState<EntryMode>("upload");
 
   const [resident, setResident] = useState(true);
-  const [grossSalary, setGrossSalary] = useState(1200000);
-  const [basicSalary, setBasicSalary] = useState(600000);
-  const [hraReceived, setHraReceived] = useState(240000);
-  const [annualRent, setAnnualRent] = useState(300000);
+  const [grossSalary, setGrossSalary] = useState(0);
+  const [basicSalary, setBasicSalary] = useState(0);
+  const [hraReceived, setHraReceived] = useState(0);
+  const [hraExemptionOverride, setHraExemptionOverride] = useState(0);
+  const [annualRent, setAnnualRent] = useState(0);
   const [metroCity, setMetroCity] = useState(false);
   const [otherExemptAllowances, setOtherExemptAllowances] = useState(0);
-  const [professionalTax, setProfessionalTax] = useState(2400);
+  const [professionalTax, setProfessionalTax] = useState(0);
   const [employerNps, setEmployerNps] = useState(0);
   const [selfOccupiedInterest, setSelfOccupiedInterest] = useState(0);
   const [rentalIncome, setRentalIncome] = useState(0);
@@ -608,45 +679,32 @@ export default function IndianTaxCalculator() {
   const [stcg111a, setStcg111a] = useState(0);
   const [ltcg112a, setLtcg112a] = useState(0);
   const [otherCapitalGains, setOtherCapitalGains] = useState(0);
-  const [savingsInterest, setSavingsInterest] = useState(10000);
+  const [savingsInterest, setSavingsInterest] = useState(0);
   const [fdInterest, setFdInterest] = useState(0);
   const [dividends, setDividends] = useState(0);
   const [otherIncome, setOtherIncome] = useState(0);
-  const [section80c, setSection80c] = useState(150000);
-  const [section80dSelf, setSection80dSelf] = useState(25000);
+  const [section80c, setSection80c] = useState(0);
+  const [section80dSelf, setSection80dSelf] = useState(0);
   const [section80dParents, setSection80dParents] = useState(0);
-  const [npsSelf, setNpsSelf] = useState(50000);
+  const [npsSelf, setNpsSelf] = useState(0);
   const [donation80g, setDonation80g] = useState(0);
   const [tdsTcs, setTdsTcs] = useState(0);
   const [foreignRelief, setForeignRelief] = useState(0);
   const [advanceTax, setAdvanceTax] = useState(0);
   const [form16Status, setForm16Status] = useState<string>("");
   const [form16Error, setForm16Error] = useState<string>("");
-  const [extractedValues, setExtractedValues] = useState<ExtractedValue[]>([]);
   const [detectedForm16Parts, setDetectedForm16Parts] = useState<Record<Form16Part, boolean>>({
     partA: false,
     partB: false,
   });
-  const [selectedExtractedKeys, setSelectedExtractedKeys] = useState<Record<ExtractedKey, boolean>>({
-    grossSalary: true,
-    basicSalary: true,
-    hraReceived: true,
-    otherExemptAllowances: true,
-    professionalTax: true,
-    employerNps: true,
-    selfOccupiedInterest: true,
-    section80c: true,
-    section80dSelf: true,
-    npsSelf: true,
-    tdsTcs: true,
-  });
 
   const result = useMemo(() => {
     const hraPercent = metroCity ? 0.5 : 0.4;
-    const hraExemption = Math.max(
+    const calculatedHraExemption = Math.max(
       0,
       Math.min(hraReceived, basicSalary * hraPercent, annualRent - basicSalary * 0.1)
     );
+    const hraExemption = hraExemptionOverride > 0 ? hraExemptionOverride : calculatedHraExemption;
     const newStandardDeduction = grossSalary > 0 ? 75000 : 0;
     const oldStandardDeduction = grossSalary > 0 ? 50000 : 0;
     const newSalaryIncome = Math.max(0, grossSalary - newStandardDeduction);
@@ -718,6 +776,7 @@ export default function IndianTaxCalculator() {
     grossSalary,
     basicSalary,
     hraReceived,
+    hraExemptionOverride,
     annualRent,
     metroCity,
     otherExemptAllowances,
@@ -752,14 +811,28 @@ export default function IndianTaxCalculator() {
     grossSalary: setGrossSalary,
     basicSalary: setBasicSalary,
     hraReceived: setHraReceived,
+    hraExemptionOverride: setHraExemptionOverride,
     otherExemptAllowances: setOtherExemptAllowances,
     professionalTax: setProfessionalTax,
     employerNps: setEmployerNps,
     selfOccupiedInterest: setSelfOccupiedInterest,
     section80c: setSection80c,
     section80dSelf: setSection80dSelf,
+    section80dParents: setSection80dParents,
     npsSelf: setNpsSelf,
     tdsTcs: setTdsTcs,
+  };
+
+  const fillExtractedValues = (values: ExtractedValue[]) => {
+    values.forEach((item) => {
+      setters[item.key](item.value);
+    });
+    setOpenSections((current) => ({
+      ...current,
+      salary: true,
+      deductions: true,
+      credits: true,
+    }));
   };
 
   const handleForm16Upload = async (event: ChangeEvent<HTMLInputElement>) => {
@@ -794,15 +867,11 @@ export default function IndianTaxCalculator() {
         return;
       }
 
-      setSelectedExtractedKeys((current) => ({
-        ...current,
-        ...Object.fromEntries(extracted.map((item) => [item.key, true])),
-      }));
-      setExtractedValues((current) => mergeExtractedValues(current, extracted));
+      fillExtractedValues(extracted);
       setForm16Status(
-        `${form16PartMessage(parts)} Found ${extracted.length} possible value${
+        `${form16PartMessage(parts)} Filled ${extracted.length} value${
           extracted.length === 1 ? "" : "s"
-        } from this upload. You can upload the other part now or review and apply selected values.`
+        } in the calculator. Please review the fields before filing. You can upload the other part if anything is missing.`
       );
     } catch (error) {
       setForm16Status("");
@@ -812,20 +881,11 @@ export default function IndianTaxCalculator() {
     }
   };
 
-  const applyExtractedValues = () => {
-    extractedValues.forEach((item) => {
-      if (selectedExtractedKeys[item.key]) {
-        setters[item.key](item.value);
-      }
-    });
-    setOpenSections((current) => ({
-      ...current,
-      salary: true,
-      deductions: true,
-      credits: true,
-    }));
-    setForm16Status("Selected Form 16 values applied. Please review the fields before filing.");
-  };
+  const recommendedPayable =
+    result.recommended === "new" ? result.newPayable : result.oldPayable;
+  const recommendedTax =
+    result.recommended === "new" ? result.newTotalTax : result.oldTotalTax;
+  const creditsUsed = tdsTcs + advanceTax + foreignRelief;
 
   return (
     <section className="premium-surface rounded-2xl p-5 md:p-8">
@@ -877,12 +937,70 @@ export default function IndianTaxCalculator() {
         </div>
       </div>
 
+      <div className="mt-6 rounded-2xl border border-slate-200 bg-white p-4 md:p-5">
+        <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+          <div>
+            <p className="text-xs font-black uppercase tracking-[0.16em] text-blue-700">
+              Start here
+            </p>
+            <h3 className="mt-1 text-lg font-black text-slate-950">
+              Choose how you want to fill the calculator
+            </h3>
+          </div>
+          <div className="grid grid-cols-2 rounded-xl border border-slate-200 bg-slate-100 p-1 lg:min-w-[360px]">
+            <button
+              type="button"
+              onClick={() => setEntryMode("upload")}
+              className={`inline-flex items-center justify-center gap-2 rounded-lg px-4 py-3 text-sm font-black transition ${
+                entryMode === "upload"
+                  ? "bg-white text-blue-800 shadow-sm"
+                  : "text-slate-600 hover:text-slate-950"
+              }`}
+            >
+              <Upload className="size-4" />
+              Form 16
+            </button>
+            <button
+              type="button"
+              onClick={() => setEntryMode("manual")}
+              className={`inline-flex items-center justify-center gap-2 rounded-lg px-4 py-3 text-sm font-black transition ${
+                entryMode === "manual"
+                  ? "bg-white text-blue-800 shadow-sm"
+                  : "text-slate-600 hover:text-slate-950"
+              }`}
+            >
+              <Keyboard className="size-4" />
+              Manual
+            </button>
+          </div>
+        </div>
+        <p className="mt-3 max-w-4xl text-sm leading-6 text-slate-600">
+          {entryMode === "upload"
+            ? "Best for salaried users. Upload Form 16, review what we detect, then edit any field before calculating."
+            : "Use the input guide and fill only the sections that apply to you. Form 16 upload stays available anytime."}
+        </p>
+      </div>
+
+      <div className="mt-4 rounded-2xl border border-slate-200 bg-white p-5">
+        <div className="flex items-center gap-2 font-black text-slate-950">
+          <FileText className="size-5 text-blue-700" />
+          Keep these ready
+        </div>
+        <div className="mt-3 grid gap-2 text-sm text-slate-700 sm:grid-cols-2 lg:grid-cols-4">
+          <span className="rounded-lg bg-slate-50 px-3 py-2">Form 16</span>
+          <span className="rounded-lg bg-slate-50 px-3 py-2">AIS / TIS</span>
+          <span className="rounded-lg bg-slate-50 px-3 py-2">Form 26AS</span>
+          <span className="rounded-lg bg-slate-50 px-3 py-2">Broker report, if applicable</span>
+        </div>
+      </div>
+
+      {entryMode === "upload" ? (
       <div className="mt-6 rounded-2xl border border-blue-200 bg-blue-50/70 p-5">
         <div className="flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
           <div>
             <div className="flex items-center gap-2 font-black text-slate-950">
               <Upload className="size-5 text-blue-700" />
-              Upload Form 16 to autofill
+              Form 16 autofill
             </div>
             <p className="mt-2 max-w-3xl text-sm leading-6 text-slate-700">
               Optional beta feature. Upload Form 16 Part A, Part B, or a
@@ -965,68 +1083,30 @@ export default function IndianTaxCalculator() {
           </div>
         )}
 
-        {extractedValues.length > 0 && (
-          <div className="mt-4 rounded-2xl border border-slate-200 bg-white p-4">
-            <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
-              <div>
-                <p className="font-black text-slate-950">Review detected values</p>
-                <p className="mt-1 text-sm leading-6 text-slate-600">
-                  Keep only the rows that look correct, then apply them to the
-                  calculator. If you uploaded only Part A or only Part B, you
-                  can upload the other part before applying. You can edit every
-                  field after applying.
-                </p>
-              </div>
-              <button
-                type="button"
-                onClick={applyExtractedValues}
-                className="rounded-xl bg-blue-700 px-5 py-3 text-sm font-bold text-white transition hover:bg-blue-800"
-              >
-                Apply selected values
-              </button>
-            </div>
-
-            <div className="mt-4 overflow-x-auto">
-              <table className="w-full min-w-[620px] border-collapse text-left text-sm">
-                <thead>
-                  <tr className="border-b border-slate-200 text-slate-600">
-                    <th className="py-3 pr-4 font-bold">Use</th>
-                    <th className="py-3 pr-4 font-bold">Field</th>
-                    <th className="py-3 pr-4 font-bold">Detected value</th>
-                    <th className="py-3 pr-4 font-bold">Source</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {extractedValues.map((item) => (
-                    <tr key={item.key} className="border-b border-slate-100">
-                      <td className="py-3 pr-4">
-                        <input
-                          type="checkbox"
-                          checked={selectedExtractedKeys[item.key]}
-                          onChange={(event) =>
-                            setSelectedExtractedKeys((current) => ({
-                              ...current,
-                              [item.key]: event.target.checked,
-                            }))
-                          }
-                          className="size-4"
-                        />
-                      </td>
-                      <td className="py-3 pr-4 font-semibold text-slate-950">
-                        {item.label}
-                      </td>
-                      <td className="py-3 pr-4 font-black text-slate-950">
-                        {formatCurrency(item.value)}
-                      </td>
-                      <td className="py-3 pr-4 text-slate-600">{item.source}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </div>
-        )}
       </div>
+      ) : (
+        <div className="mt-6 rounded-2xl border border-blue-200 bg-blue-50/70 p-5">
+          <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+            <div>
+              <div className="flex items-center gap-2 font-black text-slate-950">
+                <Keyboard className="size-5 text-blue-700" />
+                Manual entry selected
+              </div>
+              <p className="mt-2 max-w-3xl text-sm leading-6 text-slate-700">
+                Start with salary, other income, deductions and tax already paid.
+                Open home loan, property or capital gains only if they apply.
+              </p>
+            </div>
+            <Link
+              href="/articles/how-to-use-indian-tax-calculator"
+              className="inline-flex items-center justify-center gap-2 rounded-xl bg-white px-4 py-3 text-sm font-bold text-blue-800 shadow-sm transition hover:bg-blue-50"
+            >
+              Input guide
+              <ArrowRight className="size-4" />
+            </Link>
+          </div>
+        </div>
+      )}
 
       <div className="mt-6 grid gap-5 lg:grid-cols-[1fr_360px]">
         <div className="space-y-4">
@@ -1037,7 +1117,12 @@ export default function IndianTaxCalculator() {
                 onClick={() => toggleSection(section.key)}
                 className="flex w-full items-center justify-between gap-3 px-4 py-3 text-left font-bold text-slate-950"
               >
-                {section.label}
+                <span>
+                  <span className="block">{section.label}</span>
+                  <span className="mt-1 block text-sm font-medium leading-5 text-slate-500">
+                    {section.description}
+                  </span>
+                </span>
                 {openSections[section.key] ? (
                   <ChevronUp className="size-4" />
                 ) : (
@@ -1075,6 +1160,11 @@ export default function IndianTaxCalculator() {
                       <Field label="Gross salary" value={grossSalary} onChange={setGrossSalary} />
                       <Field label="Basic salary for HRA" value={basicSalary} onChange={setBasicSalary} />
                       <Field label="HRA received" value={hraReceived} onChange={setHraReceived} />
+                      <Field
+                        label="HRA exemption from Form 16"
+                        value={hraExemptionOverride}
+                        onChange={setHraExemptionOverride}
+                      />
                       <Field label="Annual rent paid" value={annualRent} onChange={setAnnualRent} />
                       <Field
                         label="Other section 10 exemptions"
@@ -1152,8 +1242,32 @@ export default function IndianTaxCalculator() {
             <p className="mt-3 text-4xl font-black text-slate-950">
               {result.recommended === "new" ? "New" : "Old"}
             </p>
-            <p className="mt-2 text-sm leading-6 text-slate-700">
-              Estimated saving versus the other regime:{" "}
+            <dl className="mt-5 grid gap-3 text-sm">
+              <div className="rounded-xl bg-white/80 p-3">
+                <dt className="font-semibold text-slate-600">
+                  {recommendedPayable >= 0 ? "Estimated payable" : "Estimated refund"}
+                </dt>
+                <dd className="mt-1 text-2xl font-black text-slate-950">
+                  {formatCurrency(Math.abs(recommendedPayable))}
+                </dd>
+              </div>
+              <div className="grid grid-cols-2 gap-3">
+                <div className="rounded-xl bg-white/70 p-3">
+                  <dt className="font-semibold text-slate-600">Total tax</dt>
+                  <dd className="mt-1 font-black text-slate-950">
+                    {formatCurrency(recommendedTax)}
+                  </dd>
+                </div>
+                <div className="rounded-xl bg-white/70 p-3">
+                  <dt className="font-semibold text-slate-600">Tax paid</dt>
+                  <dd className="mt-1 font-black text-slate-950">
+                    {formatCurrency(creditsUsed)}
+                  </dd>
+                </div>
+              </div>
+            </dl>
+            <p className="mt-4 text-sm leading-6 text-slate-700">
+              Saving versus the other regime:{" "}
               <strong>{formatCurrency(result.savings)}</strong>
             </p>
           </div>
