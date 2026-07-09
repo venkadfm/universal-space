@@ -1,6 +1,12 @@
 import type { MetadataRoute } from "next";
 import { getAllArticles, getArticleDate } from "@/lib/articles";
 
+const taxSeasonSlugs = new Set([
+  "new-vs-old-tax-regime-india",
+  "how-to-file-new-tax-regime-itr-india",
+  "how-to-use-indian-tax-calculator",
+]);
+
 function getLastModified(date: string) {
   return getArticleDate(date) ?? new Date();
 }
@@ -54,8 +60,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     {
       url: `${baseUrl}/wealth`,
       lastModified: new Date(),
-      changeFrequency: "weekly",
-      priority: 0.8,
+      changeFrequency: "daily",
+      priority: 0.95,
     },
     {
       url: `${baseUrl}/tools`,
@@ -112,8 +118,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     .map((article) => ({
       url: `${baseUrl}/articles/${article.slug}`,
       lastModified: getLastModified(article.date),
-      changeFrequency: "weekly",
-      priority: article.featured ? 0.9 : 0.7,
+      changeFrequency: taxSeasonSlugs.has(article.slug) ? "daily" : "weekly",
+      priority: taxSeasonSlugs.has(article.slug)
+        ? 0.9
+        : article.featured
+          ? 0.9
+          : 0.7,
     }));
 
   return [...staticPages, ...articlePages];

@@ -35,7 +35,7 @@ export default function PrivacyPage() {
 
           <h2 className="text-2xl font-bold text-slate-950">Contact</h2>
           <p>
-            For privacy questions, contact us at venveel.contact@gmail.com.
+            For privacy questions, contact us at hello.venveel@gmail.com.
           </p>
         </div>
       </article>

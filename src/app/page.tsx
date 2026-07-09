@@ -2,8 +2,11 @@ import { getAllArticles } from "@/lib/articles";
 import Link from "next/link";
 import {
   ArrowRight,
+  Calculator,
   CheckCircle2,
+  FileText,
   Search,
+  ShoppingBag,
   Sparkles,
   TrendingUp,
 } from "lucide-react";
@@ -14,16 +17,43 @@ import { mainCategories } from "@/lib/site-categories";
 
 const decisionPillars = [
   {
-    title: "Pick the right AI stack",
-    description: "Compare subscriptions, workflows, and tools before you pay.",
+    title: "Compare old vs new regime",
+    description: "Enter salary, HRA, deductions and TDS once before filing.",
   },
   {
-    title: "Buy with fewer regrets",
-    description: "Use practical product guides built around real tradeoffs.",
+    title: "Follow portal steps",
+    description: "Move through Income Tax portal screens without guessing.",
   },
   {
-    title: "Make money choices clearer",
-    description: "Read simple wealth notes focused on long-term decisions.",
+    title: "Find every input",
+    description: "Know where Form 16, AIS, 26AS and broker reports fit.",
+  },
+];
+
+const taxHubLinks = [
+  {
+    title: "Indian Tax Calculator",
+    description: "Compare old and new regime with salary, HRA, house property, deductions and TDS.",
+    href: "/wealth#indian-tax-calculator",
+    label: "Use tool",
+  },
+  {
+    title: "New vs Old Regime",
+    description: "See who should use new regime and when old regime still wins.",
+    href: "/articles/new-vs-old-tax-regime-india",
+    label: "Read guide",
+  },
+  {
+    title: "New Regime Filing Steps",
+    description: "Follow the key portal screens before submitting your ITR.",
+    href: "/articles/how-to-file-new-tax-regime-itr-india",
+    label: "Follow steps",
+  },
+  {
+    title: "Calculator Input Guide",
+    description: "Know exactly where each salary, HRA, AIS, deduction and TDS value comes from.",
+    href: "/articles/how-to-use-indian-tax-calculator",
+    label: "Fill inputs",
   },
 ];
 
@@ -32,13 +62,9 @@ export default function Home() {
     (article) => article.slug && !article.slug.startsWith("_")
   );
 
-  const latestBuyingGuide = articles.find(
-    (article) => article.category === "Buying Guides"
-  );
   const featuredArticles = articles.filter((article) => article.featured);
   const leadArticle = featuredArticles[0];
   const secondaryFeaturedArticles = featuredArticles.slice(1, 3);
-  const previewArticles = articles.slice(0, 3);
 
   const latestArticles = articles
     .filter((article) => !article.featured)
@@ -52,35 +78,42 @@ export default function Home() {
 
         <div className="mx-auto max-w-6xl">
           <div className="mb-6 inline-flex rounded-full border border-blue-200/70 bg-white/80 px-4 py-2 text-xs font-semibold text-blue-800 shadow-sm backdrop-blur md:text-sm">
-            AI tools, buying guides, wealth, and resources
+            Tax season spotlight + everyday decision guides
           </div>
 
           <h1 className="mx-auto max-w-5xl text-4xl font-black leading-tight tracking-tight text-slate-950 sm:text-5xl md:text-7xl">
-            Make smarter calls before you spend time or money.
+            Make better decisions on tax, AI tools, and what to buy next.
           </h1>
 
           <p className="mx-auto mt-6 max-w-3xl text-base leading-7 text-slate-600 sm:text-lg md:mt-7 md:text-2xl md:leading-9">
-            Venveel helps you cut through the noise with trusted AI tools,
-            practical buying guides, wealth insights, and useful resources.
+            Venveel brings practical calculators and guides for money, AI, and
+            buying decisions. Right now, the Indian tax hub is highlighted for
+            filing season.
           </p>
 
           <div className="mt-8 flex flex-col justify-center gap-4 sm:flex-row md:mt-10">
             <Link
-              href="/ai"
-              className="brand-button rounded-xl px-8 py-4 text-base font-semibold"
+              href="/wealth#indian-tax-calculator"
+              className="brand-button inline-flex items-center justify-center gap-2 rounded-xl px-8 py-4 text-base font-semibold"
             >
-              Explore AI Tools
+              <Calculator className="size-5" />
+              Calculate tax
             </Link>
 
             <Link
-              href={
-                latestBuyingGuide
-                  ? `/articles/${latestBuyingGuide.slug}`
-                  : "/buying-guides"
-              }
-              className="brand-button-secondary rounded-xl px-8 py-4 text-base font-semibold"
+              href="/articles/how-to-file-new-tax-regime-itr-india"
+              className="brand-button-secondary inline-flex items-center justify-center gap-2 rounded-xl px-8 py-4 text-base font-semibold"
             >
-              Latest Buying Guide
+              <FileText className="size-5" />
+              New tax filing guide
+            </Link>
+
+            <Link
+              href="/buying-guides"
+              className="brand-button-secondary inline-flex items-center justify-center gap-2 rounded-xl px-8 py-4 text-base font-semibold"
+            >
+              <ShoppingBag className="size-5" />
+              Buying guides
             </Link>
           </div>
 
@@ -93,11 +126,11 @@ export default function Home() {
               <div className="p-6 md:p-8">
                 <div className="inline-flex items-center gap-2 rounded-full border border-teal-200 bg-teal-50 px-3 py-1 text-sm font-bold text-teal-800">
                   <Sparkles className="size-4" />
-                  Decision desk
+                  Tax spotlight
                 </div>
 
                 <h2 className="mt-5 max-w-xl text-2xl font-black tracking-tight text-slate-950 md:text-4xl">
-                  Start with the guide that matches today&apos;s decision.
+                  A practical filing-season checklist before you submit.
                 </h2>
 
                 <div className="mt-6 grid gap-4">
@@ -124,24 +157,24 @@ export default function Home() {
                 <div className="flex items-center justify-between gap-4">
                   <div>
                     <p className="text-sm font-semibold uppercase tracking-[0.18em] text-blue-200">
-                      Latest guide preview
+                      Most useful right now
                     </p>
                     <h3 className="mt-2 text-2xl font-black">
-                      {latestBuyingGuide?.title ?? "Explore the latest guides"}
+                      Indian Tax Calculator
                     </h3>
                   </div>
                   <TrendingUp className="size-8 text-teal-300" />
                 </div>
 
                 <div className="mt-7 grid gap-3">
-                  {previewArticles.map((article) => (
+                  {taxHubLinks.slice(0, 3).map((article) => (
                     <Link
-                      key={article.slug}
-                      href={`/articles/${article.slug}`}
+                      key={article.href}
+                      href={article.href}
                       className="rounded-2xl border border-white/10 bg-white/8 p-4 transition hover:bg-white/12"
                     >
                       <p className="text-xs font-bold uppercase tracking-[0.16em] text-blue-200">
-                        {article.category}
+                        {article.label}
                       </p>
                       <p className="mt-2 line-clamp-2 font-bold leading-snug text-white">
                         {article.title}
@@ -151,17 +184,124 @@ export default function Home() {
                 </div>
 
                 <Link
-                  href={
-                    latestBuyingGuide
-                      ? `/articles/${latestBuyingGuide.slug}`
-                      : "/buying-guides"
-                  }
+                  href="/wealth#indian-tax-calculator"
                   className="mt-7 inline-flex items-center gap-2 rounded-xl bg-white px-5 py-3 font-semibold text-slate-950 shadow-lg transition hover:-translate-y-0.5 hover:bg-blue-50"
                 >
-                  Open guide
+                  Open calculator
                   <ArrowRight className="size-4" />
                 </Link>
               </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Evergreen Paths */}
+      <section className="mx-auto max-w-6xl px-5 pb-6 md:px-6 md:pb-8">
+        <div className="grid gap-4 md:grid-cols-2">
+          <Link
+            href="/ai"
+            className="group rounded-3xl border border-slate-200 bg-white p-6 shadow-[0_14px_38px_rgba(15,23,42,0.06)] transition hover:-translate-y-0.5 hover:border-blue-200 hover:shadow-[0_20px_50px_rgba(15,23,42,0.1)] md:p-7"
+          >
+            <div className="flex items-start justify-between gap-5">
+              <div>
+                <p className="text-sm font-bold uppercase tracking-[0.18em] text-blue-700">
+                  AI tools
+                </p>
+                <h2 className="mt-3 text-2xl font-black tracking-tight text-slate-950">
+                  Pick the right AI stack
+                </h2>
+                <p className="mt-3 max-w-xl text-sm leading-6 text-slate-600 md:text-base">
+                  Compare AI subscriptions and workflows before you pay.
+                </p>
+              </div>
+              <ArrowRight className="mt-1 size-5 text-slate-400 transition group-hover:translate-x-1 group-hover:text-blue-700" />
+            </div>
+          </Link>
+
+          <Link
+            href="/buying-guides"
+            className="group rounded-3xl border border-slate-200 bg-white p-6 shadow-[0_14px_38px_rgba(15,23,42,0.06)] transition hover:-translate-y-0.5 hover:border-blue-200 hover:shadow-[0_20px_50px_rgba(15,23,42,0.1)] md:p-7"
+          >
+            <div className="flex items-start justify-between gap-5">
+              <div>
+                <p className="text-sm font-bold uppercase tracking-[0.18em] text-blue-700">
+                  Buying guides
+                </p>
+                <h2 className="mt-3 text-2xl font-black tracking-tight text-slate-950">
+                  Buy with fewer regrets
+                </h2>
+                <p className="mt-3 max-w-xl text-sm leading-6 text-slate-600 md:text-base">
+                  Use practical product guides built around real tradeoffs.
+                </p>
+              </div>
+              <ArrowRight className="mt-1 size-5 text-slate-400 transition group-hover:translate-x-1 group-hover:text-blue-700" />
+            </div>
+          </Link>
+        </div>
+      </section>
+
+      {/* Tax Season Hub */}
+      <section className="mx-auto max-w-6xl px-5 py-12 md:px-6 md:py-16">
+        <div className="overflow-hidden rounded-3xl border border-blue-200 bg-[linear-gradient(135deg,#eff6ff_0%,#ffffff_54%,#ecfeff_100%)] shadow-[0_18px_55px_rgba(15,23,42,0.08)]">
+          <div className="grid gap-0 lg:grid-cols-[0.95fr_1.05fr]">
+            <div className="p-6 md:p-8">
+              <div className="inline-flex items-center gap-2 rounded-full border border-blue-200 bg-white px-3 py-1 text-sm font-bold text-blue-800 shadow-sm">
+                <Calculator className="size-4" />
+                Tax season
+              </div>
+
+              <h2 className="mt-5 text-3xl font-black tracking-tight text-slate-950 md:text-5xl">
+                File with fewer surprises.
+              </h2>
+
+              <p className="mt-4 max-w-xl text-base leading-7 text-slate-600 md:text-lg">
+                Compare new and old tax regime, understand every input, and
+                avoid missing AIS, Form 16, TDS, HRA or deduction details.
+              </p>
+
+              <div className="mt-7 flex flex-col gap-3 sm:flex-row">
+                <Link
+                  href="/wealth#indian-tax-calculator"
+                  className="brand-button inline-flex items-center justify-center gap-2 rounded-xl px-6 py-3 font-semibold"
+                >
+                  Open tax calculator
+                  <ArrowRight className="size-4" />
+                </Link>
+
+                <Link
+                  href="/articles/how-to-use-indian-tax-calculator"
+                  className="brand-button-secondary inline-flex items-center justify-center gap-2 rounded-xl px-6 py-3 font-semibold"
+                >
+                  Input guide
+                </Link>
+              </div>
+            </div>
+
+            <div className="grid gap-4 border-t border-blue-100 bg-white/70 p-6 md:p-8 lg:border-l lg:border-t-0">
+              {taxHubLinks.map((item) => (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className="group rounded-2xl border border-slate-200 bg-white p-5 transition hover:-translate-y-0.5 hover:border-blue-200 hover:shadow-[0_14px_35px_rgba(15,23,42,0.08)]"
+                >
+                  <div className="flex items-start justify-between gap-4">
+                    <div>
+                      <div className="flex items-center gap-2 text-sm font-bold text-blue-700">
+                        <FileText className="size-4" />
+                        {item.label}
+                      </div>
+                      <h3 className="mt-3 text-xl font-black text-slate-950">
+                        {item.title}
+                      </h3>
+                    </div>
+                    <ArrowRight className="mt-1 size-5 text-slate-400 transition group-hover:translate-x-1 group-hover:text-blue-700" />
+                  </div>
+                  <p className="mt-2 text-sm leading-6 text-slate-600">
+                    {item.description}
+                  </p>
+                </Link>
+              ))}
             </div>
           </div>
         </div>
@@ -382,7 +522,7 @@ export default function Home() {
           </p>
 
           <Link
-            href="mailto:venveel.contact@gmail.com?subject=Add%20me%20to%20Venveel%20updates"
+            href="mailto:hello.venveel@gmail.com?subject=Add%20me%20to%20Venveel%20updates"
             className="brand-button mt-8 inline-flex rounded-xl px-6 py-3 font-semibold"
           >
             Request Updates

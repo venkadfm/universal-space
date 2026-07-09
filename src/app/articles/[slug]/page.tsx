@@ -99,6 +99,30 @@ const mdxComponents = {
   ),
 };
 
+function extractFaqItems(content: string) {
+  const faqSection = content.split(/^## Frequently Asked Questions\s*$/m)[1];
+
+  if (!faqSection) {
+    return [];
+  }
+
+  const beforeNextSection = faqSection.split(/^## /m)[0];
+  const matches = [...beforeNextSection.matchAll(/^### (.+)\n+([\s\S]*?)(?=^### |\s*$)/gm)];
+
+  return matches
+    .map((match) => {
+      const question = match[1].trim();
+      const answer = match[2]
+        .replace(/\[([^\]]+)\]\([^)]+\)/g, "$1")
+        .replace(/<[^>]+>/g, "")
+        .replace(/\s+/g, " ")
+        .trim();
+
+      return question && answer ? { question, answer } : null;
+    })
+    .filter((item): item is { question: string; answer: string } => Boolean(item));
+}
+
 export function generateStaticParams() {
   return getAllArticles().map((article) => ({
     slug: article.slug,
@@ -202,10 +226,12 @@ export default async function ArticlePage({ params }: Props) {
         "@type": "ListItem",
         position: 2,
         name: article.meta.category,
-        item:
-          article.meta.category === "Buying Guides"
-            ? "https://venveel.com/buying-guides"
-            : "https://venveel.com/ai",
+          item:
+            article.meta.category === "Buying Guides"
+              ? "https://venveel.com/buying-guides"
+              : article.meta.category === "Wealth"
+                ? "https://venveel.com/wealth"
+                : "https://venveel.com/ai",
       },
       {
         "@type": "ListItem",
@@ -215,6 +241,22 @@ export default async function ArticlePage({ params }: Props) {
       },
     ],
   };
+  const faqItems = extractFaqItems(article.content);
+  const faqJsonLd =
+    faqItems.length > 0
+      ? {
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          mainEntity: faqItems.map((item) => ({
+            "@type": "Question",
+            name: item.question,
+            acceptedAnswer: {
+              "@type": "Answer",
+              text: item.answer,
+            },
+          })),
+        }
+      : null;
 
   return (
     <main className="min-h-screen px-5 py-10 md:px-6 md:py-14">
@@ -226,6 +268,12 @@ export default async function ArticlePage({ params }: Props) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
       />
+      {faqJsonLd && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+        />
+      )}
       <article className="premium-surface mx-auto max-w-5xl rounded-3xl p-7 md:p-10">
         <header className="mb-7 border-b border-slate-200 pb-7">
           <span className="inline-flex rounded-full border border-blue-200 bg-blue-50 px-4 py-2 text-sm font-semibold text-blue-800">

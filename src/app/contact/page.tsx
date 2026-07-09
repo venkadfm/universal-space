@@ -32,10 +32,10 @@ export default function ContactPage() {
           </p>
 
           <a
-            href="mailto:venveel.contact@gmail.com"
+            href="mailto:hello.venveel@gmail.com"
             className="mt-2 inline-block font-semibold text-blue-700 underline-offset-4 hover:underline"
           >
-            venveel.contact@gmail.com
+            hello.venveel@gmail.com
           </a>
 
           <p className="mt-3 text-sm leading-6 text-gray-500">
@@ -55,10 +55,10 @@ export default function ContactPage() {
           </p>
 
           <a
-            href="mailto:venveel.contact@gmail.com"
+            href="mailto:hello.venveel@gmail.com"
             className="mt-4 inline-block font-semibold text-blue-700 underline-offset-4 hover:underline"
           >
-            venveel.contact@gmail.com
+            hello.venveel@gmail.com
           </a>
 
           <p className="mt-3 text-sm leading-6 text-gray-500">
