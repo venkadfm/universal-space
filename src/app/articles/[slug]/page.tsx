@@ -1,4 +1,5 @@
 import AffiliateCTA from "@/components/article/AffiliateCTA";
+import AffiliateNotice from "@/components/article/AffiliateNotice";
 import EmailSignup from "@/app/components/EmailSignup";
 import ProductCard from "@/components/article/ProductCard";
 import remarkGfm from "remark-gfm";
@@ -12,6 +13,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { getAllArticles, getArticleBySlug, getArticleDate } from "@/lib/articles";
+import { ArrowLeft, ArrowRight, Clock, Sparkles } from "lucide-react";
 
 type Props = {
   params: Promise<{
@@ -163,6 +165,33 @@ function extractHowToSteps(content: string) {
     .filter((item): item is HowToStepJsonLd => Boolean(item));
 }
 
+function getCategoryStyle(category: string) {
+  if (category === "Buying Guides") {
+    return {
+      badge: "border-orange-200 bg-orange-50 text-orange-800",
+      hero:
+        "bg-[radial-gradient(circle_at_12%_12%,rgba(249,115,22,0.18),transparent_24rem),radial-gradient(circle_at_88%_8%,rgba(14,165,233,0.14),transparent_22rem),linear-gradient(135deg,#fff7ed_0%,#ffffff_52%,#ecfeff_100%)]",
+      text: "text-orange-700",
+    };
+  }
+
+  if (category === "Wealth") {
+    return {
+      badge: "border-emerald-200 bg-emerald-50 text-emerald-800",
+      hero:
+        "bg-[radial-gradient(circle_at_12%_12%,rgba(16,185,129,0.18),transparent_24rem),radial-gradient(circle_at_88%_8%,rgba(59,130,246,0.12),transparent_22rem),linear-gradient(135deg,#ecfdf5_0%,#ffffff_52%,#eff6ff_100%)]",
+      text: "text-emerald-700",
+    };
+  }
+
+  return {
+    badge: "border-cyan-200 bg-cyan-50 text-cyan-800",
+    hero:
+      "bg-[radial-gradient(circle_at_12%_12%,rgba(14,165,233,0.18),transparent_24rem),radial-gradient(circle_at_88%_8%,rgba(244,114,182,0.13),transparent_22rem),linear-gradient(135deg,#ecfeff_0%,#ffffff_52%,#fdf2f8_100%)]",
+    text: "text-cyan-700",
+  };
+}
+
 export function generateStaticParams() {
   return getAllArticles().map((article) => ({
     slug: article.slug,
@@ -230,6 +259,7 @@ export default async function ArticlePage({ params }: Props) {
           item.tags?.some((tag) => article.meta.tags?.includes(tag)))
     )
     .slice(0, 3);
+  const categoryStyle = getCategoryStyle(article.meta.category);
 
   const articleJsonLd = {
     "@context": "https://schema.org",
@@ -314,7 +344,7 @@ export default async function ArticlePage({ params }: Props) {
       : null;
 
   return (
-    <main className="min-h-screen px-5 py-10 md:px-6 md:py-14">
+    <main className="min-h-screen px-5 py-8 md:px-6 md:py-12">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }}
@@ -335,34 +365,72 @@ export default async function ArticlePage({ params }: Props) {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(howToJsonLd) }}
         />
       )}
-      <article className="premium-surface mx-auto max-w-5xl rounded-3xl p-7 md:p-10">
-        <header className="mb-7 border-b border-slate-200 pb-7">
-          <span className="inline-flex rounded-full border border-blue-200 bg-blue-50 px-4 py-2 text-sm font-semibold text-blue-800">
-            {article.meta.category}
-          </span>
+      <article className="mx-auto max-w-6xl overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-[0_24px_80px_rgba(15,23,42,0.10)]">
+        <header className={`${categoryStyle.hero} border-b border-slate-200 p-7 md:p-10`}>
+          <Link
+            href={
+              article.meta.category === "Buying Guides"
+                ? "/buying-guides"
+                : article.meta.category === "Wealth"
+                  ? "/wealth"
+                  : "/ai"
+            }
+            className={`inline-flex items-center gap-2 text-sm font-bold ${categoryStyle.text} transition hover:text-slate-950`}
+          >
+            <ArrowLeft className="size-4" />
+            Back to {article.meta.category}
+          </Link>
 
-          <h1 className="mt-5 text-4xl font-extrabold leading-tight tracking-tight text-slate-950 md:text-5xl">
-            {article.meta.title}
-          </h1>
+          <div className="mt-7 grid gap-8 lg:grid-cols-[1fr_280px] lg:items-end">
+            <div>
+              <span className={`inline-flex rounded-full border px-4 py-2 text-sm font-semibold ${categoryStyle.badge}`}>
+                {article.meta.category}
+              </span>
 
-          <p className="mt-5 max-w-3xl text-lg leading-7 text-slate-600">
-            {article.meta.description}
-          </p>
+              <h1 className="mt-5 max-w-4xl text-4xl font-black leading-tight tracking-tight text-slate-950 md:text-6xl">
+                {article.meta.title}
+              </h1>
 
-          <div className="mt-5 flex flex-wrap items-center gap-4 text-sm text-slate-500">
-            <span>{article.meta.date}</span>
-            <span>•</span>
-            <span>{article.meta.author}</span>
-            {article.meta.readTime && (
-              <>
-                <span>•</span>
-                <span>{article.meta.readTime}</span>
-              </>
-            )}
+              <p className="mt-5 max-w-3xl text-lg leading-8 text-slate-700 md:text-xl">
+                {article.meta.description}
+              </p>
+            </div>
+
+            <aside className="rounded-2xl border border-white/70 bg-white/75 p-5 shadow-sm backdrop-blur">
+              <div className="flex items-center gap-2 text-sm font-bold text-slate-950">
+                <Sparkles className={`size-4 ${categoryStyle.text}`} />
+                Guide snapshot
+              </div>
+              <div className="mt-4 grid gap-3 text-sm text-slate-600">
+                <div className="flex items-center justify-between gap-4 border-b border-slate-200 pb-3">
+                  <span>Updated</span>
+                  <strong className="text-slate-950">{article.meta.date}</strong>
+                </div>
+                <div className="flex items-center justify-between gap-4 border-b border-slate-200 pb-3">
+                  <span>Author</span>
+                  <strong className="text-slate-950">{article.meta.author}</strong>
+                </div>
+                {article.meta.readTime && (
+                  <div className="flex items-center justify-between gap-4">
+                    <span className="inline-flex items-center gap-1">
+                      <Clock className="size-4" />
+                      Read time
+                    </span>
+                    <strong className="text-slate-950">
+                      {article.meta.readTime}
+                    </strong>
+                  </div>
+                )}
+              </div>
+            </aside>
           </div>
         </header>
 
-        <div className="mx-auto max-w-4xl">
+        <div className="mx-auto max-w-4xl px-7 py-8 md:px-10 md:py-10">
+          {["AI Tools", "Buying Guides", "Reviews"].includes(
+            article.meta.category
+          ) && <AffiliateNotice />}
+
           <MDXRemote
             source={article.content}
             components={mdxComponents}
@@ -397,7 +465,7 @@ export default async function ArticlePage({ params }: Props) {
                       <Link
                         key={relatedArticle.slug}
                         href={`/articles/${relatedArticle.slug}`}
-                        className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition hover:-translate-y-0.5 hover:border-blue-200 hover:shadow-md"
+                        className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition hover:-translate-y-0.5 hover:border-cyan-200 hover:shadow-md"
                       >
                         <span className="text-xs font-bold uppercase tracking-[0.18em] text-blue-700">
                           {relatedArticle.category}
@@ -421,9 +489,10 @@ export default async function ArticlePage({ params }: Props) {
                   {previousArticle ? (
                     <Link
                       href={`/articles/${previousArticle.slug}`}
-                      className="rounded-2xl border border-slate-200 bg-slate-50 p-5 transition hover:bg-white hover:shadow-sm"
+                          className="rounded-2xl border border-slate-200 bg-slate-50 p-5 transition hover:bg-white hover:shadow-sm"
                     >
-                      <span className="text-sm font-semibold text-slate-500">
+                      <span className="inline-flex items-center gap-2 text-sm font-semibold text-slate-500">
+                        <ArrowLeft className="size-4" />
                         Previous
                       </span>
                       <p className="mt-2 font-bold text-slate-950">
@@ -439,8 +508,9 @@ export default async function ArticlePage({ params }: Props) {
                       href={`/articles/${nextArticle.slug}`}
                       className="rounded-2xl border border-slate-200 bg-slate-50 p-5 text-left transition hover:bg-white hover:shadow-sm md:text-right"
                     >
-                      <span className="text-sm font-semibold text-slate-500">
+                      <span className="inline-flex items-center justify-end gap-2 text-sm font-semibold text-slate-500">
                         Next
+                        <ArrowRight className="size-4" />
                       </span>
                       <p className="mt-2 font-bold text-slate-950">
                         {nextArticle.title}

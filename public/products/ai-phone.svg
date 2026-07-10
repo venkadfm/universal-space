@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="720" viewBox="0 0 720 720" role="img" aria-label="AI phone visual">
+  <rect width="720" height="720" rx="80" fill="#f8fafc"/>
+  <rect x="226" y="78" width="268" height="564" rx="54" fill="#0f172a"/>
+  <rect x="250" y="126" width="220" height="458" rx="32" fill="#e0f2fe"/>
+  <circle cx="360" cy="606" r="14" fill="#94a3b8"/>
+  <circle cx="360" cy="332" r="76" fill="#2563eb"/>
+  <path d="M360 244v176M272 332h176M298 270l124 124M422 270L298 394" stroke="#ffffff" stroke-width="18" stroke-linecap="round"/>
+  <rect x="314" y="102" width="92" height="12" rx="6" fill="#334155"/>
+</svg>

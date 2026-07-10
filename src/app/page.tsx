@@ -3,7 +3,6 @@ import Link from "next/link";
 import {
   ArrowRight,
   Calculator,
-  CheckCircle2,
   FileText,
   Search,
   ShoppingBag,
@@ -15,21 +14,6 @@ import CategoryCard from "./components/CategoryCard";
 import ArticleCard from "./components/Articlecard";
 import EmailSignup from "./components/EmailSignup";
 import { mainCategories } from "@/lib/site-categories";
-
-const decisionPillars = [
-  {
-    title: "Compare old vs new regime",
-    description: "Enter salary, HRA, deductions and TDS once before filing.",
-  },
-  {
-    title: "Follow portal steps",
-    description: "Move through Income Tax portal screens without guessing.",
-  },
-  {
-    title: "Find every input",
-    description: "Know where Form 16, AIS, 26AS and broker reports fit.",
-  },
-];
 
 const taxHubLinks = [
   {
@@ -58,14 +42,27 @@ const taxHubLinks = [
   },
 ];
 
+const highIntentSlugs = [
+  "best-ai-tools-for-professionals-2026",
+  "chatgpt-vs-claude-vs-gemini-advanced-2026",
+  "best-ai-phones-to-buy-2026",
+  "best-smartphones-2026",
+  "best-productivity-apps-for-professionals-2026",
+  "best-ai-laptops-for-work-productivity-2026",
+];
+
 export default function Home() {
   const articles = getAllArticles().filter(
     (article) => article.slug && !article.slug.startsWith("_")
   );
 
-  const featuredArticles = articles.filter((article) => article.featured);
-  const leadArticle = featuredArticles[0];
-  const secondaryFeaturedArticles = featuredArticles.slice(1, 3);
+  const highIntentArticles = highIntentSlugs
+    .map((slug) => articles.find((article) => article.slug === slug))
+    .filter((article): article is NonNullable<typeof article> =>
+      Boolean(article)
+    );
+  const leadArticle = highIntentArticles[0] ?? articles[0];
+  const secondaryFeaturedArticles = highIntentArticles.slice(1, 4);
 
   const latestArticles = articles
     .filter((article) => !article.featured)
@@ -74,39 +71,32 @@ export default function Home() {
   return (
     <main className="min-h-screen">
       {/* Hero */}
-      <section className="relative overflow-hidden px-5 pb-14 pt-14 text-center md:px-6 md:pb-20 md:pt-24">
-        <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_18%_10%,rgba(37,99,235,0.16),transparent_28rem),radial-gradient(circle_at_84%_14%,rgba(20,184,166,0.13),transparent_26rem),linear-gradient(180deg,#f8fafc_0%,#ffffff_58%,#eef6ff_100%)]" />
+      <section className="relative overflow-hidden px-5 pb-12 pt-12 md:px-6 md:pb-18 md:pt-20">
+        <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_12%_10%,rgba(14,165,233,0.18),transparent_27rem),radial-gradient(circle_at_88%_8%,rgba(244,114,182,0.16),transparent_25rem),radial-gradient(circle_at_62%_70%,rgba(249,115,22,0.10),transparent_28rem),linear-gradient(180deg,#f8fafc_0%,#ffffff_58%,#ecfeff_100%)]" />
 
-        <div className="mx-auto max-w-6xl">
-          <div className="mb-6 inline-flex rounded-full border border-blue-200/70 bg-white/80 px-4 py-2 text-xs font-semibold text-blue-800 shadow-sm backdrop-blur md:text-sm">
-            Tax season spotlight + everyday decision guides
-          </div>
+        <div className="mx-auto grid max-w-6xl gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
+          <div className="text-center lg:text-left">
+            <div className="mb-6 inline-flex rounded-full border border-cyan-200/70 bg-white/85 px-4 py-2 text-xs font-semibold text-cyan-800 shadow-sm backdrop-blur md:text-sm">
+              AI tools, buying guides, money decisions, and useful calculators
+            </div>
 
-          <h1 className="mx-auto max-w-5xl text-4xl font-black leading-tight tracking-tight text-slate-950 sm:text-5xl md:text-7xl">
-            Make better decisions on tax, AI tools, and what to buy next.
-          </h1>
+            <h1 className="mx-auto max-w-5xl text-4xl font-black leading-tight tracking-tight text-slate-950 sm:text-5xl md:text-7xl lg:mx-0">
+              Choose better tools, products, and money moves.
+            </h1>
 
-          <p className="mx-auto mt-6 max-w-3xl text-base leading-7 text-slate-600 sm:text-lg md:mt-7 md:text-2xl md:leading-9">
-            Venveel brings practical calculators and guides for money, AI, and
-            buying decisions. Right now, the Indian tax hub is highlighted for
-            filing season.
-          </p>
+            <p className="mx-auto mt-6 max-w-3xl text-base leading-7 text-slate-600 sm:text-lg md:mt-7 md:text-xl md:leading-9 lg:mx-0">
+              Venveel helps professionals compare AI tools, buy tech with fewer
+              regrets, and handle practical finance tasks without getting lost in
+              noisy advice.
+            </p>
 
-          <div className="mt-8 flex flex-col justify-center gap-4 sm:flex-row md:mt-10">
+          <div className="mt-8 flex flex-col justify-center gap-4 sm:flex-row md:mt-10 lg:justify-start">
             <Link
-              href="/wealth#indian-tax-calculator"
+              href="/articles/best-ai-tools-for-professionals-2026"
               className="brand-button inline-flex items-center justify-center gap-2 rounded-xl px-8 py-4 text-base font-semibold"
             >
-              <Calculator className="size-5" />
-              Calculate tax
-            </Link>
-
-            <Link
-              href="/articles/how-to-file-new-tax-regime-itr-india"
-              className="brand-button-secondary inline-flex items-center justify-center gap-2 rounded-xl px-8 py-4 text-base font-semibold"
-            >
-              <FileText className="size-5" />
-              New tax filing guide
+              <Sparkles className="size-5" />
+              Best AI tools
             </Link>
 
             <Link
@@ -116,85 +106,64 @@ export default function Home() {
               <ShoppingBag className="size-5" />
               Buying guides
             </Link>
+
+            <Link
+              href="/wealth#indian-tax-calculator"
+              className="brand-button-secondary inline-flex items-center justify-center gap-2 rounded-xl px-8 py-4 text-base font-semibold"
+            >
+              <Calculator className="size-5" />
+              Tax calculator
+            </Link>
           </div>
 
-          <div className="mx-auto mt-8 max-w-3xl md:mt-10">
+          <div className="mx-auto mt-8 max-w-3xl md:mt-10 lg:mx-0">
             <SearchBar articles={articles} />
           </div>
+          </div>
 
-          <div className="premium-surface mt-12 overflow-hidden rounded-3xl text-left md:mt-16">
-            <div className="grid gap-0 md:grid-cols-[1.05fr_0.95fr]">
-              <div className="p-6 md:p-8">
-                <div className="inline-flex items-center gap-2 rounded-full border border-teal-200 bg-teal-50 px-3 py-1 text-sm font-bold text-teal-800">
-                  <Sparkles className="size-4" />
-                  Tax spotlight
+          <div className="overflow-hidden rounded-3xl border border-white/70 bg-white/85 p-4 shadow-[0_24px_70px_rgba(15,23,42,0.12)] backdrop-blur">
+            <div className="rounded-2xl bg-slate-950 p-6 text-white">
+              <div className="flex items-center justify-between gap-4">
+                <div>
+                  <p className="text-xs font-bold uppercase tracking-[0.18em] text-cyan-200">
+                    High-intent guide
+                  </p>
+                  <h2 className="mt-3 text-2xl font-black leading-tight md:text-4xl">
+                    {leadArticle?.title ?? "Start with practical guides"}
+                  </h2>
                 </div>
-
-                <h2 className="mt-5 max-w-xl text-2xl font-black tracking-tight text-slate-950 md:text-4xl">
-                  A practical filing-season checklist before you submit.
-                </h2>
-
-                <div className="mt-6 grid gap-4">
-                  {decisionPillars.map((pillar) => (
-                    <div
-                      key={pillar.title}
-                      className="flex gap-4 border-t border-slate-200 pt-4 first:border-t-0 first:pt-0"
-                    >
-                      <CheckCircle2 className="mt-1 size-5 shrink-0 text-blue-700" />
-                      <div>
-                        <p className="font-bold text-slate-950">
-                          {pillar.title}
-                        </p>
-                        <p className="mt-1 text-sm leading-6 text-slate-600">
-                          {pillar.description}
-                        </p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
+                <TrendingUp className="size-8 shrink-0 text-pink-300" />
               </div>
-
-              <div className="border-t border-slate-200 bg-slate-950 p-6 text-white md:border-l md:border-t-0 md:p-8">
-                <div className="flex items-center justify-between gap-4">
-                  <div>
-                    <p className="text-sm font-semibold uppercase tracking-[0.18em] text-blue-200">
-                      Most useful right now
-                    </p>
-                    <h3 className="mt-2 text-2xl font-black">
-                      Tax Calculator
-                    </h3>
-                    <p className="mt-2 text-sm leading-6 text-slate-300">
-                      Know your exact tax amount before filing.
-                    </p>
-                  </div>
-                  <TrendingUp className="size-8 text-teal-300" />
-                </div>
-
-                <div className="mt-7 grid gap-3">
-                  {taxHubLinks.slice(0, 3).map((article) => (
-                    <Link
-                      key={article.href}
-                      href={article.href}
-                      className="rounded-2xl border border-white/10 bg-white/8 p-4 transition hover:bg-white/12"
-                    >
-                      <p className="text-xs font-bold uppercase tracking-[0.16em] text-blue-200">
-                        {article.label}
-                      </p>
-                      <p className="mt-2 line-clamp-2 font-bold leading-snug text-white">
-                        {article.title}
-                      </p>
-                    </Link>
-                  ))}
-                </div>
-
+              <p className="mt-4 text-sm leading-6 text-slate-300 md:text-base">
+                {leadArticle?.description ??
+                  "Compare the tools and products readers are most likely to search for before buying."}
+              </p>
+              {leadArticle && (
                 <Link
-                  href="/wealth#indian-tax-calculator"
-                  className="mt-7 inline-flex items-center gap-2 rounded-xl bg-white px-5 py-3 font-semibold text-slate-950 shadow-lg transition hover:-translate-y-0.5 hover:bg-blue-50"
+                  href={`/articles/${leadArticle.slug}`}
+                  className="mt-6 inline-flex items-center gap-2 rounded-xl bg-white px-5 py-3 font-bold text-slate-950 transition hover:-translate-y-0.5 hover:bg-cyan-50"
                 >
-                  Open calculator
+                  Read the guide
                   <ArrowRight className="size-4" />
                 </Link>
-              </div>
+              )}
+            </div>
+
+            <div className="grid gap-3 p-3">
+              {secondaryFeaturedArticles.map((article) => (
+                <Link
+                  key={article.slug}
+                  href={`/articles/${article.slug}`}
+                  className="group rounded-2xl border border-slate-200 bg-white p-4 transition hover:-translate-y-0.5 hover:border-cyan-200 hover:shadow-md"
+                >
+                  <p className="text-xs font-bold uppercase tracking-[0.16em] text-cyan-700">
+                    {article.category}
+                  </p>
+                  <p className="mt-2 font-bold leading-snug text-slate-950">
+                    {article.title}
+                  </p>
+                </Link>
+              ))}
             </div>
           </div>
         </div>
@@ -205,7 +174,7 @@ export default function Home() {
         <div className="grid gap-4 md:grid-cols-2">
           <Link
             href="/ai"
-            className="group rounded-3xl border border-slate-200 bg-white p-6 shadow-[0_14px_38px_rgba(15,23,42,0.06)] transition hover:-translate-y-0.5 hover:border-blue-200 hover:shadow-[0_20px_50px_rgba(15,23,42,0.1)] md:p-7"
+            className="group rounded-3xl border border-cyan-200 bg-[linear-gradient(135deg,#ecfeff_0%,#ffffff_76%)] p-6 shadow-[0_14px_38px_rgba(15,23,42,0.06)] transition hover:-translate-y-0.5 hover:border-cyan-300 hover:shadow-[0_20px_50px_rgba(15,23,42,0.1)] md:p-7"
           >
             <div className="flex items-start justify-between gap-5">
               <div>
@@ -219,13 +188,13 @@ export default function Home() {
                   Compare AI subscriptions and workflows before you pay.
                 </p>
               </div>
-              <ArrowRight className="mt-1 size-5 text-slate-400 transition group-hover:translate-x-1 group-hover:text-blue-700" />
+              <ArrowRight className="mt-1 size-5 text-cyan-500 transition group-hover:translate-x-1 group-hover:text-cyan-700" />
             </div>
           </Link>
 
           <Link
             href="/buying-guides"
-            className="group rounded-3xl border border-slate-200 bg-white p-6 shadow-[0_14px_38px_rgba(15,23,42,0.06)] transition hover:-translate-y-0.5 hover:border-blue-200 hover:shadow-[0_20px_50px_rgba(15,23,42,0.1)] md:p-7"
+            className="group rounded-3xl border border-orange-200 bg-[linear-gradient(135deg,#fff7ed_0%,#ffffff_76%)] p-6 shadow-[0_14px_38px_rgba(15,23,42,0.06)] transition hover:-translate-y-0.5 hover:border-orange-300 hover:shadow-[0_20px_50px_rgba(15,23,42,0.1)] md:p-7"
           >
             <div className="flex items-start justify-between gap-5">
               <div>
@@ -239,7 +208,7 @@ export default function Home() {
                   Use practical product guides built around real tradeoffs.
                 </p>
               </div>
-              <ArrowRight className="mt-1 size-5 text-slate-400 transition group-hover:translate-x-1 group-hover:text-blue-700" />
+              <ArrowRight className="mt-1 size-5 text-orange-500 transition group-hover:translate-x-1 group-hover:text-orange-700" />
             </div>
           </Link>
         </div>
@@ -247,7 +216,7 @@ export default function Home() {
 
       {/* Tax Season Hub */}
       <section className="mx-auto max-w-6xl px-5 py-12 md:px-6 md:py-16">
-        <div className="overflow-hidden rounded-3xl border border-blue-200 bg-[linear-gradient(135deg,#eff6ff_0%,#ffffff_54%,#ecfeff_100%)] shadow-[0_18px_55px_rgba(15,23,42,0.08)]">
+        <div className="overflow-hidden rounded-3xl border border-emerald-200 bg-[linear-gradient(135deg,#ecfdf5_0%,#ffffff_48%,#eff6ff_74%,#fdf2f8_100%)] shadow-[0_18px_55px_rgba(15,23,42,0.08)]">
           <div className="grid gap-0 lg:grid-cols-[0.95fr_1.05fr]">
             <div className="p-6 md:p-8">
               <div className="inline-flex items-center gap-2 rounded-full border border-blue-200 bg-white px-3 py-1 text-sm font-bold text-blue-800 shadow-sm">
@@ -287,11 +256,11 @@ export default function Home() {
                 <Link
                   key={item.href}
                   href={item.href}
-                  className="group rounded-2xl border border-slate-200 bg-white p-5 transition hover:-translate-y-0.5 hover:border-blue-200 hover:shadow-[0_14px_35px_rgba(15,23,42,0.08)]"
+                  className="group rounded-2xl border border-slate-200 bg-white p-5 transition hover:-translate-y-0.5 hover:border-emerald-200 hover:shadow-[0_14px_35px_rgba(15,23,42,0.08)]"
                 >
                   <div className="flex items-start justify-between gap-4">
                     <div>
-                      <div className="flex items-center gap-2 text-sm font-bold text-blue-700">
+                      <div className="flex items-center gap-2 text-sm font-bold text-emerald-700">
                         <FileText className="size-4" />
                         {item.label}
                       </div>
@@ -299,7 +268,7 @@ export default function Home() {
                         {item.title}
                       </h3>
                     </div>
-                    <ArrowRight className="mt-1 size-5 text-slate-400 transition group-hover:translate-x-1 group-hover:text-blue-700" />
+                    <ArrowRight className="mt-1 size-5 text-slate-400 transition group-hover:translate-x-1 group-hover:text-emerald-700" />
                   </div>
                   <p className="mt-2 text-sm leading-6 text-slate-600">
                     {item.description}
@@ -383,7 +352,7 @@ export default function Home() {
       </section>
 
       {/* Categories */}
-      <section className="border-y border-slate-200/80 bg-white/70 py-14 backdrop-blur md:py-20">
+      <section className="color-band py-14 backdrop-blur md:py-20">
         <div className="mx-auto max-w-6xl px-5 md:px-6">
           <div className="mb-8 text-center md:mb-12">
             <p className="section-eyebrow mb-3">Start here</p>
@@ -443,7 +412,7 @@ export default function Home() {
       </section>
 
       {/* Resources Preview */}
-      <section className="bg-[linear-gradient(135deg,#020617_0%,#0f172a_58%,#0b3b4a_100%)] px-5 py-16 text-white md:py-24">
+      <section className="bg-[radial-gradient(circle_at_15%_0%,rgba(14,165,233,0.34),transparent_24rem),radial-gradient(circle_at_84%_12%,rgba(244,114,182,0.28),transparent_24rem),linear-gradient(135deg,#020617_0%,#13223a_52%,#083344_100%)] px-5 py-16 text-white md:py-24">
         <div className="mx-auto max-w-6xl text-center">
           <h2 className="text-3xl font-bold md:text-4xl">
             Resources for Smarter Decisions
@@ -504,9 +473,9 @@ export default function Home() {
               href="/affiliate-disclosure"
               className="premium-card premium-card-hover rounded-2xl p-5"
             >
-              <p className="font-bold text-slate-950">Disclosure</p>
+              <p className="font-bold text-slate-950">Reader promise</p>
               <p className="mt-2 text-sm leading-6 text-slate-600">
-                Clear context for affiliate links and partnerships.
+                Clear context on recommendations and product links.
               </p>
             </Link>
           </div>

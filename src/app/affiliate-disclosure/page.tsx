@@ -35,6 +35,24 @@ export default function AffiliateDisclosurePage() {
             We aim to mark commercial relationships clearly wherever they are
             relevant to the reader&apos;s decision.
           </p>
+
+          <h2 className="text-2xl font-bold text-slate-950">
+            Product images, prices and availability
+          </h2>
+
+          <p>
+            Product images may come from official brand media, retailer tools,
+            affiliate network feeds, or our own original visuals. Prices and
+            availability can change quickly, so readers should confirm the final
+            price, seller, warranty and return policy on the retailer&apos;s site
+            before buying.
+          </p>
+
+          <p>
+            For Amazon links, Venveel aims to use compliant Special Links and
+            approved product content sources such as Amazon&apos;s linking tools or
+            Product Advertising API where required.
+          </p>
         </div>
       </article>
     </main>

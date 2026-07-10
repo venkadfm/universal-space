@@ -29,7 +29,7 @@ const footerSections = [
 
 export default function Footer() {
   return (
-    <footer className="bg-[linear-gradient(135deg,#020617_0%,#0f172a_58%,#0b3b4a_100%)] text-white">
+    <footer className="bg-[radial-gradient(circle_at_20%_0%,rgba(14,165,233,0.32),transparent_24rem),radial-gradient(circle_at_82%_10%,rgba(219,39,119,0.24),transparent_24rem),linear-gradient(135deg,#020617_0%,#102033_52%,#083344_100%)] text-white">
       <div className="mx-auto grid max-w-6xl gap-10 px-6 py-12 md:grid-cols-[1.4fr_repeat(3,1fr)]">
 
         <div>
@@ -71,7 +71,7 @@ export default function Footer() {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className="block text-slate-400 transition hover:text-blue-300"
+                  className="block text-slate-400 transition hover:text-cyan-200"
                 >
                   {link.label}
                 </Link>

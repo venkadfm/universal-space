@@ -36,9 +36,6 @@ export default function AffiliateCTA({
         {buttonText}
       </a>
 
-      <p className="mt-3 text-xs text-slate-500">
-        We may earn a commission if you purchase through our links, at no extra cost to you.
-      </p>
     </div>
   );
 }

@@ -12,8 +12,11 @@ body {
   margin: 0;
   color: #111827;
   background:
-    radial-gradient(circle at top left, rgb(37 99 235 / 7%), transparent 32rem),
-    linear-gradient(180deg, #f8fafc 0%, #ffffff 36rem, #f8fafc 100%);
+    radial-gradient(circle at 10% 0%, rgb(14 165 233 / 20%), transparent 28rem),
+    radial-gradient(circle at 88% 8%, rgb(244 114 182 / 18%), transparent 26rem),
+    radial-gradient(circle at 48% 42rem, rgb(249 115 22 / 13%), transparent 28rem),
+    radial-gradient(circle at 82% 62rem, rgb(20 184 166 / 14%), transparent 30rem),
+    linear-gradient(180deg, #f8fafc 0%, #ffffff 30rem, #fdf2f8 70rem, #f8fafc 100%);
 }
 
 @theme inline {
@@ -142,7 +145,7 @@ body {
 
 @layer components {
   .premium-surface {
-    @apply border border-slate-200/80 bg-white/90 shadow-[0_18px_55px_rgba(15,23,42,0.08)] backdrop-blur;
+    @apply border border-cyan-100/90 bg-white/92 shadow-[0_18px_55px_rgba(15,23,42,0.08)] backdrop-blur;
   }
 
   .premium-card {
@@ -150,18 +153,26 @@ body {
   }
 
   .premium-card-hover {
-    @apply hover:-translate-y-1 hover:border-blue-200 hover:shadow-[0_22px_60px_rgba(15,23,42,0.11)];
+    @apply hover:-translate-y-1 hover:border-cyan-200 hover:shadow-[0_22px_60px_rgba(15,23,42,0.11)];
   }
 
   .brand-button {
-    @apply bg-slate-950 text-white shadow-[0_14px_30px_rgba(15,23,42,0.18)] transition hover:-translate-y-0.5 hover:bg-blue-700;
+    @apply bg-[linear-gradient(135deg,#0f172a_0%,#0e7490_100%)] text-white shadow-[0_14px_30px_rgba(15,23,42,0.18)] transition hover:-translate-y-0.5 hover:shadow-[0_18px_36px_rgba(14,116,144,0.28)];
   }
 
   .brand-button-secondary {
-    @apply border border-slate-300 bg-white/90 text-slate-900 shadow-sm transition hover:-translate-y-0.5 hover:border-blue-300 hover:bg-blue-50;
+    @apply border border-cyan-200 bg-white/90 text-slate-900 shadow-sm transition hover:-translate-y-0.5 hover:border-pink-200 hover:bg-pink-50;
   }
 
   .section-eyebrow {
-    @apply text-sm font-bold uppercase tracking-[0.18em] text-blue-700;
+    @apply bg-[linear-gradient(90deg,#0891b2,#db2777,#ea580c)] bg-clip-text text-sm font-bold uppercase tracking-[0.18em] text-transparent;
+  }
+
+  .color-band {
+    @apply border-y border-slate-200/80 bg-[linear-gradient(135deg,#ecfeff_0%,#fdf2f8_44%,#fff7ed_72%,#ecfdf5_100%)];
+  }
+
+  .article-prose {
+    @apply text-slate-700;
   }
 }
