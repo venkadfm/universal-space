@@ -18,15 +18,21 @@ export default function ArticleCard({
 }: ArticleCardProps) {
   const categoryAccent =
     category === "Buying Guides"
-      ? "from-orange-50 to-white text-orange-700 border-orange-200"
+      ? "from-orange-100 via-amber-50 to-white text-orange-700 border-orange-200"
       : category === "Wealth"
-        ? "from-emerald-50 to-white text-emerald-700 border-emerald-200"
-        : "from-cyan-50 to-white text-cyan-700 border-cyan-200";
+        ? "from-emerald-100 via-teal-50 to-white text-emerald-700 border-emerald-200"
+        : "from-cyan-100 via-sky-50 to-white text-cyan-700 border-cyan-200";
+  const topBar =
+    category === "Buying Guides"
+      ? "from-orange-400 via-pink-400 to-amber-300"
+      : category === "Wealth"
+        ? "from-emerald-400 via-teal-400 to-cyan-300"
+        : "from-cyan-400 via-blue-500 to-violet-400";
 
   return (
     <Link href={link} className="group block">
       <article className="premium-card premium-card-hover h-full overflow-hidden rounded-2xl">
-        <div className={`h-2 bg-gradient-to-r ${categoryAccent.split(" ")[0]} ${categoryAccent.split(" ")[1]}`} />
+        <div className={`h-2.5 bg-gradient-to-r ${topBar}`} />
         <div className="p-6 md:p-7">
 
         {/* Category Badge */}

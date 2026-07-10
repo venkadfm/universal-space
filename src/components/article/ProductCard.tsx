@@ -35,10 +35,11 @@ export default function ProductCard({
   const isExternalSecondaryDeal = secondaryDealUrl?.startsWith("http");
 
   return (
-    <section className="my-8 overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-[0_18px_50px_rgba(15,23,42,0.08)]">
+    <section className="my-8 overflow-hidden rounded-3xl border border-cyan-100 bg-white shadow-[0_18px_50px_rgba(15,23,42,0.08)]">
+      <div className="h-2.5 rainbow-rule" />
 
       {/* Header */}
-      <div className="grid gap-6 bg-[linear-gradient(135deg,#f8fafc_0%,#ecfeff_52%,#fff7ed_100%)] p-6 md:grid-cols-[220px_1fr]">
+      <div className="grid gap-6 bg-[radial-gradient(circle_at_12%_18%,rgba(14,165,233,0.18),transparent_18rem),radial-gradient(circle_at_90%_10%,rgba(236,72,153,0.14),transparent_18rem),linear-gradient(135deg,#f8fafc_0%,#ecfeff_44%,#fff7ed_100%)] p-6 md:grid-cols-[220px_1fr]">
 
         <div className="flex justify-center">
           <Image
@@ -69,7 +70,7 @@ export default function ProductCard({
               </p>
             </div>
 
-            <div className="rounded-full bg-slate-950 px-5 py-2 font-bold text-white shadow-sm">
+            <div className="rounded-full bg-[linear-gradient(135deg,#0f172a,#0e7490,#db2777)] px-5 py-2 font-bold text-white shadow-sm">
               {score}
             </div>
 
@@ -93,7 +94,7 @@ export default function ProductCard({
 
       {/* Body */}
 
-      <div className="grid gap-6 border-t border-slate-200 p-6 md:grid-cols-3">
+      <div className="grid gap-6 border-t border-cyan-100 bg-[linear-gradient(180deg,#ffffff_0%,#f8fafc_100%)] p-6 md:grid-cols-3">
 
         <div>
 
@@ -125,7 +126,7 @@ export default function ProductCard({
 
         <div>
 
-          <div className="rounded-2xl border border-cyan-200 bg-cyan-50/80 p-5">
+          <div className="rounded-2xl border border-cyan-200 bg-[linear-gradient(135deg,#ecfeff_0%,#ffffff_62%,#fdf2f8_100%)] p-5">
 
             <h3 className="font-bold text-blue-700">
               Our Verdict

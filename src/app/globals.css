@@ -12,11 +12,12 @@ body {
   margin: 0;
   color: #111827;
   background:
-    radial-gradient(circle at 10% 0%, rgb(14 165 233 / 20%), transparent 28rem),
-    radial-gradient(circle at 88% 8%, rgb(244 114 182 / 18%), transparent 26rem),
-    radial-gradient(circle at 48% 42rem, rgb(249 115 22 / 13%), transparent 28rem),
-    radial-gradient(circle at 82% 62rem, rgb(20 184 166 / 14%), transparent 30rem),
-    linear-gradient(180deg, #f8fafc 0%, #ffffff 30rem, #fdf2f8 70rem, #f8fafc 100%);
+    radial-gradient(circle at 8% 0%, rgb(14 165 233 / 26%), transparent 30rem),
+    radial-gradient(circle at 88% 8%, rgb(244 114 182 / 24%), transparent 28rem),
+    radial-gradient(circle at 48% 38rem, rgb(249 115 22 / 17%), transparent 30rem),
+    radial-gradient(circle at 82% 62rem, rgb(20 184 166 / 18%), transparent 32rem),
+    radial-gradient(circle at 18% 96rem, rgb(168 85 247 / 12%), transparent 30rem),
+    linear-gradient(180deg, #f0f9ff 0%, #ffffff 28rem, #fdf2f8 70rem, #fff7ed 104rem, #f8fafc 100%);
 }
 
 @theme inline {
@@ -149,19 +150,19 @@ body {
   }
 
   .premium-card {
-    @apply border border-slate-200/80 bg-white shadow-[0_14px_38px_rgba(15,23,42,0.06)] transition-all duration-300;
+    @apply border border-cyan-100/90 bg-[linear-gradient(145deg,#ffffff_0%,#f8fafc_54%,#ecfeff_100%)] shadow-[0_14px_38px_rgba(15,23,42,0.06)] transition-all duration-300;
   }
 
   .premium-card-hover {
-    @apply hover:-translate-y-1 hover:border-cyan-200 hover:shadow-[0_22px_60px_rgba(15,23,42,0.11)];
+    @apply hover:-translate-y-1 hover:border-pink-200 hover:shadow-[0_22px_60px_rgba(15,23,42,0.11)];
   }
 
   .brand-button {
-    @apply bg-[linear-gradient(135deg,#0f172a_0%,#0e7490_100%)] text-white shadow-[0_14px_30px_rgba(15,23,42,0.18)] transition hover:-translate-y-0.5 hover:shadow-[0_18px_36px_rgba(14,116,144,0.28)];
+    @apply bg-[linear-gradient(135deg,#0f172a_0%,#0e7490_48%,#db2777_100%)] text-white shadow-[0_14px_30px_rgba(15,23,42,0.18)] transition hover:-translate-y-0.5 hover:shadow-[0_18px_36px_rgba(219,39,119,0.24)];
   }
 
   .brand-button-secondary {
-    @apply border border-cyan-200 bg-white/90 text-slate-900 shadow-sm transition hover:-translate-y-0.5 hover:border-pink-200 hover:bg-pink-50;
+    @apply border border-cyan-200 bg-[linear-gradient(135deg,#ffffff_0%,#ecfeff_100%)] text-slate-900 shadow-sm transition hover:-translate-y-0.5 hover:border-pink-200 hover:bg-pink-50;
   }
 
   .section-eyebrow {
@@ -170,6 +171,10 @@ body {
 
   .color-band {
     @apply border-y border-slate-200/80 bg-[linear-gradient(135deg,#ecfeff_0%,#fdf2f8_44%,#fff7ed_72%,#ecfdf5_100%)];
+  }
+
+  .rainbow-rule {
+    @apply bg-[linear-gradient(90deg,#06b6d4,#8b5cf6,#ec4899,#f97316,#22c55e)];
   }
 
   .article-prose {
