@@ -73,13 +73,13 @@ const mdxComponents = {
 
   blockquote: (props: React.HTMLAttributes<HTMLQuoteElement>) => (
     <blockquote
-      className="my-5 rounded-2xl border border-cyan-200 bg-[linear-gradient(135deg,#ecfeff_0%,#ffffff_70%,#fdf2f8_100%)] p-5 text-base font-medium leading-7 text-slate-800"
+      className="my-5 rounded-2xl border border-sky-200 bg-[linear-gradient(135deg,#eff6ff_0%,#ffffff_70%,#fff7ed_100%)] p-5 text-base font-medium leading-7 text-slate-800"
       {...props}
     />
   ),
 
   table: (props: React.HTMLAttributes<HTMLTableElement>) => (
-    <div className="my-5 overflow-x-auto rounded-2xl border border-cyan-100 shadow-[0_12px_30px_rgba(14,165,233,0.10)]">
+    <div className="my-5 overflow-x-auto rounded-2xl border border-sky-100 shadow-[0_12px_30px_rgba(14,165,233,0.10)]">
       <table
         className="w-full border-collapse bg-white text-left text-sm"
         {...props}
@@ -89,7 +89,7 @@ const mdxComponents = {
 
   th: (props: React.HTMLAttributes<HTMLTableCellElement>) => (
     <th
-      className="border-b border-cyan-100 bg-[linear-gradient(135deg,#ecfeff_0%,#fdf2f8_100%)] px-4 py-3 font-bold text-slate-950"
+      className="border-b border-sky-100 bg-[linear-gradient(135deg,#eff6ff_0%,#fff7ed_100%)] px-4 py-3 font-bold text-slate-950"
       {...props}
     />
   ),
@@ -103,7 +103,7 @@ const mdxComponents = {
 
   a: (props: React.AnchorHTMLAttributes<HTMLAnchorElement>) => (
     <a
-      className="font-semibold text-cyan-700 underline-offset-4 hover:text-pink-700 hover:underline"
+      className="font-semibold text-sky-700 underline-offset-4 hover:text-orange-700 hover:underline"
       {...props}
     />
   ),
@@ -170,25 +170,25 @@ function getCategoryStyle(category: string) {
     return {
       badge: "border-orange-200 bg-orange-50 text-orange-800",
       hero:
-        "bg-[radial-gradient(circle_at_12%_12%,rgba(249,115,22,0.25),transparent_24rem),radial-gradient(circle_at_88%_8%,rgba(236,72,153,0.17),transparent_22rem),radial-gradient(circle_at_58%_90%,rgba(14,165,233,0.16),transparent_22rem),linear-gradient(135deg,#fff7ed_0%,#ffffff_48%,#ecfeff_100%)]",
+        "bg-[radial-gradient(circle_at_12%_12%,rgba(249,115,22,0.24),transparent_24rem),radial-gradient(circle_at_88%_8%,rgba(56,189,248,0.18),transparent_22rem),radial-gradient(circle_at_58%_90%,rgba(15,23,42,0.08),transparent_22rem),linear-gradient(135deg,#fff7ed_0%,#ffffff_48%,#eff6ff_100%)]",
       text: "text-orange-700",
     };
   }
 
   if (category === "Wealth") {
     return {
-      badge: "border-emerald-200 bg-emerald-50 text-emerald-800",
+      badge: "border-sky-200 bg-sky-50 text-sky-800",
       hero:
-        "bg-[radial-gradient(circle_at_12%_12%,rgba(16,185,129,0.24),transparent_24rem),radial-gradient(circle_at_88%_8%,rgba(14,165,233,0.18),transparent_22rem),radial-gradient(circle_at_52%_88%,rgba(250,204,21,0.14),transparent_22rem),linear-gradient(135deg,#ecfdf5_0%,#ffffff_48%,#eff6ff_100%)]",
-      text: "text-emerald-700",
+        "bg-[radial-gradient(circle_at_12%_12%,rgba(56,189,248,0.22),transparent_24rem),radial-gradient(circle_at_88%_8%,rgba(249,115,22,0.14),transparent_22rem),radial-gradient(circle_at_52%_88%,rgba(15,23,42,0.08),transparent_22rem),linear-gradient(135deg,#eff6ff_0%,#ffffff_48%,#fff7ed_100%)]",
+      text: "text-sky-700",
     };
   }
 
   return {
-    badge: "border-cyan-200 bg-cyan-50 text-cyan-800",
+    badge: "border-sky-200 bg-sky-50 text-sky-800",
     hero:
-      "bg-[radial-gradient(circle_at_12%_12%,rgba(14,165,233,0.25),transparent_24rem),radial-gradient(circle_at_88%_8%,rgba(244,114,182,0.20),transparent_22rem),radial-gradient(circle_at_52%_88%,rgba(139,92,246,0.14),transparent_22rem),linear-gradient(135deg,#ecfeff_0%,#ffffff_48%,#fdf2f8_100%)]",
-    text: "text-cyan-700",
+      "bg-[radial-gradient(circle_at_12%_12%,rgba(56,189,248,0.24),transparent_24rem),radial-gradient(circle_at_88%_8%,rgba(249,115,22,0.16),transparent_22rem),radial-gradient(circle_at_52%_88%,rgba(15,23,42,0.08),transparent_22rem),linear-gradient(135deg,#eff6ff_0%,#ffffff_48%,#fff7ed_100%)]",
+    text: "text-sky-700",
   };
 }
 
@@ -465,7 +465,7 @@ export default async function ArticlePage({ params }: Props) {
                       <Link
                         key={relatedArticle.slug}
                         href={`/articles/${relatedArticle.slug}`}
-                        className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition hover:-translate-y-0.5 hover:border-cyan-200 hover:shadow-md"
+                        className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition hover:-translate-y-0.5 hover:border-orange-200 hover:shadow-md"
                       >
                         <span className="text-xs font-bold uppercase tracking-[0.18em] text-blue-700">
                           {relatedArticle.category}

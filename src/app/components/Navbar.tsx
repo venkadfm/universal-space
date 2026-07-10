@@ -13,7 +13,7 @@ export default function Navbar() {
   const [open, setOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-50 border-b border-cyan-100/80 bg-white/88 shadow-[0_1px_0_rgba(15,23,42,0.03)] backdrop-blur-xl">
+    <header className="sticky top-0 z-50 border-b border-sky-100/80 bg-white/88 shadow-[0_1px_0_rgba(15,23,42,0.03)] backdrop-blur-xl">
       <nav className="mx-auto flex max-w-6xl items-center justify-between px-5 py-4 md:px-6">
         <Logo />
 
@@ -27,8 +27,8 @@ export default function Navbar() {
                 href={link.href}
                 className={`text-sm font-semibold transition ${
                   active
-                    ? "text-cyan-700"
-                    : "text-slate-600 hover:text-pink-700"
+                    ? "text-sky-700"
+                    : "text-slate-600 hover:text-orange-700"
                 }`}
               >
                 {link.label}
@@ -59,8 +59,8 @@ export default function Navbar() {
                   onClick={() => setOpen(false)}
                   className={`rounded-xl px-4 py-3 text-base font-semibold ${
                     active
-                      ? "bg-cyan-50 text-cyan-700"
-                      : "text-slate-700 hover:bg-pink-50"
+                      ? "bg-sky-50 text-sky-700"
+                      : "text-slate-700 hover:bg-orange-50"
                   }`}
                 >
                   {link.label}

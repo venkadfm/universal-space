@@ -18,16 +18,16 @@ export default function ArticleCard({
 }: ArticleCardProps) {
   const categoryAccent =
     category === "Buying Guides"
-      ? "from-orange-100 via-amber-50 to-white text-orange-700 border-orange-200"
+      ? "from-orange-100 via-white to-white text-orange-700 border-orange-200"
       : category === "Wealth"
-        ? "from-emerald-100 via-teal-50 to-white text-emerald-700 border-emerald-200"
-        : "from-cyan-100 via-sky-50 to-white text-cyan-700 border-cyan-200";
+        ? "from-sky-100 via-white to-white text-sky-800 border-sky-200"
+        : "from-sky-100 via-white to-white text-sky-800 border-sky-200";
   const topBar =
     category === "Buying Guides"
-      ? "from-orange-400 via-pink-400 to-amber-300"
+      ? "from-orange-400 via-orange-500 to-slate-950"
       : category === "Wealth"
-        ? "from-emerald-400 via-teal-400 to-cyan-300"
-        : "from-cyan-400 via-blue-500 to-violet-400";
+        ? "from-sky-300 via-sky-500 to-slate-950"
+        : "from-sky-300 via-sky-500 to-orange-400";
 
   return (
     <Link href={link} className="group block">
@@ -41,7 +41,7 @@ export default function ArticleCard({
         </div>
 
         {/* Title */}
-        <h3 className="mt-5 text-xl font-black leading-tight text-slate-950 transition-colors group-hover:text-cyan-700 md:text-2xl">
+        <h3 className="mt-5 text-xl font-black leading-tight text-slate-950 transition-colors group-hover:text-orange-700 md:text-2xl">
           {title}
         </h3>
 
@@ -57,7 +57,7 @@ export default function ArticleCard({
             {readTime}
           </span>
 
-          <span className="inline-flex items-center gap-2 font-semibold text-cyan-700 transition-transform group-hover:translate-x-1">
+          <span className="inline-flex items-center gap-2 font-semibold text-sky-700 transition-transform group-hover:translate-x-1 group-hover:text-orange-700">
             Read <ArrowRight className="size-4" />
           </span>
 

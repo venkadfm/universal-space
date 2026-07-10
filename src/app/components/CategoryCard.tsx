@@ -16,25 +16,25 @@ export default function CategoryCard({
   const accent =
     title === "AI"
       ? {
-          border: "hover:border-cyan-200",
-          icon: "bg-[linear-gradient(135deg,#0891b2,#2563eb)]",
-          glow: "bg-cyan-400/15",
+          border: "hover:border-sky-200",
+          icon: "bg-[linear-gradient(135deg,#38bdf8,#0f172a)]",
+          glow: "bg-sky-400/15",
         }
       : title === "Wealth"
         ? {
-            border: "hover:border-emerald-200",
-            icon: "bg-[linear-gradient(135deg,#059669,#84cc16)]",
-            glow: "bg-emerald-400/15",
+            border: "hover:border-sky-200",
+            icon: "bg-[linear-gradient(135deg,#0284c7,#0f172a)]",
+            glow: "bg-sky-400/15",
           }
         : title === "Business"
           ? {
-              border: "hover:border-pink-200",
-              icon: "bg-[linear-gradient(135deg,#db2777,#f97316)]",
-              glow: "bg-pink-400/15",
+              border: "hover:border-orange-200",
+              icon: "bg-[linear-gradient(135deg,#0f172a,#f97316)]",
+              glow: "bg-orange-400/15",
             }
           : {
               border: "hover:border-orange-200",
-              icon: "bg-[linear-gradient(135deg,#ea580c,#facc15)]",
+              icon: "bg-[linear-gradient(135deg,#f97316,#0f172a)]",
               glow: "bg-orange-400/15",
             };
 

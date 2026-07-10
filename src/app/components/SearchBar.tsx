@@ -36,19 +36,19 @@ export default function SearchBar({ articles }: SearchBarProps) {
         value={query}
         onChange={(event) => setQuery(event.target.value)}
         placeholder="Search AI tools, buying guides, wealth, resources..."
-        className="w-full rounded-2xl border border-cyan-200 bg-white/95 px-6 py-4 text-base shadow-[0_16px_40px_rgba(14,165,233,0.14)] backdrop-blur focus:border-pink-300 focus:outline-none focus:ring-4 focus:ring-pink-100 md:text-lg"
+        className="w-full rounded-2xl border border-sky-200 bg-white/95 px-6 py-4 text-base shadow-[0_16px_40px_rgba(14,165,233,0.14)] backdrop-blur focus:border-orange-300 focus:outline-none focus:ring-4 focus:ring-orange-100 md:text-lg"
       />
 
       {matches.length > 0 && (
-        <div className="absolute left-0 right-0 top-full z-20 mt-3 overflow-hidden rounded-2xl border border-cyan-100 bg-white text-left shadow-[0_22px_55px_rgba(15,23,42,0.14)]">
+        <div className="absolute left-0 right-0 top-full z-20 mt-3 overflow-hidden rounded-2xl border border-sky-100 bg-white text-left shadow-[0_22px_55px_rgba(15,23,42,0.14)]">
           <div className="h-1.5 rainbow-rule" />
           {matches.map((article) => (
             <Link
               key={article.slug}
               href={`/articles/${article.slug}`}
-              className="block border-b border-slate-100 px-5 py-4 last:border-b-0 hover:bg-cyan-50/60"
+              className="block border-b border-slate-100 px-5 py-4 last:border-b-0 hover:bg-sky-50/70"
             >
-              <span className="block text-xs font-bold uppercase tracking-wide text-cyan-700">
+              <span className="block text-xs font-bold uppercase tracking-wide text-sky-700">
                 {article.category}
               </span>
               <span className="mt-1 block font-semibold text-slate-950">

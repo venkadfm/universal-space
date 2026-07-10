@@ -5,8 +5,8 @@ type CalloutProps = {
 
 export function RecommendationBox({ title, children }: CalloutProps) {
   return (
-    <div className="my-5 rounded-2xl border border-cyan-200 bg-[linear-gradient(135deg,#ecfeff_0%,#ffffff_100%)] p-5 shadow-sm">
-      <h3 className="mb-2 text-lg font-bold text-cyan-800">
+    <div className="my-5 rounded-2xl border border-sky-200 bg-[linear-gradient(135deg,#eff6ff_0%,#ffffff_100%)] p-5 shadow-sm">
+      <h3 className="mb-2 text-lg font-bold text-sky-800">
         {title}
       </h3>
       <div className="text-sm leading-7 text-slate-700">{children}</div>
@@ -16,8 +16,8 @@ export function RecommendationBox({ title, children }: CalloutProps) {
 
 export function ProTip({ title, children }: CalloutProps) {
   return (
-    <div className="my-5 rounded-2xl border border-emerald-200 bg-[linear-gradient(135deg,#ecfdf5_0%,#ffffff_100%)] p-5 shadow-sm">
-      <h3 className="mb-2 text-lg font-bold text-emerald-800">
+    <div className="my-5 rounded-2xl border border-sky-200 bg-[linear-gradient(135deg,#f0f9ff_0%,#ffffff_100%)] p-5 shadow-sm">
+      <h3 className="mb-2 text-lg font-bold text-sky-800">
         {title}
       </h3>
       <div className="text-sm leading-7 text-slate-700">{children}</div>

@@ -72,11 +72,11 @@ export default function Home() {
     <main className="min-h-screen">
       {/* Hero */}
       <section className="relative overflow-hidden px-5 pb-12 pt-12 md:px-6 md:pb-18 md:pt-20">
-        <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_12%_10%,rgba(14,165,233,0.18),transparent_27rem),radial-gradient(circle_at_88%_8%,rgba(244,114,182,0.16),transparent_25rem),radial-gradient(circle_at_62%_70%,rgba(249,115,22,0.10),transparent_28rem),linear-gradient(180deg,#f8fafc_0%,#ffffff_58%,#ecfeff_100%)]" />
+        <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_12%_10%,rgba(56,189,248,0.24),transparent_27rem),radial-gradient(circle_at_88%_8%,rgba(249,115,22,0.16),transparent_25rem),radial-gradient(circle_at_62%_70%,rgba(15,23,42,0.07),transparent_28rem),linear-gradient(180deg,#f0f9ff_0%,#ffffff_58%,#eff6ff_100%)]" />
 
         <div className="mx-auto grid max-w-6xl gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
           <div className="text-center lg:text-left">
-            <div className="mb-6 inline-flex rounded-full border border-cyan-200/70 bg-white/85 px-4 py-2 text-xs font-semibold text-cyan-800 shadow-sm backdrop-blur md:text-sm">
+            <div className="mb-6 inline-flex rounded-full border border-sky-200/70 bg-white/85 px-4 py-2 text-xs font-semibold text-sky-800 shadow-sm backdrop-blur md:text-sm">
               AI tools, buying guides, money decisions, and useful calculators
             </div>
 
@@ -125,14 +125,14 @@ export default function Home() {
             <div className="rounded-2xl bg-slate-950 p-6 text-white">
               <div className="flex items-center justify-between gap-4">
                 <div>
-                  <p className="text-xs font-bold uppercase tracking-[0.18em] text-cyan-200">
+                  <p className="text-xs font-bold uppercase tracking-[0.18em] text-sky-200">
                     High-intent guide
                   </p>
                   <h2 className="mt-3 text-2xl font-black leading-tight md:text-4xl">
                     {leadArticle?.title ?? "Start with practical guides"}
                   </h2>
                 </div>
-                <TrendingUp className="size-8 shrink-0 text-pink-300" />
+                <TrendingUp className="size-8 shrink-0 text-orange-300" />
               </div>
               <p className="mt-4 text-sm leading-6 text-slate-300 md:text-base">
                 {leadArticle?.description ??
@@ -141,7 +141,7 @@ export default function Home() {
               {leadArticle && (
                 <Link
                   href={`/articles/${leadArticle.slug}`}
-                  className="mt-6 inline-flex items-center gap-2 rounded-xl bg-white px-5 py-3 font-bold text-slate-950 transition hover:-translate-y-0.5 hover:bg-cyan-50"
+                  className="mt-6 inline-flex items-center gap-2 rounded-xl bg-white px-5 py-3 font-bold text-slate-950 transition hover:-translate-y-0.5 hover:bg-orange-50"
                 >
                   Read the guide
                   <ArrowRight className="size-4" />
@@ -154,9 +154,9 @@ export default function Home() {
                 <Link
                   key={article.slug}
                   href={`/articles/${article.slug}`}
-                  className="group rounded-2xl border border-slate-200 bg-white p-4 transition hover:-translate-y-0.5 hover:border-cyan-200 hover:shadow-md"
+                  className="group rounded-2xl border border-slate-200 bg-white p-4 transition hover:-translate-y-0.5 hover:border-orange-200 hover:shadow-md"
                 >
-                  <p className="text-xs font-bold uppercase tracking-[0.16em] text-cyan-700">
+                  <p className="text-xs font-bold uppercase tracking-[0.16em] text-sky-700">
                     {article.category}
                   </p>
                   <p className="mt-2 font-bold leading-snug text-slate-950">
@@ -174,7 +174,7 @@ export default function Home() {
         <div className="grid gap-4 md:grid-cols-2">
           <Link
             href="/ai"
-            className="group rounded-3xl border border-cyan-200 bg-[linear-gradient(135deg,#ecfeff_0%,#ffffff_76%)] p-6 shadow-[0_14px_38px_rgba(15,23,42,0.06)] transition hover:-translate-y-0.5 hover:border-cyan-300 hover:shadow-[0_20px_50px_rgba(15,23,42,0.1)] md:p-7"
+            className="group rounded-3xl border border-sky-200 bg-[linear-gradient(135deg,#eff6ff_0%,#ffffff_76%)] p-6 shadow-[0_14px_38px_rgba(15,23,42,0.06)] transition hover:-translate-y-0.5 hover:border-sky-300 hover:shadow-[0_20px_50px_rgba(15,23,42,0.1)] md:p-7"
           >
             <div className="flex items-start justify-between gap-5">
               <div>
@@ -188,7 +188,7 @@ export default function Home() {
                   Compare AI subscriptions and workflows before you pay.
                 </p>
               </div>
-              <ArrowRight className="mt-1 size-5 text-cyan-500 transition group-hover:translate-x-1 group-hover:text-cyan-700" />
+              <ArrowRight className="mt-1 size-5 text-sky-500 transition group-hover:translate-x-1 group-hover:text-orange-700" />
             </div>
           </Link>
 
@@ -216,7 +216,7 @@ export default function Home() {
 
       {/* Tax Season Hub */}
       <section className="mx-auto max-w-6xl px-5 py-12 md:px-6 md:py-16">
-        <div className="overflow-hidden rounded-3xl border border-emerald-200 bg-[linear-gradient(135deg,#ecfdf5_0%,#ffffff_48%,#eff6ff_74%,#fdf2f8_100%)] shadow-[0_18px_55px_rgba(15,23,42,0.08)]">
+        <div className="overflow-hidden rounded-3xl border border-sky-200 bg-[linear-gradient(135deg,#eff6ff_0%,#ffffff_48%,#fff7ed_100%)] shadow-[0_18px_55px_rgba(15,23,42,0.08)]">
           <div className="grid gap-0 lg:grid-cols-[0.95fr_1.05fr]">
             <div className="p-6 md:p-8">
               <div className="inline-flex items-center gap-2 rounded-full border border-blue-200 bg-white px-3 py-1 text-sm font-bold text-blue-800 shadow-sm">
@@ -256,11 +256,11 @@ export default function Home() {
                 <Link
                   key={item.href}
                   href={item.href}
-                  className="group rounded-2xl border border-slate-200 bg-white p-5 transition hover:-translate-y-0.5 hover:border-emerald-200 hover:shadow-[0_14px_35px_rgba(15,23,42,0.08)]"
+                  className="group rounded-2xl border border-slate-200 bg-white p-5 transition hover:-translate-y-0.5 hover:border-orange-200 hover:shadow-[0_14px_35px_rgba(15,23,42,0.08)]"
                 >
                   <div className="flex items-start justify-between gap-4">
                     <div>
-                      <div className="flex items-center gap-2 text-sm font-bold text-emerald-700">
+                      <div className="flex items-center gap-2 text-sm font-bold text-sky-700">
                         <FileText className="size-4" />
                         {item.label}
                       </div>
@@ -268,7 +268,7 @@ export default function Home() {
                         {item.title}
                       </h3>
                     </div>
-                    <ArrowRight className="mt-1 size-5 text-slate-400 transition group-hover:translate-x-1 group-hover:text-emerald-700" />
+                    <ArrowRight className="mt-1 size-5 text-slate-400 transition group-hover:translate-x-1 group-hover:text-orange-700" />
                   </div>
                   <p className="mt-2 text-sm leading-6 text-slate-600">
                     {item.description}
