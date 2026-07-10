@@ -72,7 +72,7 @@ export default function Home() {
     <main className="min-h-screen">
       {/* Hero */}
       <section className="relative overflow-hidden px-5 pb-12 pt-12 md:px-6 md:pb-18 md:pt-20">
-        <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_12%_10%,rgba(56,189,248,0.24),transparent_27rem),radial-gradient(circle_at_88%_8%,rgba(249,115,22,0.16),transparent_25rem),radial-gradient(circle_at_62%_70%,rgba(15,23,42,0.07),transparent_28rem),linear-gradient(180deg,#f0f9ff_0%,#ffffff_58%,#eff6ff_100%)]" />
+        <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_12%_10%,rgba(56,189,248,0.42),transparent_30rem),radial-gradient(circle_at_88%_8%,rgba(249,115,22,0.28),transparent_28rem),radial-gradient(circle_at_62%_70%,rgba(15,23,42,0.10),transparent_30rem),linear-gradient(180deg,#dff5ff_0%,#ffffff_54%,#dbeafe_100%)]" />
 
         <div className="mx-auto grid max-w-6xl gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
           <div className="text-center lg:text-left">
@@ -174,7 +174,7 @@ export default function Home() {
         <div className="grid gap-4 md:grid-cols-2">
           <Link
             href="/ai"
-            className="group rounded-3xl border border-sky-200 bg-[linear-gradient(135deg,#eff6ff_0%,#ffffff_76%)] p-6 shadow-[0_14px_38px_rgba(15,23,42,0.06)] transition hover:-translate-y-0.5 hover:border-sky-300 hover:shadow-[0_20px_50px_rgba(15,23,42,0.1)] md:p-7"
+            className="group rounded-3xl border border-sky-200 bg-[linear-gradient(135deg,#dbeafe_0%,#ffffff_72%)] p-6 shadow-[0_14px_38px_rgba(15,23,42,0.06)] transition hover:-translate-y-0.5 hover:border-sky-300 hover:shadow-[0_20px_50px_rgba(15,23,42,0.1)] md:p-7"
           >
             <div className="flex items-start justify-between gap-5">
               <div>
@@ -194,7 +194,7 @@ export default function Home() {
 
           <Link
             href="/buying-guides"
-            className="group rounded-3xl border border-orange-200 bg-[linear-gradient(135deg,#fff7ed_0%,#ffffff_76%)] p-6 shadow-[0_14px_38px_rgba(15,23,42,0.06)] transition hover:-translate-y-0.5 hover:border-orange-300 hover:shadow-[0_20px_50px_rgba(15,23,42,0.1)] md:p-7"
+            className="group rounded-3xl border border-orange-200 bg-[linear-gradient(135deg,#fed7aa_0%,#ffffff_72%)] p-6 shadow-[0_14px_38px_rgba(15,23,42,0.06)] transition hover:-translate-y-0.5 hover:border-orange-300 hover:shadow-[0_20px_50px_rgba(15,23,42,0.1)] md:p-7"
           >
             <div className="flex items-start justify-between gap-5">
               <div>
@@ -216,7 +216,7 @@ export default function Home() {
 
       {/* Tax Season Hub */}
       <section className="mx-auto max-w-6xl px-5 py-12 md:px-6 md:py-16">
-        <div className="overflow-hidden rounded-3xl border border-sky-200 bg-[linear-gradient(135deg,#eff6ff_0%,#ffffff_48%,#fff7ed_100%)] shadow-[0_18px_55px_rgba(15,23,42,0.08)]">
+        <div className="overflow-hidden rounded-3xl border border-sky-200 bg-[linear-gradient(135deg,#dbeafe_0%,#ffffff_46%,#fed7aa_100%)] shadow-[0_18px_55px_rgba(15,23,42,0.08)]">
           <div className="grid gap-0 lg:grid-cols-[0.95fr_1.05fr]">
             <div className="p-6 md:p-8">
               <div className="inline-flex items-center gap-2 rounded-full border border-blue-200 bg-white px-3 py-1 text-sm font-bold text-blue-800 shadow-sm">

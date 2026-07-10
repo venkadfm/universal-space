@@ -12,11 +12,11 @@ body {
   margin: 0;
   color: #111827;
   background:
-    radial-gradient(circle at 8% 0%, rgb(56 189 248 / 26%), transparent 30rem),
-    radial-gradient(circle at 88% 8%, rgb(249 115 22 / 18%), transparent 28rem),
-    radial-gradient(circle at 48% 38rem, rgb(14 165 233 / 14%), transparent 30rem),
-    radial-gradient(circle at 82% 62rem, rgb(251 146 60 / 14%), transparent 32rem),
-    linear-gradient(180deg, #f0f9ff 0%, #ffffff 28rem, #eff6ff 70rem, #fff7ed 104rem, #f8fafc 100%);
+    radial-gradient(circle at 6% 0%, rgb(56 189 248 / 42%), transparent 34rem),
+    radial-gradient(circle at 94% 4%, rgb(249 115 22 / 32%), transparent 32rem),
+    radial-gradient(circle at 46% 36rem, rgb(14 165 233 / 24%), transparent 34rem),
+    radial-gradient(circle at 86% 64rem, rgb(251 146 60 / 26%), transparent 36rem),
+    linear-gradient(180deg, #dff5ff 0%, #f8fbff 24rem, #dbeafe 68rem, #ffedd5 104rem, #f8fafc 100%);
 }
 
 @theme inline {
@@ -169,7 +169,7 @@ body {
   }
 
   .color-band {
-    @apply border-y border-slate-200/80 bg-[linear-gradient(135deg,#eff6ff_0%,#ffffff_42%,#fff7ed_100%)];
+    @apply border-y border-slate-200/80 bg-[linear-gradient(135deg,#dbeafe_0%,#ffffff_42%,#fed7aa_100%)];
   }
 
   .rainbow-rule {
